@@ -1,0 +1,24 @@
+#############################################################################
+################# NEXT JS TEST DOCKERFILE CONFIGURATION #####################
+#############################################################################
+
+# BASE IMAGE
+FROM node:22-alpine
+
+# WORKING DIR
+WORKDIR /app
+
+# COPY PACKAGE JSON
+COPY package*.json ./
+
+# NPM PACKEGS INSTALL
+RUN npm install
+
+# COPY FULL PROJECT
+COPY . .
+
+# EXPOSE PORT
+EXPOSE 3000
+
+# RUN FRONTEND PROJECT
+CMD ["npm", "run", "start"]
