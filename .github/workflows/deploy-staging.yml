@@ -13,37 +13,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci-frontend:
-    name: Frontend CI
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint --if-present
-
-      - name: Build Next.js
-        env:
-          NEXT_TELEMETRY_DISABLED: 1
-          NEXT_PUBLIC_DOMAIN_NAME: ${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
-          NEXT_PUBLIC_MEDIA_URL: ${{ secrets.NEXT_PUBLIC_MEDIA_URL }}
-          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
-        run: npm run build
-
   ci-backend:
     name: Backend CI
     runs-on: ubuntu-latest
@@ -54,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create empty env for CI (if required by settings)
+      - name: Create empty env for CI
         run: touch .env.prod
 
       - name: Setup Python
@@ -84,25 +53,57 @@ jobs:
       - name: Collect Static
         run: python manage.py collectstatic --noinput
 
+      - name: Run Temporary Backend Container
+        run: |
+          docker network create web || true
+          docker compose -f docker-compose.prod.yml up -d backend
+
+  ci-frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+    needs: ci-backend
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Build Next.js
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          NEXT_PUBLIC_DOMAIN_NAME: ${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
+          NEXT_PUBLIC_MEDIA_URL: ${{ secrets.NEXT_PUBLIC_MEDIA_URL }}
+          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+        run: npm run build
+
   build-docker:
     name: Docker Compose Build
     runs-on: ubuntu-latest
     needs:
-      - ci-frontend
       - ci-backend
+      - ci-frontend
     env:
       DOCKER_BUILDKIT: 1
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create Traefik Network (CI)
+      - name: Create Traefik Network
         run: docker network create web || true
-
-      - name: Create empty env files for CI
-        run: |
-          touch frontend/.env.production
-          touch backend/.env.prod
 
       - name: Validate Compose File
         run: docker compose -f docker-compose.prod.yml config
@@ -113,8 +114,7 @@ jobs:
   deploy:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs:
-      - build-docker
+    needs: build-docker
 
     steps:
       - uses: actions/checkout@v4
