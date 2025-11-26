@@ -156,6 +156,20 @@ jobs:
       - name: Create Traefik Network
         run: docker network create web || true
 
+      # Create backend .env.prod for docker-compose
+      - name: Create Backend .env.prod
+        run: |
+          mkdir -p backend
+          cat <<EOF > backend/.env.prod
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          ENV=prod
+          EOF
+
+      # Create frontend .env.production for docker-compose
       - name: Create Frontend .env.production
         run: |
           mkdir -p frontend
