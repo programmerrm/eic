@@ -201,11 +201,11 @@ jobs:
       - name: Add Known Hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p 9000 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts || true
+          ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts || true
 
       - name: Deploy to Production
         run: |
-          ssh -p 9000 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'SSH'
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'SSH'
             set -e
             cd /var/apps/eic.com.bd
             git fetch origin main
