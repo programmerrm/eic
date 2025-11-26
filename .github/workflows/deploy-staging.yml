@@ -42,26 +42,53 @@ jobs:
           pip install -r requirements/prod.txt
 
       - name: Django Checks
+        env:
+          ENV: ${{ secrets.ENV }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: python manage.py check
 
       - name: Migrations Check
+        env:
+          ENV: ${{ secrets.ENV }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: python manage.py makemigrations --check --dry-run
 
       - name: Run Tests
+        env:
+          ENV: ${{ secrets.ENV }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: python manage.py test --noinput
 
       - name: Collect Static
+        env:
+          ENV: ${{ secrets.ENV }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: python manage.py collectstatic --noinput
 
       - name: Run Temporary Backend Container
         env:
-            ENV: ${{ secrets.ENV }}
-            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-            POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-
+          ENV: ${{ secrets.ENV }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           docker network create web || true
           docker compose -f docker-compose.prod.yml up -d backend
