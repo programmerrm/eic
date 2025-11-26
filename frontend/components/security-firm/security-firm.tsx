@@ -2,6 +2,7 @@ import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
+import Progressbar from "../progressbar/progressbar";
 
 export default async function SecurityFirm() {
     const security_firm_data = await getFetchData('/homepage/security-firm/');
@@ -61,42 +62,11 @@ export default async function SecurityFirm() {
             <div className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
                 <div className="container">
                     <div className="flex flex-col md:flex-row items-center gap-8 xl:gap-16">
-                        <div
-                            className="w-full max-w-[708px] bg-body text-white py-8 xl:py-16 pr-[62px] pl-8 xl:pl-16 [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-40px)_100%,0_100%)] lg:[clip-path:polygon(0_0,100%_0,100%_calc(100%-80px),calc(100%-56px)_100%,0_100%)] flex flex-col relative">
-                            <div className="w-full max-w-[708px] chart relative">
-                                <div className="flex flex-col gap-6">
-                                    <div className="flex items-center text-white">
-                                        <p className=" w-full max-w-20 xl:max-w-[116px]">Security</p>
-                                        <div className="relative h-16 lg:h-20 w-72 2xl:w-[400px] bg-white/10">
-                                            <div
-                                                className="absolute h-full bg-[#2E78AC] bar animate-bar"
-                                            ></div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center text-white">
-                                        <p className=" w-full max-w-20 xl:max-w-[116px]">Ability</p>
-                                        <div className="relative h-16 lg:h-20 w-72 2xl:w-[400px] bg-white/10">
-                                            <div
-                                                className="absolute h-full bg-white bar animate-bar"
-                                            ></div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center text-white">
-                                        <p className=" w-full max-w-20 xl:max-w-[116px]">Solving</p>
-                                        <div className="relative h-16 lg:h-20 w-72 2xl:w-[400px] bg-white/10">
-                                            <div
-                                                className="absolute h-full bg-[#76ADD3] bar animate-bar"
-                                            ></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="absolute -right-10 xl:right-0 top-0 bottom-0 flex flex-col justify-between text-white text-sm py-5 lg:py-8">
-                                    <span>{security_firm_data?.data?.security_persentences}%</span>
-                                    <span>{security_firm_data?.data?.ability_persentences}%</span>
-                                    <span>{security_firm_data?.data?.solving_persentences}%</span>
-                                </div>
-                            </div>
-                        </div>
+                        <Progressbar
+                            security={security_firm_data?.data?.security_persentences}
+                            ability={security_firm_data?.data?.ability_persentences}
+                            solving={security_firm_data?.data?.solving_persentences}
+                        />
                         {security_firm_data?.data?.sub_img && (
                             <div className="w-full max-w-[605px]">
                                 <Image

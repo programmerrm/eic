@@ -5,7 +5,8 @@ HOMEPAGE ALL ROUTES
 # ==========================================
 from rest_framework.routers import DefaultRouter
 from api.homepage.views.homepage import (
-    BannerViewSet, 
+    BannerViewSet,
+    PaymnetInfoViewSet,
     SecurityFirmViewSet, 
     CybersecuritySolutionTitleViewSet, 
     CybersecuritySolutionItemViewSet,
@@ -15,6 +16,7 @@ from api.homepage.views.homepage import (
 
 router = DefaultRouter()
 router.register(r'banner', BannerViewSet, basename='banner')
+router.register(r'paymnet-info', PaymnetInfoViewSet, basename='paymnet_info')
 router.register(r'security-firm', SecurityFirmViewSet, basename='security_firm')
 router.register(r'cyber-security-solution-title', CybersecuritySolutionTitleViewSet, basename='cyber_security_solution_title')
 router.register(r'cyber-security-solution-items', CybersecuritySolutionItemViewSet, basename='cyber_security_solution_items')

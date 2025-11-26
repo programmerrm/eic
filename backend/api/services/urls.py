@@ -10,6 +10,6 @@ router = DefaultRouter()
 
 router.register(r'top-bar', ServicePageTopBarView, basename='service_page_top_bar')
 router.register(r'list-items', ServiceView, basename='service')
-router.register(r'single/(?P<slug>[-\w]+)', SingleServiceView, basename='single_service')
+router.register(r'single', SingleServiceView, basename='single_service')
 
 urlpatterns = router.urls

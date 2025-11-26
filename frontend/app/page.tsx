@@ -1,3 +1,4 @@
+import HomePageRelated from "@/components/services/homepageRelated";
 import Banner from "../components/banner/banner";
 import Cybersecurity from "../components/cybersecurity/cybersecurity";
 import Features from "../components/features/features";
@@ -11,6 +12,7 @@ export default function Page() {
             <SecurityFirm />
             <Features />
             <Cybersecurity />
+            <HomePageRelated />
             <OurProvenProcessSecurity />
         </>
     );

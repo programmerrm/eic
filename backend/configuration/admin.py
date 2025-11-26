@@ -14,7 +14,8 @@ from configuration.models import (
     StayCompliant,
     ComplianceTitle,
     ComplianceItemList,
-    ComplianceItem
+    ComplianceItem,
+    Subscribe,
 )
 
 class LogoAdmin(admin.ModelAdmin):
@@ -45,3 +46,4 @@ admin.site.register(StayCompliant)
 admin.site.register(ComplianceTitle)
 admin.site.register(ComplianceItemList)
 admin.site.register(ComplianceItem)
+admin.site.register(Subscribe)

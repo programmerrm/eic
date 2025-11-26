@@ -83,53 +83,6 @@ class Service(models.Model):
     def __str__(self):
         return f"Service title : {self.title[:50]}"
 
-# ======== Services Include Top Title ===========
-class ServicesIncludeTopTitle(models.Model):
-    service = models.OneToOneField(
-        Service,
-        on_delete=models.CASCADE,
-        related_name='include_top_title',
-        verbose_name=_("Service"),
-        null=True,
-        blank=True,
-    )
-    title = models.CharField(
-        max_length=280,
-        verbose_name=_('Title'),
-    )
-    description = models.TextField(
-        verbose_name=_('Description'),
-    )
-
-    def __str__(self):
-        return self.title[:50]
-
-# =========== Services Include Top Item ============
-class ServicesIncludeTopItem(models.Model):
-    service = models.ForeignKey(
-        Service,
-        on_delete=models.CASCADE,
-        related_name='include_top_items',
-        verbose_name=_("Service"),
-        null=True,
-        blank=True,
-    )
-    image = models.FileField(
-        upload_to='services-include-top/',
-        validators=[VALIDATE_IMAGE_EXTENSION],
-        verbose_name=_('Image'),
-    )
-    title = models.CharField(
-        max_length=280,
-        verbose_name=_('Title'),
-    )
-    description = models.TextField(
-        verbose_name=_('Description'),
-    )
-
-    def __str__(self):
-        return self.title[:50]
-
 # =========== Service Item Main =============
 class ServiceItemMain(models.Model):
     service = models.OneToOneField(
@@ -195,11 +148,62 @@ class ServiceItem(models.Model):
     def __str__(self):
         return f"Service item title : {self.title[:50]}"
 
+# ======== Services Include Top Title ===========
+class ServicesIncludeTopTitle(models.Model):
+    service = models.OneToOneField(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='include_top_title',
+        verbose_name=_("Service"),
+        null=True,
+        blank=True,
+    )
+    title = models.CharField(
+        max_length=280,
+        verbose_name=_('Title'),
+    )
+    description = models.TextField(
+        verbose_name=_('Description'),
+    )
 
+    def __str__(self):
+        return self.title[:50]
 
+# =========== Services Include Top Item ============
+class ServicesIncludeTopItem(models.Model):
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='include_top_items',
+        verbose_name=_("Service"),
+        null=True,
+        blank=True,
+    )
+    image = models.FileField(
+        upload_to='services-include-top/',
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        verbose_name=_('Image'),
+    )
+    title = models.CharField(
+        max_length=280,
+        verbose_name=_('Title'),
+    )
+    description = models.TextField(
+        verbose_name=_('Description'),
+    )
+
+    def __str__(self):
+        return self.title[:50]
 
 # ============ Service Why Choose Us Title =============
 class ServiceWhyChooseUsTitle(models.Model):
+    service = models.OneToOneField(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='service_why_choose_us_title',
+        null=True,
+        blank=True
+    )
     title_before_span = models.CharField(
         max_length=255, 
         blank=True, 
@@ -218,24 +222,25 @@ class ServiceWhyChooseUsTitle(models.Model):
         null=True,
         verbose_name=_('Title after span'),
     )
-    image = models.ImageField(
+    image = models.FileField(
         upload_to='services/',
-        validators=[VALIDATE_IMAGE_EXTENSION, VALIDATE_IMAGE_SIZE],
+        validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Image'),
     )
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        ServiceWhyChooseUsTitle.objects.exclude(id=self.id).delete()
 
     def __str__(self):
         return self.title_span[:50]
 
 # ============ Service Why Choose Us Item =============
 class ServiceWhyChooseUsItem(models.Model):
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='service_why_choose_us_item',
+        null=True,
+        blank=True
+    )
     name = models.CharField(
-        unique=True,
         max_length=280,
         verbose_name=_('Name'),
         help_text=_('Enter service item why choose us item name...'),
@@ -246,10 +251,17 @@ class ServiceWhyChooseUsItem(models.Model):
 
 # ========= Service Paymnet ===========
 class ServicePaymnet(models.Model):
-    image = models.ImageField(
+    service = models.OneToOneField(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='payment_info',
+        null=True,
+        blank=True
+    )
+    image = models.FileField(
         upload_to='services/',
-        validators=[VALIDATE_IMAGE_EXTENSION, VALIDATE_IMAGE_SIZE],
-        verbose_name=_('Image'),
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        verbose_name=_('Paymnet Image'),
     )
     title_before_span = models.CharField(
         max_length=255, 
@@ -275,8 +287,6 @@ class ServicePaymnet(models.Model):
 
     def __str__(self):
         return self.title_span[:50]
-
-
 
 # ======== Services Include Bottom Title ===========
 class ServicesIncludeBottomTitle(models.Model):

@@ -13,6 +13,7 @@ from api.configuration.views.configuration import (
     StayCompliantView,
     ComplianceTitleView,
     ComplianceItemView,
+    SubscribeView,
 )
 
 router = DefaultRouter()
@@ -24,5 +25,6 @@ router.register(r'not-found-content', NotFoundContentViewSet, basename='not_foun
 router.register(r'stay-compliant', StayCompliantView, basename='stay_compliant')
 router.register(r'compliance-title', ComplianceTitleView, basename='compliance_title')
 router.register(r'compliance-item', ComplianceItemView, basename='compliance_item')
+router.register(r'subscribe', SubscribeView, basename='subscribe')
 
 urlpatterns = router.urls

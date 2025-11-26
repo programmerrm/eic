@@ -16,6 +16,7 @@ from configuration.models import (
     StayCompliant,
     ComplianceTitle,
     ComplianceItem,
+    Subscribe,
 )
 from api.configuration.serializers.configuration import (
     FaviconSerializer,
@@ -26,6 +27,7 @@ from api.configuration.serializers.configuration import (
     StayCompliantSerializer,
     ComplianceTitleSerializer,
     ComplianceItemSeriliazer,
+    SubscribeSeriliazer,
 )
 
 # ======== FAVICON VIEW =========== 
@@ -168,7 +170,35 @@ class ComplianceTitleView(viewsets.ReadOnlyModelViewSet):
             return ComplianceTitle.objects.filter(id=obj.id)
         return ComplianceTitle.objects.none()
 
+# ============ Compliance Item ============
 class ComplianceItemView(viewsets.ReadOnlyModelViewSet):
     serializer_class = ComplianceItemSeriliazer
     queryset = ComplianceItem.objects.all()
-    
+
+class SubscribeView(viewsets.ModelViewSet):
+    serializer_class = SubscribeSeriliazer
+    queryset = Subscribe.objects.all()
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [AllowAny()]
+        return [IsAdminUser()]
+
+    def create(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+
+            return Response({
+                'success': True,
+                'message': 'Subscribe form has been submitted successfully.',
+                'data': serializer.data
+            }, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({
+                'success': False,
+                'message': 'Failed to submit subscribe form.',
+                'error': str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+        

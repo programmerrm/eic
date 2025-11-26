@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from services.models import ServicePageTopBar, Categories, Service, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem
+from services.models import ServicePageTopBar, Categories, Service, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem
 
 class ServicePageTopBarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,6 +60,28 @@ class ServicesIncludeBottomItemSerializer(serializers.ModelSerializer):
 
 class ServiceSerializer(serializers.ModelSerializer):
     categories = CategoriesSerializer(many=True)
+    
+    class Meta:
+        model = Service
+        fields = '__all__'
+
+class ServicePaymnetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServicePaymnet
+        fields = '__all__'
+
+class ServiceWhyChooseUsTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceWhyChooseUsTitle
+        fields = '__all__'
+
+class ServiceWhyChooseUsItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceWhyChooseUsItem
+        fields = '__all__'
+
+class SingleServiceSerializer(serializers.ModelSerializer):
+    categories = CategoriesSerializer(many=True)
     main_item = ServiceItemMainSerializer(read_only=True)
     items = ServiceItemSerializer(many=True, read_only=True)
     include_top_title = ServicesIncludeTopTitleSerializer(read_only=True)
@@ -69,6 +91,16 @@ class ServiceSerializer(serializers.ModelSerializer):
     faqs = FaqSerializer(many=True, read_only=True)
     faq_items = FaqItemSerializer(many=True, read_only=True)
     related_services = serializers.SerializerMethodField()
+    payment_info = ServicePaymnetSerializer(read_only=True)
+    why_choose_us_title = ServiceWhyChooseUsTitleSerializer(
+        read_only=True, 
+        source='service_why_choose_us_title'
+    )
+    why_choose_us_item = ServiceWhyChooseUsItemSerializer(
+        many=True,
+        read_only=True,
+        source='service_why_choose_us_item'
+    )
 
     class Meta:
         model = Service

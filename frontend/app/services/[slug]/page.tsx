@@ -7,6 +7,7 @@ import Link from "next/link";
 import complianceBG from "../../../public/images/compliance-bg.svg";
 import RelatedBGImg from "../../../public/images/related-image-bg.svg";
 import trustedForProven from "../../../public/images/trusted-for-proven.png";
+import FAQ from "@/components/FAQ/FAQ";
 
 type SingleServiceProps = {
     params: Promise<{ slug: string }>;
@@ -18,16 +19,18 @@ export default async function SingleService({ params }: SingleServiceProps) {
     const complianceTitleData = await getFetchData('/configuration/compliance-title/');
     const complianceItemData = await getFetchData('/configuration/compliance-item/');
 
-    const singleServiceData = singleService[0];
+    const singleServiceData = singleService?.data;
+
     const topBar = {
-        title: singleService[0]?.title || "",
-        description: singleService[0]?.description || "",
+        title: singleService?.data?.title || "",
+        description: singleService?.data?.description || "",
     };
+
+    console.log('singleServiceData -- ', singleServiceData?.payment_info)
 
     return (
         <>
             <SectionBanner topBarData={topBar} />
-
             {/* SERVICE ITEM SECTION START */}
             {singleServiceData?.main_item && (
                 <section className="py-12 md:py-[100px]">
@@ -59,40 +62,88 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {/* SERVICE ITEM SECTION END */}
 
             {/* SERVICE TOP START */}
-            <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
-                <div className="container">
-                    <div className=" text-white">
-                        <div className="mb-10 md:mb-[114px] w-full max-w-[668px]">
-                            <h2 className="text-white max-w-[602px] mb-4 md:mb-6">{singleServiceData?.include_top_title?.title}</h2>
-                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">{singleServiceData?.include_top_title?.description}</p>
-                        </div>
-                        <div className="flex flex-wrap justify-between h-full gap-5">
-                            {singleServiceData?.include_top_items?.map((item: any) => {
-                                return (
-                                    <div className="w-full max-w-[272px] flex flex-col items-start h-auto" key={item.id}>
-                                        <div>
-                                            <div className="w-full max-w-11 sm:max-w-[60px]">
-                                                <Image
-                                                    src={item?.image}
-                                                    alt={item.title}
-                                                    width={60}
-                                                    height={66}
-                                                />
+            {(singleServiceData?.include_top_title || singleServiceData?.include_top_items) && (
+                <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
+                    <div className="container">
+                        <div className=" text-white">
+                            <div className="mb-10 md:mb-[114px] w-full max-w-[668px]">
+                                <h2 className="text-white max-w-[602px] mb-4 md:mb-6">{singleServiceData?.include_top_title?.title}</h2>
+                                <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">{singleServiceData?.include_top_title?.description}</p>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-full gap-5">
+                                {singleServiceData?.include_top_items?.map((item: any) => {
+                                    return (
+                                        <div className="w-full max-w-[272px] flex flex-col items-start h-auto" key={item.id}>
+                                            <div>
+                                                <div className="w-full max-w-11 sm:max-w-[60px]">
+                                                    <Image
+                                                        src={item?.image}
+                                                        alt={item.title}
+                                                        width={60}
+                                                        height={66}
+                                                    />
+                                                </div>
+                                                <h4 className="text-white mt-6 lg:min-h-[100px]">{item.title}</h4>
                                             </div>
-                                            <h4 className="text-white mt-6 lg:min-h-[100px]">{item.title}</h4>
+                                            <div className="">
+                                                <div className="h-0.5 w-full lg:max-w-full bg-white/30 mt-4"></div>
+                                                <p className="text-sm sm:text-base mt-4">{item.description}</p>
+                                            </div>
                                         </div>
-                                        <div className="">
-                                            <div className="h-0.5 w-full lg:max-w-full bg-white/30 mt-4"></div>
-                                            <p className="text-sm sm:text-base mt-4">{item.description}</p>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+            {/* SERVICE TOP END */}
+
+            <section className="why-choose relative z-10 overflow-hidden">
+                <div className="container">
+                    <div className="flex flex-col lg:flex-row justify-between">
+                        <div className="w-full lg:w-1/2 order-2 lg:order-1">
+                            <div className="w-full lg:max-w-[400px] xl:max-w-[673px] pt-10 xl:pt-64">
+                                <h2 className="w-full md:w-[540px] lg:w-[673px] mx-auto relative z-20">{singleServiceData?.why_choose_us_title?.title_before_span} <span className="text-blue">{singleServiceData?.why_choose_us_title?.title_span}</span> {singleServiceData?.why_choose_us_title?.title_after_span}</h2>
+                                <ul className="mt-8 ">
+                                    {singleServiceData?.why_choose_us_item?.map((item:any) => {
+                                        return (
+                                            <li key={item.id}>{item.name}</li>
+                                        );
+                                    })}
+                                </ul>
+                                <a href="" className="btn-primary group inline-flex mt-10">Secure Your DATA
+                                    <svg
+                                        className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="M6 18 18 6m0 0H9m9 0v9"
+                                        />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end order-1 lg:order-2">
+                            <div className="pci-wrap w-full max-w-[200px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[536px] max-h-[640px] pt-24 md:pt-33 lg:pt-48 xl:pt-56 mb-20 sm:mb-28 md:mb-44 xl:mb-60 relative flex items-center justify-center">
+                                <Image
+                                    className="lg:-ml-20"
+                                    src={singleServiceData?.why_choose_us_title?.image}
+                                    alt="components"
+                                    width={536}
+                                    height={640}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-            {/* SERVICE TOP END */}
 
             <section className="pb-[270px] sm:pb-[300px] pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat"
                 style={{
@@ -164,14 +215,12 @@ export default async function SingleService({ params }: SingleServiceProps) {
                 <div className="container">
                     <div className="flex flex-col lg:flex-row  gap-5 justify-between">
                         <div className="w-full lg:max-w-[37.720%] pr-9 mt-8 lg:mt-16 xl:mt-28">
-                            <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">Securing <span
-                                className="text-blue">Top</span> Brands</h2>
-                            <p
-                                className=" text-base sm:text-xl md:text-2xl md:leading-8 text-[#245E86] mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[610px] font-spacegrotesk">
-                                Trusted by nearly 200+ Companies</p>
+                            <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{singleServiceData?.payment_info?.title_after_span}<span
+                                className="text-blue"> {singleServiceData?.payment_info?.title_span}</span> {singleServiceData?.payment_info?.title_after_span}</h2>
+                            <p className=" text-base sm:text-xl md:text-2xl md:leading-8 text-[#245E86] mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[610px] font-spacegrotesk">{singleServiceData?.payment_info?.description}</p>
 
                             <div className="btn-wrap">
-                                <a href="#" className="btn-primary group inline-flex">Get Started
+                                <a href="" className="btn-primary group inline-flex">Get Started
                                     <svg
                                         className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +244,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                     className="bg-[#F4F4F6] flex items-center justify-between gap-5 px-2 sm:px-[30px] py-3 sm:py-5 rounded-md sm:rounded-[10px]">
                                     <a href="">
                                         <Image
-                                            src="./src/assets/logo/ieps.svg"
+                                            src={singleServiceData?.payment_info?.image}
                                             alt="ieps"
                                             width={835}
                                             height={410}
@@ -209,28 +258,30 @@ export default async function SingleService({ params }: SingleServiceProps) {
             </section>
 
             {/* SERVICE BOTTOM START */}
-            <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
-                <div className="container">
-                    <div className="mb-5 md:mb-10 w-full max-w-[668px]">
-                        <h2 className="text-white max-w-[602px] mb-4 md:mb-6">{singleServiceData?.include_bottom_title?.title}</h2>
-                        <p className="text-white text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">{singleServiceData?.include_bottom_title?.description}</p>
-                    </div>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 lg:gap-x-16 xl:gap-x-[125px] gap-y-5 md:gap-y-9">
-                        {singleServiceData?.include_bottom_items?.map((item: any, index: number) => {
-                            return (
-                                <div className="flex flex-col justify-between gap-1 pr-4" key={item.id}>
-                                    <h2 className="text-6xl md:text-[88px] font-bold bg-linear-to-b from-white to-blue bg-clip-text text-transparent font-sans">{index + 1}</h2>
-                                    <div className="content">
-                                        <h4 className="text-white">{item?.title}</h4>
-                                        <div className="h-0.5 w-full bg-white/30 mt-4"></div>
-                                        <p className="text-white text-sm sm:text-base my-4">{item?.description}</p>
+            {(singleServiceData?.include_bottom_title || singleServiceData?.include_bottom_items) && (
+                <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
+                    <div className="container">
+                        <div className="mb-5 md:mb-10 w-full max-w-[668px]">
+                            <h2 className="text-white max-w-[602px] mb-4 md:mb-6">{singleServiceData?.include_bottom_title?.title}</h2>
+                            <p className="text-white text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">{singleServiceData?.include_bottom_title?.description}</p>
+                        </div>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 lg:gap-x-16 xl:gap-x-[125px] gap-y-5 md:gap-y-9">
+                            {singleServiceData?.include_bottom_items?.map((item: any, index: number) => {
+                                return (
+                                    <div className="flex flex-col justify-between gap-1 pr-4" key={item.id}>
+                                        <h2 className="text-6xl md:text-[88px] font-bold bg-linear-to-b from-white to-blue bg-clip-text text-transparent font-sans">{index + 1}</h2>
+                                        <div className="content">
+                                            <h4 className="text-white">{item?.title}</h4>
+                                            <div className="h-0.5 w-full bg-white/30 mt-4"></div>
+                                            <p className="text-white text-sm sm:text-base my-4">{item?.description}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
             {/* SERVICE BOTTOM END */}
 
             {/* SERVICE RELATED START */}
@@ -265,7 +316,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                     <p className=" mt-3 mx-auto sm:mx-0">
                                                         {item.description}
                                                     </p>
-                                                    <Link href={`/services/${item?.slug}`}
+                                                    <span
                                                         className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4">Read
                                                         More
                                                         <svg
@@ -282,7 +333,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                                 d="M6 18 18 6m0 0H9m9 0v9"
                                                             />
                                                         </svg>
-                                                    </Link>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,25 +368,11 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {singleServiceData?.faqs.length > 0 && (
                 <section className="pb-12 md:pb-[100px]">
                     <div className="container">
-
                         <div className="flex flex-col lg:flex-row items-center">
                             <div className="w-full lg:max-w-[60.955%] order-2 lg:order-1">
                                 <h2 className="w-full max-w-[658px] mx-auto lg:mx-0 text-center lg:text-start"><span className="text-blue">FAQs</span> {singleServiceData?.faqs[0]?.title}</h2>
                                 <div className="w-full max-w-[696px] space-y-4 mt-10 md:mt-20">
-                                    {singleServiceData?.faq_items?.map((item: any) => {
-                                        return (
-                                            <div className="faq-item" key={item.id}>
-                                                <div className="faq-content">
-                                                    <h4>{item?.question}</h4>
-                                                    <p className="mt-2 text-sm sm:text-base">{item?.answer}</p>
-                                                </div>
-                                                <div className="faq-icon">
-                                                    <i></i>
-                                                    <i></i>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
+                                    <FAQ faqItems={singleServiceData?.faq_items || []} />
                                 </div>
                             </div>
                             <div className="w-full lg:max-w-[calc(100%-60.955%)] order-1 lg:order-2">

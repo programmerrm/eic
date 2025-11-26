@@ -75,14 +75,12 @@ class CopyRight(models.Model):
 
 # ============= SOCIAL LINK ==================
 class SocialLink(models.Model):
-    name = models.CharField(
+    icon = models.FileField(
         null=True,
         blank=True,
-        max_length=180,
-        unique=True,
-        validators=[MinLengthValidator(1)],
-        verbose_name=_('Socail Link Name'),
-        help_text=_('Enter your website socail link name...')
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        verbose_name=_('Socail Icon'),
+        help_text=_('Enter your website socail icon name...')
     )
     url = models.URLField(
         null=True,
@@ -121,8 +119,6 @@ class NotFoundContent(models.Model):
 
     def __str__(self):
         return f"Not found infomation added."
-
-
 
 # =============== Stay Compliant ===================
 class StayCompliant(models.Model):
@@ -184,11 +180,6 @@ class ComplianceTitle(models.Model):
     class Meta:
         verbose_name = _('Compliance-Title')
         verbose_name_plural = _('Compliance-Title')
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        ComplianceTitle.objects.exclude(id=self.id).delete()
 
     def __str__(self):
         return self.title_span[:50]
@@ -230,3 +221,15 @@ class ComplianceItem(models.Model):
 
     def __str__(self):
         return self.title[:50]
+
+# =========== Subscribe =============
+class Subscribe(models.Model):
+    email = models.EmailField(
+        max_length=280,
+        verbose_name=_('Email'),
+        help_text=_('Email Address'),
+    )
+    # created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email

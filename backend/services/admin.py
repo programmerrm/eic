@@ -7,7 +7,7 @@ from django.contrib import admin, messages
 from django.utils.html import format_html
 from django.urls import path, reverse
 from django.shortcuts import redirect
-from services.models import ServicePageTopBar, Service, Categories, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem
+from services.models import ServicePageTopBar, Service, Categories, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem
 from django import forms
 from django.db import models
 
@@ -185,3 +185,6 @@ admin.site.register(ServicesIncludeTopTitle)
 admin.site.register(ServicesIncludeTopItem)
 admin.site.register(ServicesIncludeBottomTitle)
 admin.site.register(ServicesIncludeBottomItem)
+admin.site.register(ServicePaymnet)
+admin.site.register(ServiceWhyChooseUsTitle)
+admin.site.register(ServiceWhyChooseUsItem)

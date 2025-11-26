@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'configuration',
-    'pages',
     'homepage',
     'services',
     'features',

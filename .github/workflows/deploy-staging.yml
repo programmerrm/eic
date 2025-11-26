@@ -1,11 +1,6 @@
 name: Build & Deploy
 
 on:
-  workflow_call:
-    inputs:
-      environment_branch:
-        required: false
-        type: string
   push:
     branches: [main]
   workflow_dispatch:
@@ -56,7 +51,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # No .env needed — CI uses SQLite
       - name: Create empty env for CI (if required by settings)
         run: touch .env.prod
 
@@ -75,7 +69,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements/prod.txt
 
-      # Django will use SQLite in CI (because no env vars provided)
       - name: Django Checks
         run: python manage.py check
 
@@ -103,7 +96,6 @@ jobs:
       - name: Create Traefik Network (CI)
         run: docker network create web || true
 
-      # docker-compose requires .env files to exist
       - name: Create empty env files for CI
         run: |
           touch frontend/.env.production
@@ -116,7 +108,7 @@ jobs:
         run: docker compose -f docker-compose.prod.yml build
 
   deploy:
-    name: Deploy to Server
+    name: Deploy to Production
     runs-on: ubuntu-latest
     needs:
       - build-docker
@@ -127,26 +119,19 @@ jobs:
       - name: Start SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SERVER_KEY }}
 
-      - name: Add Known Hosts (Production)
-        if: github.ref == 'refs/heads/main'
+      - name: Add Known Hosts
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.PRODUCTION_KNOWN_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -p 9000 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Add Known Hosts (Staging)
-        if: github.ref == 'refs/heads/staging'
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.STAGING_KNOWN_HOST }}" >> ~/.ssh/known_hosts
-      
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.PRODUCTION_SERVER }} << 'SSH'
+          ssh -p 9000 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'SSH'
             set -e
-            cd /var/apps/pngpoint.com
+            cd /var/apps/eic.com.bd
             git fetch origin main
             git reset --hard origin/main
             docker network create web || true
@@ -156,20 +141,3 @@ jobs:
             # Apply Django migrations
             docker compose exec backend python manage.py migrate --noinput
           SSH
-
-      - name: Deploy to Staging
-        if: github.ref == 'refs/heads/staging'
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.STAGING_SERVER }} << 'SSH'
-            set -e
-            cd /var/apps/staging.pngpoint.com
-            git fetch origin staging
-            git reset --hard origin/staging
-            docker network create web || true
-            docker compose pull || true
-            docker compose up -d --build
-
-            # Apply Django migrations
-            docker compose exec backend python manage.py migrate --noinput
-          SSH
-    

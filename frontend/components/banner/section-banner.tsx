@@ -3,7 +3,7 @@ import BannerImg from "../../public/images/banner-img.svg";
 
 export default async function SectionBanner({ topBarData }: any) {
     return (
-        <section className="mt-[129px] md:mt-20 banner-section bg-blue [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-60px)_100%,0_100%)] md:[clip-path:polygon(0_0,100%_0,100%_calc(100%-100px),calc(100%-150px)_100%,0_100%)]">
+        <section className="mt-24 md:mt-36 banner-section bg-blue [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-60px)_100%,0_100%)] md:[clip-path:polygon(0_0,100%_0,100%_calc(100%-100px),calc(100%-150px)_100%,0_100%)]">
             <div className="container">
                 <div className="bg-bottom bg-contain bg-no-repeat" style={{
                     backgroundImage: `url(${BannerImg.src})`,

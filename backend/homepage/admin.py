@@ -1,24 +1,25 @@
-# #########################################
-# """
-# ADMIN UI DESIGN SETUP
-# """
-# #########################################
-# from django.contrib import admin, messages
-# from django.utils.html import format_html
-# from django.urls import path, reverse
-# from django.shortcuts import redirect
-# from homepage.models import (
-#     Banner, 
-#     SecurityFirm, 
-#     CybersecuritySolutionTitle, 
-#     CybersecuritySolutionItem,
-#     OurProvenProcessSecurity,
-#     OurProvenProcessSecurityItems
-# )
-# from django import forms
-# from django.db import models
+#########################################
+"""
+ADMIN UI DESIGN SETUP
+"""
+#########################################
+from django.contrib import admin, messages
+from django.utils.html import format_html
+from django.urls import path, reverse
+from django.shortcuts import redirect
+from homepage.models import (
+    Banner,
+    PaymnetInfo,
+    SecurityFirm, 
+    CybersecuritySolutionTitle, 
+    CybersecuritySolutionItem,
+    OurProvenProcessSecurity,
+    OurProvenProcessSecurityItems
+)
+from django import forms
+from django.db import models
 
-# @admin.register(Banner)
+
 # class BannerAdmin(admin.ModelAdmin):
 #     list_display = (
 #         'styled_title',
@@ -171,7 +172,7 @@
 #         )
 #     delete_link.short_description = "Delete"
 
-# @admin.register(SecurityFirm)
+
 # class SecurityFirmAdmin(admin.ModelAdmin):
 #     list_display = (
 #         'styled_title',
@@ -325,7 +326,10 @@
 #         )
 #     delete_link.short_description = "Delete"
 
-# admin.site.register(CybersecuritySolutionTitle)
-# admin.site.register(CybersecuritySolutionItem)
-# admin.site.register(OurProvenProcessSecurity)
-# admin.site.register(OurProvenProcessSecurityItems)
+admin.site.register(Banner)
+admin.site.register(PaymnetInfo)
+admin.site.register(SecurityFirm)
+admin.site.register(CybersecuritySolutionTitle)
+admin.site.register(CybersecuritySolutionItem)
+admin.site.register(OurProvenProcessSecurity)
+admin.site.register(OurProvenProcessSecurityItems)

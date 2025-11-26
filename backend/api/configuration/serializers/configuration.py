@@ -14,6 +14,7 @@ from configuration.models import (
     ComplianceTitle,
     ComplianceItem,
     ComplianceItemList,
+    Subscribe,
 )
 
 # ============ FAVICON SERIALIZER ===============
@@ -69,4 +70,10 @@ class ComplianceItemSeriliazer(serializers.ModelSerializer):
     item_list = ComplianceItemListSerializer(many=True, read_only=True)
     class Meta:
         model = ComplianceItem
+        fields = '__all__'
+
+# ============= Subscribe ===============
+class SubscribeSeriliazer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscribe
         fields = '__all__'

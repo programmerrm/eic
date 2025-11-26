@@ -70,7 +70,7 @@ footer .menu h5{
     @apply mb-2 sm:mb-4
 }
 footer .menu ul li a{
-    @apply text-[#B5B5B5] text-sm sm:text-base sm:leading-6 font-medium py-1.5 sm:py-3 inline-block transition-all
+    @apply text-[#B5B5B5] text-sm sm:text-base sm:leading-6 font-medium py-1.5 sm:py-2 inline-block transition-all
 }
 footer .menu ul li a:hover{
     @apply text-white
@@ -198,7 +198,7 @@ footer .menu ul li a:hover{
   transition: all 0.5s ease; 
 }
 
-.faq-content p {
+/* .faq-content p {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease;
@@ -207,7 +207,7 @@ footer .menu ul li a:hover{
 .faq-content p.open {
   max-height: 200px;    
   padding: 10px; 
-}
+} */
 
 .active.faq-item {
   background-color: rgba(51, 132, 189, 1);
@@ -218,12 +218,9 @@ footer .menu ul li a:hover{
     font-size: 22px;
     font-weight: 500;
     line-height: 33px;
-    color: #4E5B76;
     font-family: var(--font-inter);
 }
-.active.faq-item h4{
-  color: white;
-}
+
 .active.faq-item .faq-icon i{
   background-color: white;
 }
@@ -335,4 +332,74 @@ header:not(.home-page){
 
 html {
   scroll-behavior: smooth;
+}
+
+
+.pci-wrap{
+    overflow: visible;
+}
+.pci-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 196%; 
+    height: 150%;
+    background-image: url(../public/images/eic-bg.svg);
+    background-repeat: no-repeat;
+    background-size: contain; 
+    background-position: top right; 
+    transform: translateX(282px); 
+    z-index: -99;
+}
+.eic-home .pci-wrap::after{
+    width: 163%; 
+    height: 150%; 
+    transform: translateX(292px); 
+}
+@media(max-width:1279px){
+    .eic-home .pci-wrap::after{
+        width: 180%; 
+        height: 150%; 
+        transform: translateX(300px); 
+    }
+}
+@media(max-width:1024px){
+    .pci-wrap::after {
+        width: 220%;
+        height: 124%;
+        transform: translateX(311px);
+    }
+    .eic-home .pci-wrap::after {
+        width: 195%;
+        height: 110%;
+        transform: translateX(312px);
+    }
+    
+}
+@media(max-width:767px){
+    .pci-wrap::after {
+        width: 215%;
+        height: 124%;
+        transform: translateX(233px);
+    }
+    .eic-home .pci-wrap::after {
+        width: 240%;
+        height: 132%;
+        transform: translateX(312px);
+        top: -41px;
+    }
+}
+@media(max-width:640px){
+    .pci-wrap::after {
+        width: 240%;
+        height: 160%;
+        transform: translateX(220px);
+    }
+    .eic-home .pci-wrap::after {
+        width: 193%;
+        height: 150%;
+        transform: translateX(193px);
+        top: 0px;
+    }
 }

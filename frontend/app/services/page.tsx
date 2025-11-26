@@ -7,10 +7,9 @@ import { getFetchData } from "../../utils/getFetchData";
 
 export default async function Page() {
     const topBarFetchData = await getFetchData('/services/top-bar/');
-    const topBar = topBarFetchData[0];
     return (
         <>
-            <SectionBanner topBarData={topBar} />
+            <SectionBanner topBarData={topBarFetchData?.data} />
             <Services />
             <Features />
             <Compliance />
