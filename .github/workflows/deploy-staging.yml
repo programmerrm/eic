@@ -39,6 +39,9 @@ jobs:
       - name: Build Next.js
         env:
           NEXT_TELEMETRY_DISABLED: 1
+          NEXT_PUBLIC_DOMAIN_NAME: ${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
+          NEXT_PUBLIC_MEDIA_URL: ${{ secrets.NEXT_PUBLIC_MEDIA_URL }}
+          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
         run: npm run build
 
   ci-backend:
