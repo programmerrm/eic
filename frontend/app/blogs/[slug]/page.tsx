@@ -109,16 +109,18 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                                 <div>
                                     <BlogContent content={singleBlog?.data?.content.replace(/src="\/media/g, `src="${MEDIA_URL}/media`)} />
                                 </div>
-                                <div className="flex flex-col md:flex-row md:items-center gap-2 lg:gap-4 mt-12">
-                                    <span className="text-base leading-[25px] font-inter text-[#151517]">Tagged with:</span>
-                                    {singleBlog?.data?.tags?.map((item: any) => {
-                                        return (
-                                            <div className="flex items-center gap-2.5 flex-wrap" key={item.id}>
-                                                <button type="button" className="px-3 py-1 text-body text-sm leading-5 font-inter font-medium rounded-lg bg-[#EBF3F8] cursor-pointer">{item.name}</button>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
+                                {singleBlog?.data?.tags && (
+                                    <div className="flex flex-col md:flex-row md:items-center gap-2 lg:gap-4 mt-12">
+                                        <span className="text-base leading-[25px] font-inter text-[#151517]">Tagged with:</span>
+                                        {singleBlog?.data?.tags?.map((item: any) => {
+                                            return (
+                                                <div className="flex items-center gap-2.5 flex-wrap" key={item.id}>
+                                                    <button type="button" className="px-3 py-1 text-body text-sm leading-5 font-inter font-medium rounded-lg bg-[#EBF3F8] cursor-pointer">{item.name}</button>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

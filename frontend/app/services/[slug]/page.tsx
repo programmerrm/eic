@@ -36,7 +36,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                 <section className="py-12 md:py-[100px]">
                     <div className="container">
                         <h2 className="w-full max-w-[692px]">{singleServiceData?.main_item?.normal_title} <span className="text-blue">{singleServiceData?.main_item?.span_title}</span></h2>
-                        <div className="mt-6 md:mt-12">
+                        {singleServiceData?.items && (
+                            <div className="mt-6 md:mt-12">
                             {singleServiceData?.items?.map((item: any) => {
                                 return (
                                     <div className="flex flex-col sm:flex-row items-center gap-7 md:gap-14 mb-12 md:mb-24" key={item.id}>
@@ -56,6 +57,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 );
                             })}
                         </div>
+                        )}
+                        
                     </div>
                 </section>
             )}
@@ -105,13 +108,16 @@ export default async function SingleService({ params }: SingleServiceProps) {
                         <div className="w-full lg:w-1/2 order-2 lg:order-1">
                             <div className="w-full lg:max-w-[400px] xl:max-w-[673px] pt-10 xl:pt-64">
                                 <h2 className="w-full md:w-[540px] lg:w-[673px] mx-auto relative z-20">{singleServiceData?.why_choose_us_title?.title_before_span} <span className="text-blue">{singleServiceData?.why_choose_us_title?.title_span}</span> {singleServiceData?.why_choose_us_title?.title_after_span}</h2>
-                                <ul className="mt-8 ">
+                                {singleServiceData?.why_choose_us_item && (
+                                    <ul className="mt-8 ">
                                     {singleServiceData?.why_choose_us_item?.map((item:any) => {
                                         return (
                                             <li key={item.id}>{item.name}</li>
                                         );
                                     })}
                                 </ul>
+                                )}
+                                
                                 <a href="" className="btn-primary group inline-flex mt-10">Secure Your DATA
                                     <svg
                                         className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
@@ -176,7 +182,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 </a>
                             </div>
                         </div>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {complianceItemData && (
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {complianceItemData?.map((item: any) => {
                                 return (
                                     <div
@@ -207,6 +214,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 );
                             })}
                         </div>
+                        )}
+                        
                     </div>
                 </div>
             </section>
