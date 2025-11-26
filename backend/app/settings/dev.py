@@ -6,9 +6,9 @@ Development settings configuration
 from app.settings.base import *
 
 # BASE CONFIGRATION
-DEBUG = env('DEBUG')
+DEBUG = True
 ALLOWED_HOSTS = ['*']
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = 'django-insecure--j7#f^zo#_&rlptdsq0ut#8)cdnocjkb=$7*=(vyc4z%5zizum'
 
 # DATABASE CONFIGRATION
 DATABASES = {
