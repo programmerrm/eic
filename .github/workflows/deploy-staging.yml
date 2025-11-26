@@ -46,7 +46,6 @@ jobs:
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
-          echo "DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
           python manage.py check
 
       - name: Migrations Check
@@ -77,15 +76,9 @@ jobs:
         run: python manage.py migrate --noinput
 
       - name: Run Temporary Backend Container
-        env:
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           docker network create web || true
-          docker compose -f docker-compose.prod.yml up -d backend
+          docker compose -f $GITHUB_WORKSPACE/docker-compose.prod.yml up -d backend
 
   ci-frontend:
     name: Frontend CI
@@ -135,10 +128,10 @@ jobs:
         run: docker network create web || true
 
       - name: Validate Compose File
-        run: docker compose -f docker-compose.prod.yml config
+        run: docker compose -f $GITHUB_WORKSPACE/docker-compose.prod.yml config
 
       - name: Build Application Images
-        run: docker compose -f docker-compose.prod.yml build
+        run: docker compose -f $GITHUB_WORKSPACE/docker-compose.prod.yml build
 
   deploy:
     name: Deploy to Production
@@ -169,5 +162,7 @@ jobs:
             docker network create web || true
             docker compose -f docker-compose.prod.yml pull || true
             docker compose -f docker-compose.prod.yml up -d --build
+
+            # Apply Django migrations inside container
             docker compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
           SSH
