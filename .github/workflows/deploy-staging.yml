@@ -2,7 +2,7 @@ name: Build & Deploy
 
 on:
   push:
-    branches: [main]   # শুধুমাত্র main branch
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -38,30 +38,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements/prod.txt
 
-      - name: Create .env.prod for production
-        run: |
-          cat <<EOF > .env.prod
-          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-          ENV=prod
-          EOF
-
       - name: Django Checks
         env:
-          ENV: prod
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-        run: python manage.py check
+        run: |
+          python manage.py check
 
       - name: Migrations Check
         env:
-          ENV: prod
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -71,7 +59,6 @@ jobs:
 
       - name: Run Tests
         env:
-          ENV: prod
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -81,7 +68,6 @@ jobs:
 
       - name: Run Migrations
         env:
-          ENV: prod
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -90,16 +76,9 @@ jobs:
         run: python manage.py migrate --noinput
 
       - name: Run Temporary Backend Container
-        env:
-          ENV: prod
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           docker network create web || true
-          docker compose -f ../docker-compose.prod.yml up -d backend
+          docker compose -f $GITHUB_WORKSPACE/docker-compose.prod.yml up -d backend
 
   ci-frontend:
     name: Frontend CI
@@ -149,10 +128,10 @@ jobs:
         run: docker network create web || true
 
       - name: Validate Compose File
-        run: docker compose -f docker-compose.prod.yml config
+        run: docker compose -f $GITHUB_WORKSPACE/docker-compose.prod.yml config
 
       - name: Build Application Images
-        run: docker compose -f docker-compose.prod.yml build
+        run: docker compose -f $GITHUB_WORKSPACE/docker-compose.prod.yml build
 
   deploy:
     name: Deploy to Production
@@ -173,6 +152,7 @@ jobs:
           ssh-keyscan -p 9000 ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'
         run: |
           ssh -p 9000 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'SSH'
             set -e
@@ -182,5 +162,7 @@ jobs:
             docker network create web || true
             docker compose -f docker-compose.prod.yml pull || true
             docker compose -f docker-compose.prod.yml up -d --build
+
+            # Apply Django migrations inside container
             docker compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
           SSH
