@@ -55,7 +55,6 @@ jobs:
 
       - name: Run Temporary Backend Container
         env:
-            NEXT_TELEMETRY_DISABLED: 1
             ENV: ${{ secrets.ENV }}
             POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
             POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
