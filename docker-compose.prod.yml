@@ -109,8 +109,6 @@ services:
 # ================= NETWORKS ======================
 networks:
   web:
-    external: true
-    name: web
+    driver: bridge
   backend:
-    external: true
-    name: backend
+    driver: bridge
