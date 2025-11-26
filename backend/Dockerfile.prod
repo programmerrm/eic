@@ -31,7 +31,7 @@ COPY requirements/prod.txt /app/backend/requirements/prod.txt
 
 # REQUIREMENTS.TXT ALL PACKENGS INSTALL
 RUN pip install --upgrade pip && \
-    pip install -r /app/backend/requirements/dev.txt
+    pip install -r /app/backend/requirements/prod.txt
 
 # ADDITIONAL PYTHON PACKAGES
 RUN pip install \
