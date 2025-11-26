@@ -156,7 +156,7 @@ class CybersecuritySolutionItemViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 class OurProvenProcessSecurityViewSet(viewsets.ModelViewSet):
-    queryset = OurProvenProcessSecurity.objects.first()
+    queryset = OurProvenProcessSecurity.objects.all()
     serializer_class = OurProvenProcessSecuritySerializer
 
     def get_permissions(self):
