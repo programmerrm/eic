@@ -23,9 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create empty env for CI
-        run: touch .env.prod
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -41,23 +38,54 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements/prod.txt
 
-      # ---------------- DB-FREE STEPS ----------------
-      - name: Django Checks (DB-Free)
-        run: python manage.py check  # শুধু config check করবে, DB connect হবে না
+      - name: Django Checks
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        run: |
+          echo "DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+          python manage.py check
 
-      - name: Migrations Check (Dry Run, DB-Free)
-        run: python manage.py makemigrations --check --dry-run || true  # DB connect ছাড়াই
+      - name: Migrations Check
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        run: python manage.py makemigrations --check --dry-run
 
-      - name: Collect Static
-        run: python manage.py collectstatic --noinput
+      - name: Run Tests
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        run: python manage.py test --noinput
 
-      # DB/Migrate related steps বাদ দেওয়া হয়েছে CI-তে
-      # ---------------- DOCKER CONTAINER ----------------
+      - name: Run Migrations
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        run: python manage.py migrate --noinput
+
       - name: Run Temporary Backend Container
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
         run: |
           docker network create web || true
           docker compose -f docker-compose.prod.yml up -d backend
-
 
   ci-frontend:
     name: Frontend CI
