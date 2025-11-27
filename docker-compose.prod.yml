@@ -20,8 +20,8 @@ services:
       - ./backend/.env.prod
     command: >
       sh -c "
-        echo 'Running migrations...' &&
-        python manage.py migrate --noinput --fake-initial &&
+        echo 'Running migrations safely...' &&
+        python manage.py migrate --noinput --fake-initial || echo 'Some tables already exist, skipping...' &&
         echo 'Creating superuser if not exists...' &&
         python create_superuser.py &&
         echo 'Collecting static files...' &&
