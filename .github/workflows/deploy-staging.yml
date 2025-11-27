@@ -197,7 +197,9 @@ jobs:
           set -e
           cd /var/apps/eic.com.bd
 
-          # Create frontend environment file
+          # ------------------------------
+          # Frontend environment file
+          # ------------------------------
           mkdir -p frontend
           cat <<EOF > frontend/.env.production
             NEXT_PUBLIC_DOMAIN_NAME=${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
@@ -205,7 +207,9 @@ jobs:
             NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}
           EOF
 
-          # Create backend environment file
+          # ------------------------------
+          # Backend environment file
+          # ------------------------------
           mkdir -p backend
           cat <<EOF > backend/.env.prod
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
@@ -216,16 +220,31 @@ jobs:
             ENV=prod
           EOF
 
+          # ------------------------------
           # Fetch latest code
+          # ------------------------------
           git fetch https://$GH_PAT@github.com/programmerrm/eic.git main
           git reset --hard FETCH_HEAD
 
-          # Docker deploy
-          docker network create web || true
-          docker-compose -f docker-compose.prod.yml pull || true
-          docker-compose -f docker-compose.prod.yml up -d --build
+          # ------------------------------
+          # Docker cleanup & deploy
+          # ------------------------------
+          echo "Stopping & removing old containers and volumes..."
+          docker-compose -f docker-compose.prod.yml down -v
 
-          # Run migrations
+          echo "Pruning unused Docker networks..."
+          docker network prune -f
+
+          echo "Recreating Docker network..."
+          docker network create web || true
+
+          echo "Pulling latest images..."
+          docker-compose -f docker-compose.prod.yml pull || true
+
+          echo "Building & running containers fresh..."
+          docker-compose -f docker-compose.prod.yml up -d --build --force-recreate
+
+          echo "Running backend migrations..."
           docker-compose -f docker-compose.prod.yml exec -T backend python manage.py migrate --noinput
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
