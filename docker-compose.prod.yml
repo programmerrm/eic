@@ -20,24 +20,15 @@ services:
       dockerfile: Dockerfile.prod
     env_file:
       - ./backend/.env.prod
-    # Docker backend command section
     command: >
       sh -c "
-        if [ -f /app/db.sqlite3 ]; then
-          echo 'Removing old SQLite DB...'
-          rm /app/db.sqlite3
-        fi &&
-        python manage.py migrate --noinput &&
+        python manage.py migrate --noinput --fake-initial &&
         python create_superuser.py &&
         python manage.py collectstatic --noinput &&
         daphne -b 0.0.0.0 -p 8000 app.asgi:application
       "
-      
-    deploy:
-      resources:
-        limits:
-          memory: 1g
     volumes:
+      - ./backend/db.sqlite3:/app/db.sqlite3 
       - ./backend/static:/app/static
       - ./backend/media:/app/media
     expose:
