@@ -20,15 +20,8 @@ services:
       dockerfile: Dockerfile.prod
     env_file:
       - ./backend/.env.prod
-    command: >
-      sh -c "
-        python manage.py migrate --noinput --fake-initial &&
-        python create_superuser.py &&
-        python manage.py collectstatic --noinput &&
-        daphne -b 0.0.0.0 -p 8000 app.asgi:application
-      "
+    command: daphne -b 0.0.0.0 -p 8000 app.asgi:application
     volumes:
-      - ./backend/db.sqlite3:/app/db.sqlite3 
       - ./backend/static:/app/static
       - ./backend/media:/app/media
     expose:
@@ -36,10 +29,6 @@ services:
     networks:
       - web
       - backend
-    deploy:
-      resources:
-        limits:
-          memory: 3g
 
   # ==================== Nginx =======================
   nginx:
