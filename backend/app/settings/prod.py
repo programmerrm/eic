@@ -7,7 +7,7 @@ from app.settings.base import *
 
 # BASE CONFIGRATION
 DEBUG = False
-ALLOWED_HOSTS = ['eic.com.bd', 'eicsec.com']
+ALLOWED_HOSTS = ['eic.com.bd', 'www.eic.com.bd', 'eicsec.com', 'www.eicsec.com']
 SECRET_KEY = 'django-insecure--j7#f^zo#_&rlptdsq0ut#8)cdnocjkb=$7*=(vyc4z%5zizum'
 
 # DATABASES = {
