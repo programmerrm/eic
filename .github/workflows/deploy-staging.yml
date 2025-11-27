@@ -197,8 +197,28 @@ jobs:
         run: |
           set -e
           cd /var/apps/eic.com.bd
+
+          mkdir -p frontend
+          cat <<EOF > frontend/.env.production
+            NEXT_PUBLIC_DOMAIN_NAME=${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
+            NEXT_PUBLIC_MEDIA_URL=${{ secrets.NEXT_PUBLIC_MEDIA_URL }}
+            NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+          EOF
+
+          mkdir -p backend
+          cat <<EOF > backend/.env.prod
+            POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+            ENV=prod
+          EOF
+
           git fetch https://$GH_PAT@github.com/programmerrm/eic.git main
           git reset --hard FETCH_HEAD
+
+          # Docker deploy
           docker network create web || true
           docker-compose -f docker-compose.prod.yml pull || true
           docker-compose -f docker-compose.prod.yml up -d --build
