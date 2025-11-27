@@ -10,17 +10,6 @@ DEBUG = False
 ALLOWED_HOSTS = ['eic.com.bd', 'www.eic.com.bd', 'eicsec.com', 'www.eicsec.com']
 SECRET_KEY = 'django-insecure--j7#f^zo#_&rlptdsq0ut#8)cdnocjkb=$7*=(vyc4z%5zizum'
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.environ.get("POSTGRES_DB"),
-#         "USER": os.environ.get("POSTGRES_USER"),
-#         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-#         "HOST": os.environ.get("POSTGRES_HOST"),
-#         "PORT": os.environ.get("POSTGRES_PORT"),
-#     }
-# }
-
 # DATABASE CONFIGRATION
 DATABASES = {
     "default": {

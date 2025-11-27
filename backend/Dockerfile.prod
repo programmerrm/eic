@@ -42,6 +42,9 @@ RUN pip install \
 # COPY APPLICATION CODE
 COPY . .
 
+# RUN COLLECTSTATIC
+RUN python manage.py collectstatic --noinput
+
 # EXPOSE PORT
 EXPOSE 8000
 

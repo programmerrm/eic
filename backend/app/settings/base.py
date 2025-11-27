@@ -17,7 +17,7 @@ BASE_DIR = Path('/app/') \
 # LOAD ENV FILE
 try:
     from dotenv import load_dotenv
-    app_env = os.environ.get('ENV', 'dev')
+    app_env = os.environ.get('ENV', 'prod')
     if app_env == 'dev':
         load_dotenv(BASE_DIR / '.env.dev')
     elif app_env == 'test':
