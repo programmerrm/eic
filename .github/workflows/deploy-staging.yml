@@ -200,10 +200,8 @@ jobs:
           git fetch https://$GH_PAT@github.com/programmerrm/eic.git main
           git reset --hard FETCH_HEAD
           docker network create web || true
-          docker compose -f docker-compose.prod.yml pull || true
-          docker compose -f docker-compose.prod.yml up -d --build
-          docker compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
+          docker-compose -f docker-compose.prod.yml pull || true
+          docker-compose -f docker-compose.prod.yml up -d --build
+          docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-
-
