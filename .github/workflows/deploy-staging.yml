@@ -42,6 +42,7 @@ jobs:
       - name: Create .env.prod for production
         run: |
           cat <<EOF > .env.prod
+            ENV=${{ secrets.ENV }}
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
@@ -50,12 +51,11 @@ jobs:
             DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
             DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
             DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-          ENV=prod
           EOF
 
       - name: Django Checks
         env:
-          ENV: prod
+          ENV: ${{ secrets.ENV }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -68,7 +68,7 @@ jobs:
 
       - name: Migrations Check
         env:
-          ENV: prod
+          ENV: ${{ secrets.ENV }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
@@ -179,6 +179,7 @@ jobs:
         run: |
           mkdir -p backend
           cat <<EOF > backend/.env.prod
+            ENV=${{ secrets.ENV }}
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
@@ -187,7 +188,6 @@ jobs:
             DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
             DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
             DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-          ENV=prod
           EOF
 
       - name: Create Frontend .env.production
@@ -232,6 +232,7 @@ jobs:
 
           mkdir -p backend
           cat <<EOF > backend/.env.prod
+            ENV=${{ secrets.ENV }}
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
@@ -240,7 +241,6 @@ jobs:
             DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }}
             DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }}
             DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-            ENV=prod
           EOF
 
           git fetch https://$GH_PAT@github.com/programmerrm/eic.git main
