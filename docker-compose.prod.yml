@@ -1,70 +1,3 @@
-# version: "3.9"
-
-# services:
-#   # ==================== Frontend =====================
-#   frontend:
-#     build:
-#       context: ./frontend
-#       dockerfile: Dockerfile.prod
-#     env_file:
-#       - ./frontend/.env.production
-#     expose:
-#       - "3000"
-#     networks:
-#       - web
-
-#   # =================== Backend =======================
-#   backend:
-#     build:
-#       context: ./backend
-#       dockerfile: Dockerfile.prod
-#     env_file:
-#       - ./backend/.env.prod
-#     command: >
-#       sh -c "
-#         echo 'Running migrations safely...' &&
-#         python manage.py migrate --noinput --fake-initial || echo 'Some tables already exist, skipping...' &&
-#         echo 'Creating superuser if not exists...' &&
-#         python create_superuser.py || echo 'Superuser exists' &&
-#         echo 'Collecting static files...' &&
-#         python manage.py collectstatic --noinput &&
-#         echo 'Starting Daphne server...' &&
-#         daphne -b 0.0.0.0 -p 8000 app.asgi:application
-#       "
-#     volumes:
-#       - ./backend/static:/app/static
-#       - ./backend/media:/app/media
-#     expose:
-#       - "8000"
-#     networks:
-#       - web
-#       - backend
-
-#   # ==================== Nginx =======================
-#   nginx:
-#     image: nginx:1.27-alpine
-#     restart: unless-stopped
-#     ports:
-#       - "80:80"
-#       - "443:443"
-#     networks:
-#       - web
-#     volumes:
-#       - ./nginx/assets.conf:/etc/nginx/conf.d/default.conf:ro
-#       - ./backend/static:/usr/share/nginx/html/static:ro
-#       - ./backend/media:/usr/share/nginx/html/media:ro
-#       - /etc/ssl/eic.com.bd:/etc/ssl/eic.com.bd:ro
-#       - /etc/ssl/eicsec.com:/etc/ssl/eicsec.com:ro
-#       - /etc/letsencrypt:/etc/letsencrypt:ro
-
-# # ================= NETWORKS ======================
-# networks:
-#   web:
-#     driver: bridge
-#   backend:
-#     driver: bridge
-
-
 version: "3.9"
 
 services:
@@ -89,13 +22,7 @@ services:
       - ./backend/.env.prod
     command: >
       sh -c "
-        echo 'Running migrations safely...' &&
-        python manage.py migrate --noinput --fake-initial || echo 'Some tables already exist, skipping...' &&
-        echo 'Creating superuser if not exists...' &&
-        python create_superuser.py || echo 'Superuser exists' &&
-        echo 'Collecting static files...' &&
-        python manage.py collectstatic --noinput &&
-        echo 'Starting Daphne server...' &&
+        python create_superuser.py &&
         daphne -b 0.0.0.0 -p 8000 app.asgi:application
       "
     volumes:
