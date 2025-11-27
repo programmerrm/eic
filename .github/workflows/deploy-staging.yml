@@ -192,6 +192,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Stop Nginx to free ports
+        run: |
+          sudo systemctl stop nginx || true
+
       - name: Deploy to Production
         run: |
           set -e
