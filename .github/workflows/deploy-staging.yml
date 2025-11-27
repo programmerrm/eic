@@ -197,9 +197,6 @@ jobs:
           set -e
           cd /var/apps/eic.com.bd
 
-          # ------------------------------
-          # Frontend environment file
-          # ------------------------------
           mkdir -p frontend
           cat <<EOF > frontend/.env.production
             NEXT_PUBLIC_DOMAIN_NAME=${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
@@ -207,9 +204,6 @@ jobs:
             NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}
           EOF
 
-          # ------------------------------
-          # Backend environment file
-          # ------------------------------
           mkdir -p backend
           cat <<EOF > backend/.env.prod
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
@@ -220,15 +214,9 @@ jobs:
             ENV=prod
           EOF
 
-          # ------------------------------
-          # Fetch latest code
-          # ------------------------------
           git fetch https://$GH_PAT@github.com/programmerrm/eic.git main
           git reset --hard FETCH_HEAD
 
-          # ------------------------------
-          # Docker cleanup & deploy
-          # ------------------------------
           echo "Stopping & removing old containers and volumes..."
           docker-compose -f docker-compose.prod.yml down -v
 
