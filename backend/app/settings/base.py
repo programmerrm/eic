@@ -14,21 +14,6 @@ BASE_DIR = Path('/app/') \
     if '/opt/' in str(Path(__file__).resolve()) \
     else Path(__file__).resolve().parent.parent.parent
 
-# LOAD ENV FILE
-try:
-    from dotenv import load_dotenv
-    app_env = os.environ.get('ENV', 'prod')
-    if app_env == 'dev':
-        load_dotenv(BASE_DIR / '.env.dev')
-    elif app_env == 'test':
-        load_dotenv(BASE_DIR, '.env.test')
-    elif app_env == 'prod':
-        load_dotenv(BASE_DIR, '.env.prod')
-    else:
-        raise Exception('Unknown ENV value')
-except:
-    print('Cannot load dotenv variables. Is python-dotenv package installed?')
-
 # LOAD ENVIRON
 env = environ.Env()
 
