@@ -7,34 +7,9 @@ services:
     env_file:
       - ./frontend/.env.production
     expose:
-      - "3000"  # internal port
+      - "3000"
     networks:
       - web
-    labels:
-      # Enable Traefik routing
-      - "traefik.enable=true"
-
-      # Middleware → HTTP → HTTPS redirect
-      - "traefik.http.middlewares.eic-https.redirectscheme.scheme=https"
-
-      # HTTP router → redirect all traffic to HTTPS
-      - "traefik.http.routers.eic-frontend-web.rule=Host(`eic.com.bd`) || Host(`www.eic.com.bd`)"
-      - "traefik.http.routers.eic-frontend-web.entrypoints=web"
-      - "traefik.http.routers.eic-frontend-web.middlewares=eic-https"
-      - "traefik.http.routers.eic-frontend-web.priority=10"
-
-      # HTTPS router → actual frontend
-      - "traefik.http.routers.eic-frontend-secure.rule=Host(`eic.com.bd`) || Host(`www.eic.com.bd`)"
-      - "traefik.http.routers.eic-frontend-secure.entrypoints=websecure"
-      - "traefik.http.routers.eic-frontend-secure.tls.certresolver=le"
-      - "traefik.http.routers.eic-frontend-secure.priority=10"
-      - "traefik.http.routers.eic-frontend-secure.service=eic-frontend-svc"
-
-      # Service definition → internal Next.js port
-      - "traefik.http.services.eic-frontend-svc.loadbalancer.server.port=3000"
-
-      # Traefik network
-      - "traefik.docker.network=web"
 
   # =================== Backend =======================
   backend:
@@ -52,30 +27,6 @@ services:
     networks:
       - web
       - backend
-    labels:
-      - "traefik.enable=true"
-
-      # Middleware → HTTP → HTTPS redirect
-      - "traefik.http.middlewares.eic-backend-https.redirectscheme.scheme=https"
-
-      # HTTP router → redirect HTTP → HTTPS
-      - "traefik.http.routers.eic-backend-web.rule=(Host(`eicsec.com`) || Host(`www.eicsec.com`))"
-      - "traefik.http.routers.eic-backend-web.entrypoints=web"
-      - "traefik.http.routers.eic-backend-web.middlewares=eic-backend-https"
-      - "traefik.http.routers.eic-backend-web.priority=10"
-
-      # HTTPS router → actual backend + static/media
-      - "traefik.http.routers.eic-backend-secure.rule=(Host(`eicsec.com`) || Host(`www.eicsec.com`))"
-      - "traefik.http.routers.eic-backend-secure.entrypoints=websecure"
-      - "traefik.http.routers.eic-backend-secure.tls.certresolver=le"
-      - "traefik.http.routers.eic-backend-secure.priority=10"
-      - "traefik.http.routers.eic-backend-secure.service=eic-backend-svc"
-
-      # Service → Django container internal port
-      - "traefik.http.services.eic-backend-svc.loadbalancer.server.port=8000"
-
-      # Traefik network
-      - "traefik.docker.network=web"
 
   # ===================== NGINX =======================
   nginx:
@@ -85,26 +36,13 @@ services:
       - ./nginx/assets.conf:/etc/nginx/conf.d/default.conf:ro
       - ./backend/static:/usr/share/nginx/html/static:ro
       - ./backend/media:/usr/share/nginx/html/media:ro
-    expose:
-      - "80"
+      - /etc/letsencrypt:/etc/letsencrypt:ro   # SSL certificates
     networks:
       - web
-    labels:
-      - "traefik.enable=true"
-      # Middleware HTTP → HTTPS
-      - "traefik.http.middlewares.eic-nginx-https.redirectscheme.scheme=https"
-      # Router for static/media over HTTP
-      - "traefik.http.routers.eic-nginx-web.rule=(Host(`eicsec.com`) || Host(`www.eicsec.com`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
-      - "traefik.http.routers.eic-nginx-web.entrypoints=web"
-      - "traefik.http.routers.eic-nginx-web.middlewares=eic-nginx-https"
-      - "traefik.http.routers.eic-nginx-web.priority=100"
-      # Router for static/media over HTTPS
-      - "traefik.http.routers.eic-nginx-secure.rule=(Host(`eicsec.com`) || Host(`www.eicsec.com`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
-      - "traefik.http.routers.eic-nginx-secure.entrypoints=websecure"
-      - "traefik.http.routers.eic-nginx-secure.tls.certresolver=le"
-      - "traefik.http.routers.eic-nginx-secure.priority=100"
-      - "traefik.http.routers.eic-nginx-secure.service=eic-nginx-svc"
-      - "traefik.http.services.eic-nginx-svc.loadbalancer.server.port=80"
+      - backend
+    ports:
+      - "80:80"
+      - "443:443" 
 
 # ================= NETWORKS ======================
 networks:

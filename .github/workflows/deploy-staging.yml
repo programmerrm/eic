@@ -2,7 +2,7 @@ name: Build & Deploy
 
 on:
   push:
-    branches: [main]   # শুধুমাত্র main branch
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -156,7 +156,6 @@ jobs:
       - name: Create Traefik Network
         run: docker network create web || true
 
-      # Create backend .env.prod for docker-compose
       - name: Create Backend .env.prod
         run: |
           mkdir -p backend
@@ -169,7 +168,6 @@ jobs:
           ENV=prod
           EOF
 
-      # Create frontend .env.production for docker-compose
       - name: Create Frontend .env.production
         run: |
           mkdir -p frontend
@@ -231,4 +229,3 @@ jobs:
           docker-compose -f docker-compose.prod.yml exec -T backend python manage.py migrate --noinput
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-
