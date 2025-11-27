@@ -39,7 +39,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2g
+          memory: 1g
 
   # ==================== Nginx =======================
   nginx:
