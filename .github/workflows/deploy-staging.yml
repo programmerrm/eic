@@ -191,13 +191,15 @@ jobs:
     needs: build-docker
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Deploy to Production
         run: |
           set -e
           cd /var/apps/eic.com.bd
 
+          # Create frontend environment file
           mkdir -p frontend
           cat <<EOF > frontend/.env.production
             NEXT_PUBLIC_DOMAIN_NAME=${{ secrets.NEXT_PUBLIC_DOMAIN_NAME }}
@@ -205,6 +207,7 @@ jobs:
             NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}
           EOF
 
+          # Create backend environment file
           mkdir -p backend
           cat <<EOF > backend/.env.prod
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
@@ -215,6 +218,7 @@ jobs:
             ENV=prod
           EOF
 
+          # Fetch latest code
           git fetch https://$GH_PAT@github.com/programmerrm/eic.git main
           git reset --hard FETCH_HEAD
 
@@ -222,6 +226,9 @@ jobs:
           docker network create web || true
           docker-compose -f docker-compose.prod.yml pull || true
           docker-compose -f docker-compose.prod.yml up -d --build
-          docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
+
+          # Run migrations
+          docker-compose -f docker-compose.prod.yml exec -T backend python manage.py migrate --noinput
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
+
