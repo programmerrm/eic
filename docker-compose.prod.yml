@@ -27,6 +27,7 @@ services:
       "
 
     volumes:
+      - ./backend/db.sqlite3:/app/db.sqlite3
       - ./backend/static:/app/static
       - ./backend/media:/app/media
     expose:
