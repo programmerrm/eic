@@ -47,4 +47,3 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.eicsec.com",
     "http://localhost:3000",
 ]
-

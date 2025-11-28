@@ -36,8 +36,8 @@ export default function Header() {
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 
-            ${isScrolled ? "bg-white shadow-md py-3 sm:py-6" : "bg-transparent py-7 md:py-[54px]"}`}
+            className={`home-page fixed top-0 left-0 right-0 z-50 transition-all duration-500 
+            ${isScrolled ? "bg-white! shadow-md py-3 sm:py-6" : "py-7 md:py-[54px]"}`}
         >
             <div className="container">
                 <div className="flex items-center justify-between gap-2">
