@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function StayCompliant() {
-    const stayCompliantData = await getFetchData('/configuration/stay-compliant/');
+    const stayCompliantData = await getFetchData('/configuration/stay-compliant/', {
+        tag: "stay-compliant-data",
+    });
     const data = stayCompliantData[0];
-    console.log('image url -- ', data);
     return (
         <>
             {data && (
