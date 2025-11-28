@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export const dynamic = 'force-dynamic';
 import { DOMAIN_NAME, MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
@@ -8,6 +9,7 @@ import footerBgImg from "../../public/images/footer-bg.png";
 import phoneImage from "../../public/images/footer-phone.svg";
 import SubscribeForm from "../forms/subscribeForm";
 import Logo from "../../public/images/eic-logo.svg";
+
 
 export default async function Footer() {
     const logo = await getFetchData('/configuration/logo/');
