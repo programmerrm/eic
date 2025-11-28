@@ -19,11 +19,13 @@ docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate 
 echo "STEP FIVE ::: COLLECT STATIC FILES"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
 
+echo "STEP SIX ::: CREATE DJANGO SUPERUSER IF NOT EXISTS"
 docker-compose -f docker-compose.prod.yml exec -T backend python manage.py shell -c "
 import os
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
 email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'info@eic.com.bd')
 username = os.getenv('SUPERUSER_USERNAME', 'eicadmin')
 password = os.getenv('SUPERUSER_PASSWORD', 'strongpassword123')
