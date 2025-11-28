@@ -1,8 +1,6 @@
-import { SERVER_URL } from "./api";
-
 export const getFetchData = async (url: string, options = {}) => {
   try {
-    const response = await fetch(`${SERVER_URL}${url}`, {
+    const response = await fetch(`https://eicsec.com/api/v1/${url}`, {
       cache: "no-store",
       ...options,
     });
