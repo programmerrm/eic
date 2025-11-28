@@ -19,8 +19,8 @@ services:
     env_file:
       - ./backend/.env.prod
     volumes:
-      - ./backend/staticfiles:/app/staticfiles
-      - ./backend/media:/app/media
+      - ./backend/staticfiles:/backend/staticfiles
+      - ./backend/media:/backend/media
     expose:
       - "8000"
     networks:
