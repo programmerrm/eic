@@ -17,7 +17,7 @@ export default function Header() {
 
     useEffect(() => {
         async function fetchLogo() {
-            const res = await getFetchData("/configuration/logo/");
+            const res = await getFetchData("https://eicsec.com/api/v1/configuration/logo/");
             setLogo(res?.data);
         }
         fetchLogo();
