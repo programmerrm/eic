@@ -26,16 +26,16 @@ export default async function SecurityFirm() {
                             </div>
                         )}
                     </div>
+
                     <div className="w-full lg:max-w-[calc(100%-52.058%)] mb-16 relative mt-4 sm:mt-0">
-                        <div className="absolute w-[250px] mx-auto sm:w-full lg:max-w-[362px] xl:max-w-[462px] 2xl:max-w-[562px] h-[250px] sm:h-full lg:max-h-[362px] xl:max-h-[462px] 2xl:max-h-[562px] inset-0 bg-contain bg-top bg-no-repeat bg-rotate overflow-hidden rounded-full"
+                        <div
+                            className="absolute w-[250px] mx-auto sm:w-full lg:max-w-[362px] xl:max-w-[462px] 2xl:max-w-[562px] h-[250px] sm:h-full lg:max-h-[362px] xl:max-h-[462px] 2xl:max-h-[562px] inset-0 bg-contain bg-top bg-no-repeat bg-rotate overflow-hidden rounded-full"
                             style={{
                                 backgroundImage: `url(${bgImage})`,
-                                backgroundPosition: "center",
-                                backgroundSize: "contain",
-                            }}>
-                            <div>
-                                <div className="pt-10 lg:pt-[152px] pl-16 lg:pl-40">
-                                    <div className=" text-body">
+                            }}></div>
+                        <div className="content">
+                            <div className="pt-10 lg:pt-[70px] xl:pt-[152px] pl-16 lg:pl-20 xl:pl-40">
+                                <div className=" text-body">
                                         <h3>{security_firm_data?.data?.mission_title}</h3>
                                         <p className="mt-3.5">{security_firm_data?.data?.mission_description}</p>
                                     </div>
@@ -62,11 +62,11 @@ export default async function SecurityFirm() {
                                             </svg>
                                         </Link>
                                     </div>
-                                </div>
                             </div>
-
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <div className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
