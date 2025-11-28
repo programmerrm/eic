@@ -13,7 +13,9 @@ export default function Services() {
 
     useEffect(() => {
         const fetchInitialData = async () => {
-            const data = await getFetchData("/services/list-items/");
+            const data = await getFetchData("/services/list-items/", {
+                tag: "services-items",
+            });
             setServices(data?.results?.data || []);
             setNextUrl(data?.next || null);
         };

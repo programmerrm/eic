@@ -5,8 +5,12 @@ import Link from "next/link";
 import ComplianceBg from "../../public/images/compliance-bg.svg";
 
 export default async function Compliance() {
-    const complianceTitleData = await getFetchData('/configuration/compliance-title/');
-    const complianceItemData = await getFetchData('/configuration/compliance-item/');
+    const complianceTitleData = await getFetchData('/configuration/compliance-title/', {
+        tag: "compliance-title-data",
+    });
+    const complianceItemData = await getFetchData('/configuration/compliance-item/', {
+        tag: "compliance-item-data",
+    });
     return (
         <section className="py-12 md:py-[100px] bg-contain bg-bottom-right bg-no-repeat"
             style={{

@@ -25,7 +25,7 @@ export default async function SecurityFirm() {
                             </div>
                         )}
                     </div>
-                    <div className="w-full md:max-w-[calc(100%-52.058%)] bg-contain bg-no-repeat mb-16"
+                    <div className="bg-rotate w-full md:max-w-[calc(100%-52.058%)] bg-contain bg-no-repeat mb-16"
                         style={{
                             backgroundImage: `url(${bgImage})`,
                             backgroundPosition: "center",

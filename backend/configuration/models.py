@@ -139,11 +139,6 @@ class StayCompliant(models.Model):
         verbose_name = _('Stay-Compliant')
         verbose_name_plural = _('Stay-Compliant')
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        StayCompliant.objects.exclude(id=self.id).delete()
-
     def __str__(self):
         return self.title[:50]
 
