@@ -25,7 +25,7 @@ services:
       - ./backend:/app/backend
       - ./backend/staticfiles:/app/staticfiles
       - ./backend/media:/app/media
-      - db_data:/app/db.sqlite3       # <-- Docker managed volume
+      - ./backend/data/db.sqlite3:/app/db.sqlite3   # <-- persistent old DB
     expose:
       - "8000"
     networks:
@@ -55,7 +55,3 @@ networks:
     driver: bridge
   backend:
     driver: bridge
-
-# ================= VOLUMES =======================
-volumes:
-  db_data:
