@@ -26,4 +26,3 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.eicsec.com',
 ]
 
-# PROD FILE RM
