@@ -1,3 +1,7 @@
+/* eslint-disable @next/next/no-async-client-component */
+"use client";
+
+
 import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
