@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MEDIA_URL } from "@/utils/api";
+import { DOMAIN_NAME, MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,6 +27,8 @@ export default async function Footer() {
         : Array.isArray(services)
             ? services
             : [];
+
+    console.log('DOMAIN NAME', DOMAIN_NAME);
 
     return (
         <footer className="bg-body py-[30px] md:py-[60px]">
