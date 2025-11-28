@@ -20,9 +20,9 @@ services:
       - ./backend/.env.prod
     command: daphne -b 0.0.0.0 -p 8000 app.asgi:application
     volumes:
-      - ./backend/media:/app/staticfiles
-      - ./backend/static:/app/static
       - ./backend/media:/app/media
+      - ./backend/static:/app/static       # optional extra static
+      - ./backend/staticfiles:/app/staticfiles  # collectstatic output
     expose:
       - "8000"
     networks:
