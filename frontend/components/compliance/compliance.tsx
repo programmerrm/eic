@@ -19,8 +19,7 @@ export default async function Compliance() {
             <div className="container">
                 {complianceTitleData && (
                     <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-20 gap-5">
-                        <h2 className="sm:max-w-[636px] w-full">{complianceTitleData[0]?.title_before_span} <span className="text-[#2E78AC]">{complianceTitleData[0]?.title_span}</span>
-                            {complianceTitleData[0]?.title_after_span}</h2>
+                        <h2 className="sm:max-w-[636px] w-full">{complianceTitleData[0]?.title_before_span} <span className="text-[#2E78AC]">{complianceTitleData[0]?.title_span}</span> {complianceTitleData[0]?.title_after_span}</h2>
                         <div className="flex items-center justify-center sm:justify-end">
                             <Link href={complianceTitleData[0]?.btn_url || ""} className="btn-primary group">{complianceTitleData[0]?.btn_name}
                                 <svg
