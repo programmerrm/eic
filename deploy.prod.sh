@@ -20,7 +20,7 @@ echo "STEP FIVE ::: COLLECT STATIC FILES"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
 
 echo "STEP SIX ::: CREATE SUPERUSER"
-docker-compose -f docker-compose.prod.yml exec backend python << EOF
+docker-compose -f docker-compose.prod.yml exec -T backend python << EOF
 import os
 from django.contrib.auth import get_user_model
 User = get_user_model()
