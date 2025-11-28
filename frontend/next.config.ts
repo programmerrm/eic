@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "eicsec.com",
         pathname: "/media/**",
       },
+      {
+        protocol: "https",
+        hostname: "eic.com.bd",
+        pathname: "/media/**",
+      },
     ],
   },
 };
