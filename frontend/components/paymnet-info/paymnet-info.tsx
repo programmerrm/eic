@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function PaymentInfo() {
-    const paymnetInfo = await getFetchData('https://eicsec.com/api/v1/homepage/paymnet-info/');
+    const paymnetInfo = await getFetchData('/homepage/paymnet-info/');
     return (
         <>
             {paymnetInfo?.data && (

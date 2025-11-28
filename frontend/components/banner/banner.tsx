@@ -6,7 +6,7 @@ import BannerImg from "../../public/images/hero-banner.svg"
 import PaymentInfo from "../paymnet-info/paymnet-info";
 
 export default async function Banner() {
-    const banner = await getFetchData('https://eicsec.com/api/v1/homepage/banner/');
+    const banner = await getFetchData('/homepage/banner/');
     return (
         <>
             <section className="relative pb-11 w-full mx-auto overflow-hidden bg-contain bg-top bg-no-repeat"

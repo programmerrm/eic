@@ -11,18 +11,18 @@ import Logo from "../../public/images/eic-logo.svg";
 
 
 export default async function Footer() {
-    const logo = await getFetchData('https://eicsec.com/api/v1/configuration/logo/');
-    const copyRight = await getFetchData('https://eicsec.com/api/v1/configuration/copy-right/');
-    const infomation = await getFetchData('https://eicsec.com/api/v1/contact/infomation/');
+    const logo = await getFetchData('/configuration/logo/');
+    const copyRight = await getFetchData('/configuration/copy-right/');
+    const infomation = await getFetchData('/contact/infomation/');
 
-    const socialLinkRes = await getFetchData('https://eicsec.com/api/v1/configuration/social-link/');
+    const socialLinkRes = await getFetchData('/configuration/social-link/');
     const socialLink = Array.isArray(socialLinkRes?.data)
         ? socialLinkRes.data
         : Array.isArray(socialLinkRes)
             ? socialLinkRes
             : [];
 
-    const services = await getFetchData('https://eicsec.com/api/v1/services/list-items/');
+    const services = await getFetchData('/services/list-items/');
     const servicesList = Array.isArray(services?.results?.data)
         ? services.results.data
         : Array.isArray(services)

@@ -1,6 +1,8 @@
+import { SERVER_URL } from "./api";
+
 export const getFetchData = async (url: string, options = {}) => {
   try {
-    const response = await fetch(`${url}`, {
+    const response = await fetch(`${SERVER_URL}${url}`, {
       cache: "no-store",
       ...options,
     });

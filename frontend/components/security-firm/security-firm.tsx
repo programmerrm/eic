@@ -17,7 +17,9 @@ export default async function SecurityFirm() {
                         </h2>
                         {security_firm_data?.data?.main_img && (
                             <div>
-                                <Image src={`${MEDIA_URL}${security_firm_data?.data?.main_img}`} alt="security" width={375} height={235} />
+                                {security_firm_data?.data?.main_img && (
+                                    <Image src={`${MEDIA_URL}${security_firm_data?.data?.main_img}`} alt="security" width={375} height={235} />
+                                )}
                             </div>
                         )}
                     </div>
@@ -69,12 +71,14 @@ export default async function SecurityFirm() {
                         />
                         {security_firm_data?.data?.sub_img && (
                             <div className="w-full max-w-[605px]">
-                                <Image
-                                    src={`${MEDIA_URL}${security_firm_data?.data?.sub_img}`}
-                                    alt="security"
-                                    width={605}
-                                    height={400}
-                                />
+                                {security_firm_data?.data?.sub_img && (
+                                    <Image
+                                        src={`${MEDIA_URL}${security_firm_data?.data?.sub_img}`}
+                                        alt="security"
+                                        width={605}
+                                        height={400}
+                                    />
+                                )}
                             </div>
                         )}
                     </div>
