@@ -7,6 +7,7 @@ import PaymentInfo from "../paymnet-info/paymnet-info";
 
 export default async function Banner() {
     const banner = await getFetchData('/homepage/banner/');
+    console.log('banner -- ', banner?.data?.secure_business_btn_name);
     return (
         <>
             <section className="relative pb-11 w-full mx-auto overflow-hidden bg-contain bg-top bg-no-repeat"
@@ -24,8 +25,8 @@ export default async function Banner() {
                                 <p className="w-full max-w-[606px] text-base sm:text-xl md:text-2xl md:leading-8 font-normal text-[#245E86] font-spacegrotesk my-4 sm:my-8">{banner?.data?.description}</p>
                             )}
                             <div className="flex flex-col sm:flex-row items-center gap-2">
-                                {banner?.data?.secure_business_name && (
-                                    <Link href={banner?.data?.secure_business_url || ""} className="w-fit btn-primary group">{banner?.data?.secure_business_name}
+                                {banner?.data?.secure_business_btn_name && (
+                                    <Link href={banner?.data?.secure_business_btn_url || ""} className="w-fit btn-primary group">{banner?.data?.secure_business_btn_name}
                                         <svg
                                             className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -42,8 +43,8 @@ export default async function Banner() {
                                         </svg>
                                     </Link>
                                 )}
-                                {banner?.data?.company_profile_name && (
-                                    <Link href={banner?.data?.company_profile_url || ""} className="w-fit btn-secondary group">{banner?.data?.company_profile_name}
+                                {banner?.data?.company_profile_btn_name && (
+                                    <Link href={banner?.data?.company_profile_btn_url || ""} className="w-fit btn-secondary group">{banner?.data?.company_profile_btn_name}
                                         <svg
                                             className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -63,12 +64,14 @@ export default async function Banner() {
                             </div>
                         </div>
                         <div className="w-full lg:max-w-[52.132%] order-1 lg:order-2 lg:mt-16">
-                            <Image
-                                src={`${MEDIA_URL}${banner?.data?.image}`}
-                                alt="hero-banner-image"
-                                width={710}
-                                height={640}
-                            />
+                            {banner?.data?.image && (
+                                <Image
+                                    src={`${MEDIA_URL}${banner?.data?.image}`}
+                                    alt="hero-banner-image"
+                                    width={710}
+                                    height={640}
+                                />
+                            )}
                         </div>
                     </div>
                     <PaymentInfo />

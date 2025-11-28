@@ -6,39 +6,45 @@ import Link from "next/link";
 export default async function PaymentInfo() {
     const paymnetInfo = await getFetchData('/homepage/paymnet-info/');
     return (
-        <section className="relative z-10 pb-5 md:pb-10 mx-auto">
-            <div className="container">
-                <div className="flex flex-col lg:flex-row  gap-5 justify-between">
-                    <div className="w-full lg:max-w-[37.720%] pr-9 lg:mt-8 xl:mt-16 2xl:mt-28 order-2 lg:order-1">
-                        <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
-                            <span className="text-blue">{paymnetInfo?.data?.title_span}</span> {paymnetInfo?.data?.title_after_span}</h2>
-                        <p className=" text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[555px]">{paymnetInfo?.data?.description}</p>
-                        <div className="btn-wrap">
-                            <Link href={paymnetInfo?.data?.btn_url || ""} className="btn-primary group inline-flex">Get Started
-                                <svg
-                                    className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={1.5}
-                                        d="M6 18 18 6m0 0H9m9 0v9"
-                                    />
-                                </svg>
-                            </Link>
+        <>
+            {paymnetInfo?.data && (
+                <section className="relative z-10 pb-5 md:pb-10 mx-auto">
+                    <div className="container">
+                        <div className="flex flex-col lg:flex-row  gap-5 justify-between">
+                            <div className="w-full lg:max-w-[37.720%] pr-9 lg:mt-8 xl:mt-16 2xl:mt-28 order-2 lg:order-1">
+                                <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
+                                    <span className="text-blue">{paymnetInfo?.data?.title_span}</span> {paymnetInfo?.data?.title_after_span}</h2>
+                                <p className=" text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[555px]">{paymnetInfo?.data?.description}</p>
+                                <div className="btn-wrap">
+                                    <Link href={paymnetInfo?.data?.btn_url || ""} className="btn-primary group inline-flex">Get Started
+                                        <svg
+                                            className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={1.5}
+                                                d="M6 18 18 6m0 0H9m9 0v9"
+                                            />
+                                        </svg>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end order-1 lg:order-2">
+                                <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end">
+                                    {paymnetInfo?.data?.image && (
+                                        <Image src={`${MEDIA_URL}${paymnetInfo?.data?.image}`} alt="payment-logo" width={770} height={410} />
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end order-1 lg:order-2">
-                        <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end">
-                            <Image src={`${MEDIA_URL}${paymnetInfo?.data?.image}`} alt="payment-logo" width={770} height={410} />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section >
+                </section >
+            )}
+        </>
     );
 }
