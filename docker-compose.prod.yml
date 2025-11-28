@@ -101,7 +101,6 @@ services:
       - /etc/ssl/eicsec.com:/etc/ssl/eicsec.com:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
 
-# ================= NETWORKS ======================
 networks:
   web:
     driver: bridge
