@@ -15,6 +15,12 @@ BASE_DIR = Path('/app/') \
     else Path(__file__).resolve().parent.parent.parent
 
 # LOAD ENVIRON
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env.prod')
+except Exception as e:
+    print(f'Cannot load dotenv variables. Error: {str(e)}')
+
 env = environ.Env()
 
 # INSTALLED APPS
