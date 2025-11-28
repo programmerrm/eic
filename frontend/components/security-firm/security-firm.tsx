@@ -5,7 +5,9 @@ import Link from "next/link";
 import Progressbar from "../progressbar/progressbar";
 
 export default async function SecurityFirm() {
-    const security_firm_data = await getFetchData('/homepage/security-firm/');
+    const security_firm_data = await getFetchData('/homepage/security-firm/' , {
+        tag: "security-firm-data",
+    });
     const bgImage = security_firm_data?.data?.bg ? `${MEDIA_URL}${security_firm_data.data.bg}` : null;
     return (
         <section className="bg-[#EBF3F8] py-12 md:py-[100px]">

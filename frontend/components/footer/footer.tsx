@@ -9,20 +9,29 @@ import phoneImage from "../../public/images/footer-phone.svg";
 import SubscribeForm from "../forms/subscribeForm";
 import Logo from "../../public/images/eic-logo.svg";
 
-
 export default async function Footer() {
-    const logo = await getFetchData('/configuration/logo/');
-    const copyRight = await getFetchData('/configuration/copy-right/');
-    const infomation = await getFetchData('/contact/infomation/');
+    const logo = await getFetchData('/configuration/logo/', {
+        tag: "logo-data",
+    });
+    const copyRight = await getFetchData('/configuration/copy-right/', {
+        tag: "copy-right-data",
+    });
+    const infomation = await getFetchData('/contact/infomation/', {
+        tag: "contact-data",
+    });
 
-    const socialLinkRes = await getFetchData('/configuration/social-link/');
+    const socialLinkRes = await getFetchData('/configuration/social-link/', {
+        tag: "social-link-data",
+    });
     const socialLink = Array.isArray(socialLinkRes?.data)
         ? socialLinkRes.data
         : Array.isArray(socialLinkRes)
             ? socialLinkRes
             : [];
 
-    const services = await getFetchData('/services/list-items/');
+    const services = await getFetchData('/services/list-items/', {
+        tag: "services-data",
+    });
     const servicesList = Array.isArray(services?.results?.data)
         ? services.results.data
         : Array.isArray(services)

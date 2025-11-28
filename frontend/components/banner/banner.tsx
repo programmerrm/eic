@@ -2,14 +2,16 @@ import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
-import BannerImg from "../../public/images/hero-banner.svg"
+import BannerImg from "../../public/images/hero-banner.svg";
 import PaymentInfo from "../paymnet-info/paymnet-info";
 
 export default async function Banner() {
-    const banner = await getFetchData('/homepage/banner/');
+    const banner = await getFetchData('/homepage/banner/', {
+        tag: "banner-data",
+    });
     return (
         <>
-            <section className="relative pb-11 w-full mx-auto overflow-hidden bg-contain bg-top bg-no-repeat"
+            <section className="relative pb-11 w-full mx-auto overflow-hidden bg-cover bg-top bg-no-repeat"
                 style={{
                     backgroundImage: `url(${BannerImg.src})`,
                 }}

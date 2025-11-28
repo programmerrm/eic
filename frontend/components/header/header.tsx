@@ -64,7 +64,7 @@ export default function Header() {
                         lg:w-auto lg:static flex items-center flex-col justify-between 
                         lg:block py-10 lg:py-0 transition-all duration-500 ease-in-out overflow-y-auto`}
                     >
-                        <ul className="header-nav flex flex-col lg:flex-row items-center justify-center flex-wrap xl:gap-6">
+                        <ul className="header-nav flex flex-col lg:flex-row items-center justify-center flex-wrap xl:gap-4">
                             <li>
                                 <Link href="/" className={isActive("/")} onClick={handleLinkClick}>Home</Link>
                             </li>

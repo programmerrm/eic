@@ -69,6 +69,7 @@ export default function Progressbar({ security, ability, solving }: any) {
                         </div>
                     </div>
                 </div>
+                
                 <div className="absolute -right-10 xl:right-0 top-0 bottom-0 flex flex-col justify-between text-white text-sm py-5 lg:py-8">
                     <span>{security}%</span>
                     <span>{ability}%</span>
