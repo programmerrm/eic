@@ -1,13 +1,10 @@
-/* eslint-disable @next/next/no-async-client-component */
-"use client";
-
 import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function PaymentInfo() {
-    const paymnetInfo = await getFetchData('/homepage/paymnet-info/');
+    const paymnetInfo = await getFetchData('https://eicsec.com/api/v1/homepage/paymnet-info/');
     return (
         <>
             {paymnetInfo?.data && (

@@ -1,7 +1,3 @@
-/* eslint-disable @next/next/no-async-client-component */
-"use client";
-
-
 import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
@@ -10,8 +6,7 @@ import BannerImg from "../../public/images/hero-banner.svg"
 import PaymentInfo from "../paymnet-info/paymnet-info";
 
 export default async function Banner() {
-    const banner = await getFetchData('/homepage/banner/');
-    console.log('banner -- ', banner?.data?.secure_business_btn_name);
+    const banner = await getFetchData('https://eicsec.com/api/v1/homepage/banner/');
     return (
         <>
             <section className="relative pb-11 w-full mx-auto overflow-hidden bg-contain bg-top bg-no-repeat"

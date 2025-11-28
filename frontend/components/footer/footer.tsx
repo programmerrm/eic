@@ -1,9 +1,5 @@
-/* eslint-disable @next/next/no-async-client-component */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
-export const dynamic = 'force-dynamic';
-import { DOMAIN_NAME, MEDIA_URL } from "@/utils/api";
+import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,26 +9,25 @@ import phoneImage from "../../public/images/footer-phone.svg";
 import SubscribeForm from "../forms/subscribeForm";
 import Logo from "../../public/images/eic-logo.svg";
 
-export default async function Footer() {
-    const logo = await getFetchData('/configuration/logo/');
-    const copyRight = await getFetchData('/configuration/copy-right/');
-    const infomation = await getFetchData('/contact/infomation/');
 
-    const socialLinkRes = await getFetchData('/configuration/social-link/');
+export default async function Footer() {
+    const logo = await getFetchData('https://eicsec.com/api/v1/configuration/logo/');
+    const copyRight = await getFetchData('https://eicsec.com/api/v1/configuration/copy-right/');
+    const infomation = await getFetchData('https://eicsec.com/api/v1/contact/infomation/');
+
+    const socialLinkRes = await getFetchData('https://eicsec.com/api/v1/configuration/social-link/');
     const socialLink = Array.isArray(socialLinkRes?.data)
         ? socialLinkRes.data
         : Array.isArray(socialLinkRes)
             ? socialLinkRes
             : [];
 
-    const services = await getFetchData('/services/list-items/');
+    const services = await getFetchData('https://eicsec.com/api/v1/services/list-items/');
     const servicesList = Array.isArray(services?.results?.data)
         ? services.results.data
         : Array.isArray(services)
             ? services
             : [];
-
-    console.log('DOMAIN NAME', DOMAIN_NAME);
 
     return (
         <footer className="bg-body py-[30px] md:py-[60px]">

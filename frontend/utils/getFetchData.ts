@@ -1,6 +1,6 @@
 export const getFetchData = async (url: string, options = {}) => {
   try {
-    const response = await fetch(`https://eicsec.com/api/v1${url}`, {
+    const response = await fetch(`${url}`, {
       cache: "no-store",
       ...options,
     });
