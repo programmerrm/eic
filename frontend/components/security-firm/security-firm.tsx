@@ -41,7 +41,7 @@ export default async function SecurityFirm() {
                                         <h3>{security_firm_data?.data?.vision_title}</h3>
                                         <p className="mt-3.5">{security_firm_data?.data?.vision_description}</p>
                                     </div>
-                                    <div className="pt-12">
+                                    <div className="pt-12 z-50 relative">
                                         <Link href={security_firm_data?.data?.get_to_know_us_btn_url || ""} className="w-fit btn-primary group">
                                             {security_firm_data?.data?.get_to_know_us_btn_name}
                                             <svg

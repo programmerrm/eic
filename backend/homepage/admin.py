@@ -245,90 +245,6 @@ class SecurityFirmAdmin(admin.ModelAdmin):
         },
     }
 
-    def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path(
-                '<int:firm_id>/delete-bg/',
-                self.admin_site.admin_view(self.delete_bg_view),
-                name='homepage_securityfirm_delete_bg',
-            ),
-            path(
-                '<int:firm_id>/delete-main-img/',
-                self.admin_site.admin_view(self.delete_main_img_view),
-                name='homepage_securityfirm_delete_main_img',
-            ),
-            path(
-                '<int:firm_id>/delete-sub-img/',
-                self.admin_site.admin_view(self.delete_sub_img_view),
-                name='homepage_securityfirm_delete_sub_img',
-            ),
-        ]
-        return custom_urls + urls
-
-    def delete_bg_view(self, request, firm_id):
-        firm = get_object_or_404(SecurityFirm, pk=firm_id)
-        if firm.bg:
-            firm.bg.delete(save=False)
-            firm.bg = None
-            firm.save()
-            self.message_user(
-                request,
-                "Background image deleted successfully.",
-                messages.SUCCESS,
-            )
-        else:
-            self.message_user(
-                request,
-                "No background image to delete.",
-                messages.WARNING,
-            )
-        return redirect(
-            reverse('admin:homepage_securityfirm_change', args=[firm_id])
-        )
-
-    def delete_main_img_view(self, request, firm_id):
-        firm = get_object_or_404(SecurityFirm, pk=firm_id)
-        if firm.main_img:
-            firm.main_img.delete(save=False)
-            firm.main_img = None
-            firm.save()
-            self.message_user(
-                request,
-                "Main image deleted successfully.",
-                messages.SUCCESS,
-            )
-        else:
-            self.message_user(
-                request,
-                "No main image to delete.",
-                messages.WARNING,
-            )
-        return redirect(
-            reverse('admin:homepage_securityfirm_change', args=[firm_id])
-        )
-
-    def delete_sub_img_view(self, request, firm_id):
-        firm = get_object_or_404(SecurityFirm, pk=firm_id)
-        if firm.sub_img:
-            firm.sub_img.delete(save=False)
-            firm.sub_img = None
-            firm.save()
-            self.message_user(
-                request,
-                "Sub image deleted successfully.",
-                messages.SUCCESS,
-            )
-        else:
-            self.message_user(
-                request,
-                "No sub image to delete.",
-                messages.WARNING,
-            )
-        return redirect(
-            reverse('admin:homepage_securityfirm_change', args=[firm_id])
-        )
-
     def styled_title(self, obj):
         span_part = obj.title_span or ""
         normal_part = obj.title_normal or ""
@@ -343,34 +259,22 @@ class SecurityFirmAdmin(admin.ModelAdmin):
 
     def bg_preview(self, obj):
         if obj.bg:
-            delete_url = reverse(
-                'admin:homepage_securityfirm_delete_bg',
-                args=[obj.id],
-            )
             return format_html(
                 '<div style="border:1px solid #ccc; border-radius:6px; '
                 'padding:6px; background:#fafafa; text-align:center;">'
-                '<img src="{}" width="150"/><br>'
-                '<a href="{}">Delete</a></div>',
+                '<img src="{}" width="100"/><br>',
                 obj.bg.url,
-                delete_url,
             )
         return format_html('<span style="color:#999;">No BG uploaded</span>')
     bg_preview.short_description = "Background Preview"
 
     def main_img_preview(self, obj):
         if obj.main_img:
-            delete_url = reverse(
-                'admin:homepage_securityfirm_delete_main_img',
-                args=[obj.id],
-            )
             return format_html(
                 '<div style="border:1px solid #ccc; border-radius:6px; '
                 'padding:6px; background:#fafafa; text-align:center;">'
-                '<img src="{}" width="150"/><br>'
-                '<a href="{}">Delete</a></div>',
+                '<img src="{}" width="100"/><br>',
                 obj.main_img.url,
-                delete_url,
             )
         return format_html(
             '<span style="color:#999;">No main image uploaded</span>'
@@ -379,17 +283,11 @@ class SecurityFirmAdmin(admin.ModelAdmin):
 
     def sub_img_preview(self, obj):
         if obj.sub_img:
-            delete_url = reverse(
-                'admin:homepage_securityfirm_delete_sub_img',
-                args=[obj.id],
-            )
             return format_html(
                 '<div style="border:1px solid #ccc; border-radius:6px; '
                 'padding:6px; background:#fafafa; text-align:center;">'
-                '<img src="{}" width="100"/><br>'
-                '<a href="{}">Delete</a></div>',
+                '<img src="{}" width="100"/><br>',
                 obj.sub_img.url,
-                delete_url,
             )
         return format_html('<span style="color:#999;">No sub image</span>')
     sub_img_preview.short_description = "Sub Image Preview"

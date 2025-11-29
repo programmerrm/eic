@@ -18,7 +18,7 @@ export default async function HomePageRelated() {
                     <h2 className="text-center">Comprehensive Cybersecurity Solutions</h2>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                    {data?.results?.data?.map((item: any) => {
+                    {data?.results?.data?.slice(0, 3)?.map((item: any) => {
                         return (
                             <Link className="h-full transition-all hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]" href={`/services/${item.slug}`} key={item.id}>
                                 <div className="h-full bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
@@ -32,7 +32,6 @@ export default async function HomePageRelated() {
                                                     height={220}
                                                 />
                                             </div>
-
                                             <h3 className="mt-2.5">{item.title}</h3>
                                             <p className=" mt-3 mx-auto sm:mx-0">{item.description}</p>
                                         </div>

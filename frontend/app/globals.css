@@ -410,5 +410,5 @@ html {
 }
 
 .bg-rotate {
-  animation: rotateForever 10s linear infinite;
+  animation: rotateForever 20s linear infinite;
 }
