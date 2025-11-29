@@ -78,7 +78,6 @@ class ServiceView(viewsets.ModelViewSet):
                 'error': str(e)
             })
 
-
 class SingleServiceView(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = SingleServiceSerializer

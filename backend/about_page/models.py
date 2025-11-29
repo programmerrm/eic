@@ -207,21 +207,7 @@ class SecurityFirm(models.Model):
         verbose_name=_('Get To Know Us Button URL'),
         help_text=_('Enter get to know us button URL...'),
     )
-    security_persentences = models.IntegerField(
-        verbose_name=_('Security Persentences'),
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-    )
-    response_persentences = models.IntegerField(
-        verbose_name=_('Response Persentences'),
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-    )
-    compliance_persentences = models.IntegerField(
-        verbose_name=_('Compliance Persentences'),
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-    )
+    
     def __str__(self):
         return self.title_span or "Security Firm"
     
