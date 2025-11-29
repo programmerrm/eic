@@ -17,7 +17,7 @@ export default async function Features() {
             <div className="container">
                 {featureTitle && (
                     <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-20 gap-5">
-                        <h2 className="w-full max-w-[841px]">{featureTitle?.title_before_span} <span className="text-[#2E78AC]">{featureTitle?.title_span} </span>{featureTitle?.title_after_span}</h2>
+                        <h2 className="w-full max-w-[841px] text-center sm:text-start">{featureTitle?.title_before_span} <span className="text-[#2E78AC]">{featureTitle?.title_span} </span>{featureTitle?.title_after_span}</h2>
                         <div className="flex items-center sm:max-w-[300px] w-full justify-center sm:justify-end">
                             <Link
                                 href={featureTitle?.features_btn_url || ""}
@@ -46,13 +46,13 @@ export default async function Features() {
                     {featureItems.map((item: any) => (
                         <div
                             key={item.id}
-                            className="border-2 border-[#EBF3F8] rounded-[10px] shadow-3xl transition-all hover:shadow-4xl bg-bottom bg-contain bg-no-repeat cursor-pointer"
+                            className="border-2 border-[#EBF3F8] rounded-[10px] shadow-3xl transition-all hover:shadow-4xl bg-bottom bg-contain bg-no-repeat"
                             style={{
                                 backgroundImage: `url(${item.bg || ""})`,
                             }}
                         >
                             <div className="flex flex-col justify-between h-full p-8 pb-10">
-                                <div className="pr-4 md:pr-7 w-full max-w-[581px]">
+                                <div className="pr-4 md:pr-7 w-full max-w-[581px] text-center sm:text-start">
                                     <h3>{item.name}</h3>
                                     <p className="font-medium mt-4">{item.description}</p>
                                 </div>

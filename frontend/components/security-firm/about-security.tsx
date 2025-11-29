@@ -2,15 +2,15 @@ import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
-import Progressbar from "../progressbar/progressbar";
+import PaymentInfo from "../about-page/paymnet-info";
 
-export default async function SecurityFirm() {
+export default async function AboutSecurity() {
     const security_firm_data = await getFetchData('/homepage/security-firm/', {
         tag: "security-firm-data",
     });
     const bgImage = security_firm_data?.data?.bg ? `${MEDIA_URL}${security_firm_data.data.bg}` : null;
     return (
-        <section className="bg-[#EBF3F8] py-12 md:py-[100px]">
+        <section className="bg-white py-12 md:py-[100px]">
             <div className="container">
                 <div className="flex flex-col md:flex-row">
                     <div className="w-full md:max-w-[52.058%] lg:pt-8">
@@ -31,8 +31,8 @@ export default async function SecurityFirm() {
                             style={{
                                 backgroundImage: `url(${bgImage})`,
                             }}></div>
-                        <div className="content z-50 relative">
-                            <div className="pt-10 lg:pt-[70px] xl:pt-[152px] sm:pl-16 lg:pl-20 xl:pl-40">
+                        <div className="content">
+                            <div className="pt-10 lg:pt-[70px] xl:pt-[152px] pl-16 lg:pl-20 xl:pl-40">
                                 <div className=" text-body">
                                         <h3>{security_firm_data?.data?.mission_title}</h3>
                                         <p className="mt-3.5">{security_firm_data?.data?.mission_description}</p>
@@ -41,7 +41,7 @@ export default async function SecurityFirm() {
                                         <h3>{security_firm_data?.data?.vision_title}</h3>
                                         <p className="mt-3.5">{security_firm_data?.data?.vision_description}</p>
                                     </div>
-                                    <div className="pt-12">
+                                    <div className="pt-12 z-50 relative">
                                         <Link href={security_firm_data?.data?.get_to_know_us_btn_url || ""} className="w-fit btn-primary group">
                                             {security_firm_data?.data?.get_to_know_us_btn_name}
                                             <svg
@@ -65,29 +65,7 @@ export default async function SecurityFirm() {
                     </div>
                 </div>
             </div>
-            <div className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
-                <div className="container">
-                    <div className="flex flex-col md:flex-row items-center gap-8 xl:gap-16">
-                        <Progressbar
-                            response={security_firm_data?.data?.response_persentences}
-                            compliance={security_firm_data?.data?.compliance_persentences}
-                            security={security_firm_data?.data?.security_persentences}
-                        />
-                        {security_firm_data?.data?.sub_img && (
-                            <div className="w-full max-w-[605px]">
-                                {security_firm_data?.data?.sub_img && (
-                                    <Image
-                                        src={`${MEDIA_URL}${security_firm_data?.data?.sub_img}`}
-                                        alt="security"
-                                        width={605}
-                                        height={400}
-                                    />
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+            <PaymentInfo />
         </section>
     );
 }

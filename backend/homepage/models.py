@@ -423,7 +423,7 @@ class ExperienceEic(models.Model):
     def __str__(self):
         return self.normal_title or "Experience Eic"
 
-# ========== Experience Eic Item =============
+# ========== Experience EicItem =============
 class ExperienceEicItem(models.Model):
     name = models.CharField(
         max_length=280,

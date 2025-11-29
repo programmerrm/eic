@@ -434,3 +434,9 @@ html {
     background-color: #3384BD !important;
     color: white !important;
 }
+
+@media (max-width: 1023px) {
+  .mobile-bg-hide {
+    background-image: none !important;
+  }
+}
