@@ -230,6 +230,7 @@ class Blog(models.Model):
         help_text=_('Enter your blog title...'),
     )
     slug = models.SlugField(
+        max_length=500,
         editable=False,
         unique=True,
         verbose_name=_('Slug'),

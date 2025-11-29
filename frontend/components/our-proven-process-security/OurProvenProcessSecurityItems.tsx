@@ -147,19 +147,20 @@ export default function OurProvenProcessSecurityClient({
                                     className="circle"
                                 />
                                 {activeItem && (
-                                    <Image
-                                        src={activeItem.image}
-                                        alt={activeItem.title}
-                                        width={142}
-                                        height={142}
-                                        className="circle-icon w-full max-w-24 lg:max-w-[149px] absolute top-0 left-0"
-                                    />
+                                    <div className="bg-white rounded-full p-5 circle-icon w-full max-w-24 lg:max-w-[149px] absolute top-0 left-0">
+                                        <Image
+                                            src={activeItem.image}
+                                            alt={activeItem.title}
+                                            width={142}
+                                            height={142}
+                                            className=""
+                                        />
+                                    </div>
                                 )}
                             </>
                         )}
                     </div>
                 </div>
-
                 {/* RIGHT SIDE */}
                 <div className="w-full max-w-[444px] mx-auto lg:mx-0 h-full flex items-center">
                     <div
@@ -198,7 +199,6 @@ export default function OurProvenProcessSecurityClient({
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     );
