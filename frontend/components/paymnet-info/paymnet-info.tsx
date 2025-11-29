@@ -37,7 +37,7 @@ export default async function PaymentInfo() {
                                 </div>
                             </div>
                             <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end order-1 lg:order-2">
-                                <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end">
+                                <div className="w-full lg:max-w-fit flex flex-col items-end">
                                     {paymnetInfo?.data?.image && (
                                         <Image src={`${MEDIA_URL}${paymnetInfo?.data?.image}`} alt="payment-logo" width={840} height={406} />
                                     )}

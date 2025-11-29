@@ -20,7 +20,7 @@ export default async function SecurityFirm() {
                         {security_firm_data?.data?.main_img && (
                             <div>
                                 {security_firm_data?.data?.main_img && (
-                                    <Image src={`${MEDIA_URL}${security_firm_data?.data?.main_img}`} alt="security" width={375} height={235} />
+                                    <Image src={`${MEDIA_URL}${security_firm_data?.data?.main_img}`} alt="security" width={655} height={555} />
                                 )}
                             </div>
                         )}

@@ -241,6 +241,8 @@ class SuccessStorie(models.Model):
         verbose_name=_('Budget Description'),
     )
     content = RichTextUploadingField(
+        null=True,
+        blank=True,
         verbose_name=_('Content'),
     )
     client_name = models.CharField(

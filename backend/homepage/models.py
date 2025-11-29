@@ -366,3 +366,70 @@ class Review(models.Model):
 
     def __str__(self):
         return self.author_name or "Autor data"
+
+# ============= Globally Accredited ==============
+class GloballyAccredited(models.Model):
+    title = models.CharField(
+        max_length=280,
+        verbose_name=_('Title'),
+    )
+    image = models.FileField(
+        null=True,
+        blank=True,
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        verbose_name=_('Image'),
+    )
+    bg = models.FileField(
+        null=True,
+        blank=True,
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        verbose_name=_('Background Image'),
+    )
+
+    def __str__(self):
+        return self.title or "Globally Accredited"
+
+# =========== Experience Eic =============
+class ExperienceEic(models.Model):
+    normal_title = models.CharField(
+        null=True,
+        blank=True,
+        max_length=280,
+        verbose_name=_('Experience Eic item normal title'),
+    )
+    span_title = models.CharField(
+        null=True,
+        blank=True,
+        max_length=280,
+        verbose_name=_('ExperienceEic item span title'),
+    )
+    image = models.FileField(
+        null=True,
+        blank=True,
+        verbose_name=_('Image'),
+        upload_to='experience-eic/',
+    )
+    btn_name = models.CharField(
+        null=True,
+        blank=True,
+        verbose_name=_('Button Name'),
+    )
+    btn_url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('Button URL'),
+    )
+
+    def __str__(self):
+        return self.normal_title or "Experience Eic"
+
+# ========== Experience Eic Item =============
+class ExperienceEicItem(models.Model):
+    name = models.CharField(
+        max_length=280,
+        verbose_name=_('Item Name'),
+    )
+
+    def __str__(self):
+        return self.name or "Experience Eic Item"
+    

@@ -18,6 +18,8 @@ from homepage.models import (
     OurProvenProcessSecurityItems,
     ReviewTopBar,
     Review,
+    ExperienceEic,
+    ExperienceEicItem
 )
 from django import forms
 from django.db import models
@@ -319,3 +321,5 @@ admin.site.register(OurProvenProcessSecurity)
 admin.site.register(OurProvenProcessSecurityItems)
 admin.site.register(ReviewTopBar)
 admin.site.register(Review)
+admin.site.register(ExperienceEic)
+admin.site.register(ExperienceEicItem)
