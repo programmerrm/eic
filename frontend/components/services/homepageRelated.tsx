@@ -5,8 +5,9 @@ import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 
 export default async function HomePageRelated() {
-    const data = await getFetchData("/services/list-items/");
-
+    const data = await getFetchData("/services/list-items/", {
+        tag: "services-item",
+    });
     return (
         <section className="pt-12 md:pt-[100px] pb-6 md:pb-12 mb-12 lg:mb-24 bg-contain bg-top-right bg-no-repeat"
             style={{
@@ -16,19 +17,13 @@ export default async function HomePageRelated() {
                 <div className="w-full max-w-[588px] mx-auto">
                     <h2 className="text-center">Comprehensive Cybersecurity Solutions</h2>
                 </div>
-
-
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                     {data?.results?.data?.map((item: any) => {
                         return (
                             <Link className="h-full transition-all hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]" href={`/services/${item.slug}`} key={item.id}>
-
                                 <div className="h-full bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
-
                                     <div className="h-full bg-white rounded-2xl pt-5 xl:pt-8 pb-5 xl:pb-6 pl-6 xl:pl-10 pr-5 xl:pr-8 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
-
                                         <div className="text-center sm:text-start">
-
                                             <div className="flex items-center justify-center px-16">
                                                 <Image
                                                     src={item.image}
@@ -40,20 +35,13 @@ export default async function HomePageRelated() {
 
                                             <h3 className="mt-2.5">{item.title}</h3>
                                             <p className=" mt-3 mx-auto sm:mx-0">{item.description}</p>
-
-
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </Link>
                         );
                     })}
-
                 </div>
-
                 <div className="flex items-center justify-center mt-6 md:mt-12">
                     <Link href="/services" className="btn-primary group">more services
                         <svg
@@ -72,10 +60,6 @@ export default async function HomePageRelated() {
                         </svg>
                     </Link>
                 </div>
-
-
-
-
             </div>
         </section>
     );

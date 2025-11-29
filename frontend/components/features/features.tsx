@@ -10,30 +10,20 @@ export default async function Features() {
     const featureItemsRes = await getFetchData('/feature/items/', {
         tag: "feature/items-data",
     });
-
     const featureTitle = featureTitleRes?.data || null;
     const featureItems = Array.isArray(featureItemsRes?.data) ? featureItemsRes.data : [];
-
     return (
         <section className="py-12 md:py-[100px]">
             <div className="container">
                 {featureTitle && (
                     <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-20 gap-5">
-                        <h2 className="w-full max-w-[841px]">
-                            {featureTitle?.title_before_span}{" "}
-                            <span className="text-[#2E78AC]">
-                                {featureTitle?.title_span}
-                            </span>
-                            {featureTitle?.title_after_span}
-                        </h2>
-
+                        <h2 className="w-full max-w-[841px]">{featureTitle?.title_before_span} <span className="text-[#2E78AC]">{featureTitle?.title_span} </span>{featureTitle?.title_after_span}</h2>
                         <div className="flex items-center sm:max-w-[300px] w-full justify-center sm:justify-end">
                             <Link
                                 href={featureTitle?.features_btn_url || ""}
                                 className="btn-primary group"
                             >
                                 {featureTitle?.features_btn_name}
-
                                 <svg
                                     className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -66,10 +56,9 @@ export default async function Features() {
                                     <h3>{item.name}</h3>
                                     <p className="font-medium mt-4">{item.description}</p>
                                 </div>
-
                                 <div className="flex items-center justify-center mt-[30px]">
                                     <Image
-                                        src={item.image || "/images/placeholder.png"}
+                                        src={item.image}
                                         alt={item.name}
                                         width={200}
                                         height={300}

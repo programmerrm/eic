@@ -13,7 +13,6 @@ export default async function SecurityFirm() {
         <section className="bg-[#EBF3F8] py-12 md:py-[100px]">
             <div className="container">
                 <div className="flex flex-col md:flex-row">
-
                     <div className="w-full md:max-w-[52.058%] lg:pt-8">
                         <h2>
                             <span className="text-blue">{security_firm_data?.data?.title_span}</span> {security_firm_data?.data?.title_normal}
@@ -26,7 +25,6 @@ export default async function SecurityFirm() {
                             </div>
                         )}
                     </div>
-
                     <div className="w-full lg:max-w-[calc(100%-52.058%)] mb-16 relative mt-4 sm:mt-0">
                         <div
                             className="absolute w-[250px] mx-auto sm:w-full lg:max-w-[362px] xl:max-w-[462px] 2xl:max-w-[562px] h-[250px] sm:h-full lg:max-h-[362px] xl:max-h-[462px] 2xl:max-h-[562px] inset-0 bg-contain bg-top bg-no-repeat bg-rotate overflow-hidden rounded-full"
@@ -65,17 +63,15 @@ export default async function SecurityFirm() {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
                 <div className="container">
                     <div className="flex flex-col md:flex-row items-center gap-8 xl:gap-16">
                         <Progressbar
+                            response={security_firm_data?.data?.response_persentences}
+                            compliance={security_firm_data?.data?.compliance_persentences}
                             security={security_firm_data?.data?.security_persentences}
-                            ability={security_firm_data?.data?.ability_persentences}
-                            solving={security_firm_data?.data?.solving_persentences}
                         />
                         {security_firm_data?.data?.sub_img && (
                             <div className="w-full max-w-[605px]">

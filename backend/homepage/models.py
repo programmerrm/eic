@@ -7,6 +7,7 @@ from django.db import models
 from django.core.validators import MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # CREATE MODELS HERE.
 
@@ -151,7 +152,7 @@ class SecurityFirm(models.Model):
     mission_description = models.TextField(
         null=True,
         blank=True,
-        verbose_name=_('Mission description')
+        verbose_name=_('Mission description'),
     )
     vision_title = models.CharField(
         max_length=280,
@@ -162,7 +163,7 @@ class SecurityFirm(models.Model):
     vision_description = models.TextField(
         null=True,
         blank=True,
-        verbose_name=_('Vision description')
+        verbose_name=_('Vision description'),
     )
     get_to_know_us_btn_name = models.CharField(
         null=True,
@@ -181,18 +182,20 @@ class SecurityFirm(models.Model):
     security_persentences = models.IntegerField(
         verbose_name=_('Security Persentences'),
         default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
-    ability_persentences = models.IntegerField(
-        verbose_name=_('Security Persentences'),
+    response_persentences = models.IntegerField(
+        verbose_name=_('Response Persentences'),
         default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
-    solving_persentences = models.IntegerField(
-        verbose_name=_('Security Persentences'),
+    compliance_persentences = models.IntegerField(
+        verbose_name=_('Compliance Persentences'),
         default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
-
     def __str__(self):
-        return super().__str__()
+        return self.title_span or "Security Firm"
 
 # =============== Cyber Security Solution Title ================
 class CybersecuritySolutionTitle(models.Model):

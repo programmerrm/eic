@@ -7,6 +7,7 @@ from django.contrib import admin, messages
 from django.utils.html import format_html
 from django.urls import path, reverse
 from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from homepage.models import (
     Banner,
     PaymnetInfo,
@@ -173,162 +174,245 @@ from django.db import models
 #     delete_link.short_description = "Delete"
 
 
-# class SecurityFirmAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'styled_title',
-#         'bg_preview',
-#         'main_img_preview',
-#         'edit_link',
-#         'delete_link',
-#     )
+class SecurityFirmAdmin(admin.ModelAdmin):
+    list_display = (
+        'styled_title',
+        'bg_preview',
+        'main_img_preview',
+        'sub_img_preview',
+        'edit_link',
+        'delete_link',
+    )
 
-#     readonly_fields = (
-#         'bg_preview',
-#         'main_img_preview',
-#         'sub_img_preview',
-#         'left_side_animation_preview',
-#         'right_side_animation_preview',
-#     )
+    readonly_fields = (
+        'bg_preview',
+        'main_img_preview',
+        'sub_img_preview',
+    )
 
-#     fieldsets = (
-#         ('Security Firm Info', {
-#             'fields': ('bg', 'bg_preview', 'title_span', 'title_normal', 'main_img', 'main_img_preview', 'sub_img', 'sub_img_preview')
-#         }),
-#         ('Animations', {
-#             'fields': ('left_side_animation_img', 'left_side_animation_preview', 'right_side_animation_img', 'right_side_animation_preview')
-#         }),
-#         ('Mission & Vision', {
-#             'fields': ('mission_title', 'mission_description', 'vision_title', 'vision_description')
-#         }),
-#         ('Buttons', {
-#             'fields': ('get_to_know_us_btn_name', 'get_to_know_us_btn_url')
-#         }),
-#         ('Statistics', {
-#             'fields': ('security_persentences', 'ability_persentences', 'solving_persentences')
-#         }),
-#     )
+    fieldsets = (
+        ('Security Firm Info', {
+            'fields': (
+                'bg',
+                'bg_preview',
+                'title_span',
+                'title_normal',
+                'main_img',
+                'main_img_preview',
+                'sub_img',
+                'sub_img_preview',
+            )
+        }),
+        ('Mission & Vision', {
+            'fields': (
+                'mission_title',
+                'mission_description',
+                'vision_title',
+                'vision_description',
+            )
+        }),
+        ('Buttons', {
+            'fields': (
+                'get_to_know_us_btn_name',
+                'get_to_know_us_btn_url',
+            )
+        }),
+        ('Statistics', {
+            'fields': (
+                'security_persentences',
+                'response_persentences',
+                'compliance_persentences',
+            )
+        }),
+    )
 
-#     formfield_overrides = {
-#         models.CharField: {
-#             'widget': forms.TextInput(
-#                 attrs={
-#                     'style': 'width:100%; border:1px solid #ccc; border-radius:6px; padding:6px;'
-#                 }
-#             )
-#         },
-#         models.TextField: {
-#             'widget': forms.Textarea(
-#                 attrs={
-#                     'style': 'width:100%; border:1px solid #ccc; border-radius:6px; padding:6px;'
-#                 }
-#             )
-#         },
-#     }
+    formfield_overrides = {
+        models.CharField: {
+            'widget': forms.TextInput(
+                attrs={
+                    'style': 'width:100%; border:1px solid #ccc; '
+                             'border-radius:6px; padding:6px;'
+                }
+            )
+        },
+        models.TextField: {
+            'widget': forms.Textarea(
+                attrs={
+                    'style': 'width:100%; border:1px solid #ccc; '
+                             'border-radius:6px; padding:6px;'
+                }
+            )
+        },
+    }
 
-#     # 🗑 Custom delete handlers
-#     def get_urls(self):
-#         urls = super().get_urls()
-#         custom_urls = [
-#             path(
-#                 '<int:firm_id>/delete-bg/',
-#                 self.admin_site.admin_view(self.delete_bg_view),
-#                 name='homepage_securityfirm_delete_bg',
-#             ),
-#             path(
-#                 '<int:firm_id>/delete-main-img/',
-#                 self.admin_site.admin_view(self.delete_main_img_view),
-#                 name='homepage_securityfirm_delete_main_img',
-#             ),
-#         ]
-#         return custom_urls + urls
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                '<int:firm_id>/delete-bg/',
+                self.admin_site.admin_view(self.delete_bg_view),
+                name='homepage_securityfirm_delete_bg',
+            ),
+            path(
+                '<int:firm_id>/delete-main-img/',
+                self.admin_site.admin_view(self.delete_main_img_view),
+                name='homepage_securityfirm_delete_main_img',
+            ),
+            path(
+                '<int:firm_id>/delete-sub-img/',
+                self.admin_site.admin_view(self.delete_sub_img_view),
+                name='homepage_securityfirm_delete_sub_img',
+            ),
+        ]
+        return custom_urls + urls
 
-#     def delete_bg_view(self, request, firm_id):
-#         firm = SecurityFirm.objects.get(pk=firm_id)
-#         if firm.bg:
-#             firm.bg.delete(save=False)
-#             firm.bg = None
-#             firm.save()
-#             self.message_user(request, "Background image deleted successfully.", messages.SUCCESS)
-#         else:
-#             self.message_user(request, "No background image to delete.", messages.WARNING)
-#         return redirect(reverse('admin:homepage_securityfirm_change', args=[firm_id]))
+    def delete_bg_view(self, request, firm_id):
+        firm = get_object_or_404(SecurityFirm, pk=firm_id)
+        if firm.bg:
+            firm.bg.delete(save=False)
+            firm.bg = None
+            firm.save()
+            self.message_user(
+                request,
+                "Background image deleted successfully.",
+                messages.SUCCESS,
+            )
+        else:
+            self.message_user(
+                request,
+                "No background image to delete.",
+                messages.WARNING,
+            )
+        return redirect(
+            reverse('admin:homepage_securityfirm_change', args=[firm_id])
+        )
 
-#     def delete_main_img_view(self, request, firm_id):
-#         firm = SecurityFirm.objects.get(pk=firm_id)
-#         if firm.main_img:
-#             firm.main_img.delete(save=False)
-#             firm.main_img = None
-#             firm.save()
-#             self.message_user(request, "Main image deleted successfully.", messages.SUCCESS)
-#         else:
-#             self.message_user(request, "No main image to delete.", messages.WARNING)
-#         return redirect(reverse('admin:homepage_securityfirm_change', args=[firm_id]))
+    def delete_main_img_view(self, request, firm_id):
+        firm = get_object_or_404(SecurityFirm, pk=firm_id)
+        if firm.main_img:
+            firm.main_img.delete(save=False)
+            firm.main_img = None
+            firm.save()
+            self.message_user(
+                request,
+                "Main image deleted successfully.",
+                messages.SUCCESS,
+            )
+        else:
+            self.message_user(
+                request,
+                "No main image to delete.",
+                messages.WARNING,
+            )
+        return redirect(
+            reverse('admin:homepage_securityfirm_change', args=[firm_id])
+        )
 
-#     # 🖋 Styled display columns
-#     def styled_title(self, obj):
-#         span_part = obj.title_span or ""
-#         normal_part = obj.title_normal or ""
-#         return format_html(
-#             '<div style="border:1px solid #ccc; border-radius:6px; padding:6px; background:#f9f9f9;"><span style="color:#2E78AC;">{}</span> {}</div>',
-#             span_part, normal_part
-#         )
-#     styled_title.short_description = "Title"
+    def delete_sub_img_view(self, request, firm_id):
+        firm = get_object_or_404(SecurityFirm, pk=firm_id)
+        if firm.sub_img:
+            firm.sub_img.delete(save=False)
+            firm.sub_img = None
+            firm.save()
+            self.message_user(
+                request,
+                "Sub image deleted successfully.",
+                messages.SUCCESS,
+            )
+        else:
+            self.message_user(
+                request,
+                "No sub image to delete.",
+                messages.WARNING,
+            )
+        return redirect(
+            reverse('admin:homepage_securityfirm_change', args=[firm_id])
+        )
 
-#     # 🖼 Image Previews
-#     def bg_preview(self, obj):
-#         if obj.bg:
-#             delete_url = reverse('admin:homepage_securityfirm_delete_bg', args=[obj.id])
-#             return format_html(
-#                 '<div style="border:1px solid #ccc; border-radius:6px; padding:6px; background:#fafafa; text-align:center;"><img src="{}" width="150"/><br><a href="{}">Delete</a></div>',
-#                 obj.bg.url, delete_url
-#             )
-#         return format_html('<span style="color:#999;">No BG uploaded</span>')
-#     bg_preview.short_description = "Background Preview"
+    def styled_title(self, obj):
+        span_part = obj.title_span or ""
+        normal_part = obj.title_normal or ""
+        return format_html(
+            '<div style="border:1px solid #ccc; border-radius:6px; '
+            'padding:6px; background:#f9f9f9;">'
+            '<span style="color:#2E78AC;">{}</span> {}</div>',
+            span_part,
+            normal_part,
+        )
+    styled_title.short_description = "Title"
 
-#     def main_img_preview(self, obj):
-#         if obj.main_img:
-#             delete_url = reverse('admin:homepage_securityfirm_delete_main_img', args=[obj.id])
-#             return format_html(
-#                 '<div style="border:1px solid #ccc; border-radius:6px; padding:6px; background:#fafafa; text-align:center;"><img src="{}" width="150"/><br><a href="{}">Delete</a></div>',
-#                 obj.main_img.url, delete_url
-#             )
-#         return format_html('<span style="color:#999;">No main image uploaded</span>')
-#     main_img_preview.short_description = "Main Image Preview"
+    def bg_preview(self, obj):
+        if obj.bg:
+            delete_url = reverse(
+                'admin:homepage_securityfirm_delete_bg',
+                args=[obj.id],
+            )
+            return format_html(
+                '<div style="border:1px solid #ccc; border-radius:6px; '
+                'padding:6px; background:#fafafa; text-align:center;">'
+                '<img src="{}" width="150"/><br>'
+                '<a href="{}">Delete</a></div>',
+                obj.bg.url,
+                delete_url,
+            )
+        return format_html('<span style="color:#999;">No BG uploaded</span>')
+    bg_preview.short_description = "Background Preview"
 
-#     def sub_img_preview(self, obj):
-#         if obj.sub_img:
-#             return format_html('<img src="{}" width="100"/>', obj.sub_img.url)
-#         return format_html('<span style="color:#999;">No sub image</span>')
-#     sub_img_preview.short_description = "Sub Image Preview"
+    def main_img_preview(self, obj):
+        if obj.main_img:
+            delete_url = reverse(
+                'admin:homepage_securityfirm_delete_main_img',
+                args=[obj.id],
+            )
+            return format_html(
+                '<div style="border:1px solid #ccc; border-radius:6px; '
+                'padding:6px; background:#fafafa; text-align:center;">'
+                '<img src="{}" width="150"/><br>'
+                '<a href="{}">Delete</a></div>',
+                obj.main_img.url,
+                delete_url,
+            )
+        return format_html(
+            '<span style="color:#999;">No main image uploaded</span>'
+        )
+    main_img_preview.short_description = "Main Image Preview"
 
-#     def left_side_animation_preview(self, obj):
-#         if obj.left_side_animation_img:
-#             return format_html('<img src="{}" width="100"/>', obj.left_side_animation_img.url)
-#         return format_html('<span style="color:#999;">No left animation</span>')
-#     left_side_animation_preview.short_description = "Left Animation Preview"
+    def sub_img_preview(self, obj):
+        if obj.sub_img:
+            delete_url = reverse(
+                'admin:homepage_securityfirm_delete_sub_img',
+                args=[obj.id],
+            )
+            return format_html(
+                '<div style="border:1px solid #ccc; border-radius:6px; '
+                'padding:6px; background:#fafafa; text-align:center;">'
+                '<img src="{}" width="100"/><br>'
+                '<a href="{}">Delete</a></div>',
+                obj.sub_img.url,
+                delete_url,
+            )
+        return format_html('<span style="color:#999;">No sub image</span>')
+    sub_img_preview.short_description = "Sub Image Preview"
 
-#     def right_side_animation_preview(self, obj):
-#         if obj.right_side_animation_img:
-#             return format_html('<img src="{}" width="100"/>', obj.right_side_animation_img.url)
-#         return format_html('<span style="color:#999;">No right animation</span>')
-#     right_side_animation_preview.short_description = "Right Animation Preview"
+    def edit_link(self, obj):
+        url = reverse('admin:homepage_securityfirm_change', args=[obj.id])
+        return format_html(
+            '<a href="{}" style="color:#0066cc;">✏ Edit</a>',
+            url,
+        )
+    edit_link.short_description = "Edit"
 
-#     # ✏ Edit / 🗑 Delete links (in list)
-#     def edit_link(self, obj):
-#         return format_html(
-#             '<a href="/admin/homepage/securityfirm/{}/change/" style="color:#0066cc;">✏ Edit</a>', obj.id
-#         )
-#     edit_link.short_description = "Edit"
-
-#     def delete_link(self, obj):
-#         return format_html(
-#             '<a href="/admin/homepage/securityfirm/{}/delete/" style="color:#d00;">🗑 Delete</a>', obj.id
-#         )
-#     delete_link.short_description = "Delete"
+    def delete_link(self, obj):
+        url = reverse('admin:homepage_securityfirm_delete', args=[obj.id])
+        return format_html(
+            '<a href="{}" style="color:#d00;">🗑 Delete</a>',
+            url,
+        )
+    delete_link.short_description = "Delete"
 
 admin.site.register(Banner)
 admin.site.register(PaymnetInfo)
-admin.site.register(SecurityFirm)
+admin.site.register(SecurityFirm, SecurityFirmAdmin)
 admin.site.register(CybersecuritySolutionTitle)
 admin.site.register(CybersecuritySolutionItem)
 admin.site.register(OurProvenProcessSecurity)
