@@ -51,7 +51,7 @@ export default async function Features() {
                                 backgroundImage: `url(${item.bg || ""})`,
                             }}
                         >
-                            <div className="p-8 pb-10">
+                            <div className="flex flex-col justify-between h-full p-8 pb-10">
                                 <div className="pr-4 md:pr-7 w-full max-w-[581px]">
                                     <h3>{item.name}</h3>
                                     <p className="font-medium mt-4">{item.description}</p>

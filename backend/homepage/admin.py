@@ -19,7 +19,8 @@ from homepage.models import (
     ReviewTopBar,
     Review,
     ExperienceEic,
-    ExperienceEicItem
+    ExperienceEicItem,
+    GloballyAccredited,
 )
 from django import forms
 from django.db import models
@@ -323,3 +324,4 @@ admin.site.register(ReviewTopBar)
 admin.site.register(Review)
 admin.site.register(ExperienceEic)
 admin.site.register(ExperienceEicItem)
+admin.site.register(GloballyAccredited)

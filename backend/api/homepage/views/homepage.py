@@ -17,6 +17,9 @@ from api.homepage.serializers.homepage import (
     PaymnetInfoSerializer,
     ReviewTopBarSerializer,
     ReviewSerializer,
+    ExperienceEicSerializer,
+    ExperienceEicItemSerializer,
+    GloballyAccreditedSerializer,
 )
 from homepage.models import (
     Banner,
@@ -28,6 +31,9 @@ from homepage.models import (
     PaymnetInfo,
     ReviewTopBar,
     Review,
+    ExperienceEic,
+    ExperienceEicItem,
+    GloballyAccredited,
 )
 
 # =========== BANNER VIEW SET =============
@@ -252,3 +258,93 @@ class ReviewViewSet(viewsets.ModelViewSet):
                 "message": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+class ExperienceEicViewSet(viewsets.ModelViewSet):
+    serializer_class = ExperienceEicSerializer
+    queryset = ExperienceEic.objects.all()
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [AllowAny()]
+        return [IsAdminUser()]
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = ExperienceEic.objects.first()
+            if not queryset:
+                return Response({
+                    'success': False,
+                    'message': 'Experience Eic records not found',
+                    'data': {},
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            serializer = self.get_serializer(queryset)
+            return Response({
+                'success': True,
+                'message': 'Experience eic data fetched successfully.',
+                'data': serializer.data,
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                'success': False,
+                'message': 'Something went wrong.',
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+
+class ExperienceEicItemViewSet(viewsets.ModelViewSet):
+    serializer_class = ExperienceEicItemSerializer
+    queryset = ExperienceEicItem.objects.all()
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [AllowAny()]
+        return [IsAdminUser()]
+    
+    def list(self, request, *args, **kwargs):
+        """Experience eic all items"""
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            return Response({
+                "success": True,
+                "message": "Experience eic items fetched successfully.",
+                "data": serializer.data
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({
+                "success": False,
+                "message": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class GloballyAccreditedViewSet(viewsets.ModelViewSet):
+    serializer_class = GloballyAccreditedSerializer
+    queryset = GloballyAccredited.objects.all()
+
+    def get_permissions(self):
+        if self.action == 'list':
+            return [AllowAny()]
+        return [IsAdminUser()]
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = GloballyAccredited.objects.first()
+            if not queryset:
+                return Response({
+                    'success': False,
+                    'message': 'Globally accredited records not found',
+                    'data': {},
+                }, status=status.HTTP_404_NOT_FOUND)
+
+            serializer = self.get_serializer(queryset)
+            return Response({
+                'success': True,
+                'message': 'Globally accredited data fetched successfully.',
+                'data': serializer.data,
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                'success': False,
+                'message': 'Something went wrong.',
+                'error': str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 

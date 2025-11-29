@@ -14,6 +14,9 @@ from homepage.models import (
     OurProvenProcessSecurityItems,
     ReviewTopBar,
     Review,
+    ExperienceEic,
+    ExperienceEicItem,
+    GloballyAccredited,
 )
 
 # ============ BANNER SERIALIZER ===============
@@ -68,4 +71,22 @@ class ReviewTopBarSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
+        fields = '__all__'
+
+# ========== ExperienceEic ===========
+class ExperienceEicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExperienceEic
+        fields = '__all'
+
+# ============= Experience Eic Item ==============
+class ExperienceEicItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExperienceEicItem
+        fields = '__all__'
+
+# ============= Globally Accredited =============
+class GloballyAccreditedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GloballyAccredited
         fields = '__all__'

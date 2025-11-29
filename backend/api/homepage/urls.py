@@ -14,6 +14,9 @@ from api.homepage.views.homepage import (
     OurProvenProcessSecurityItemsViewSet,
     ReviewViewSet,
     ReviewTopBarViewSet,
+    ExperienceEicViewSet,
+    ExperienceEicItemViewSet,
+    GloballyAccreditedViewSet,
 )
 
 router = DefaultRouter()
@@ -26,5 +29,9 @@ router.register(r'our-proven-process-security', OurProvenProcessSecurityViewSet,
 router.register(r'our-proven-process-security-items', OurProvenProcessSecurityItemsViewSet, basename='our_proven_process_security_items')
 router.register(r'review-top-bar', ReviewTopBarViewSet, basename='review_top_bar')
 router.register(r'review-items', ReviewViewSet, basename='review_items')
+
+router.register(r'experience-eic', ExperienceEicViewSet, basename='experience_eic')
+router.register(r'experience-eic-item', ExperienceEicItemViewSet, basename='experience_eic_item')
+router.register(r'globally-accredited', GloballyAccreditedViewSet, basename='globally_accredited')
 
 urlpatterns = router.urls
