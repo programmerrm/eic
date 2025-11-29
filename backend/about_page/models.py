@@ -149,14 +149,6 @@ class SecurityFirm(models.Model):
         verbose_name=_('Main Image'),
         help_text=_('Upload your security firm image...'),
     )
-    sub_img = models.FileField(
-        null=True,
-        blank=True,
-        upload_to='security-firm/',
-        validators=[VALIDATE_IMAGE_EXTENSION],
-        verbose_name=_('Sub Image'),
-        help_text=_('Upload your security firm image...'),
-    )
     title_span = models.CharField(
         max_length=280,
         null=True,
