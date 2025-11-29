@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from api.features.serializers.features import FeatureSerializer, FeatureItemSerializer
 from features.models import Feature, FeatureItem
 
-
 # ==========================
 # FEATURE VIEWSET
 # ==========================
@@ -42,7 +41,6 @@ class FeatureViewSet(viewsets.ModelViewSet):
                 "success": False,
                 "message": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 # ==========================
 # FEATURE ITEM VIEWSET

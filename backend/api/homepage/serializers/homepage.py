@@ -77,7 +77,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ExperienceEicSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExperienceEic
-        fields = '__all'
+        fields = '__all__'
 
 # ============= Experience Eic Item ==============
 class ExperienceEicItemSerializer(serializers.ModelSerializer):
