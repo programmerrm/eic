@@ -48,7 +48,7 @@ class FeatureViewSet(viewsets.ModelViewSet):
 # FEATURE ITEM VIEWSET
 # ==========================
 class FeatureItemViewSet(viewsets.ModelViewSet):
-    queryset = FeatureItem.objects.all()
+    queryset = FeatureItem.objects.all().order_by('-id')
     serializer_class = FeatureItemSerializer
 
     def get_permissions(self):

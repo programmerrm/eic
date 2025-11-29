@@ -67,25 +67,25 @@ export default async function Footer() {
                             <div className="flex items-center gap-2 sm:gap-4">
                                 <Image src={phoneImage} alt="phone" width={40} height={40} />
                                 <div className="flex flex-col">
-                                    <Link href={`tel:${infomation?.data?.phone_number1 || ""}`}>
+                                    <Link className="text-sm sm:text-base font-medium font-roboto" href={`tel:${infomation?.data?.phone_number1 || ""}`}>
                                         {infomation?.data?.phone_number1 || ""}
                                     </Link>
-                                    <Link href={`tel:${infomation?.data?.phone_number2 || ""}`}>
+                                    <Link className="text-sm sm:text-base font-medium font-roboto" href={`tel:${infomation?.data?.phone_number2 || ""}`}>
                                         {infomation?.data?.phone_number2 || ""}
                                     </Link>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2 sm:gap-4">
                                 <Image src={emailImage} alt="mail" width={40} height={40} />
-                                <a href={`mailto:${infomation?.data?.email || ""}`}>
+                                <Link className="text-sm sm:text-base font-medium font-roboto" href={`mailto:${infomation?.data?.email || ""}`}>
                                     {infomation?.data?.email || ""}
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-col lg:flex-row justify-between pt-6 border-b border-[#EBF3F8]/20 pb-12 gap-10 text-white">
                         <div className="w-full max-w-[352px]">
-                            <p>Subscribe our newsletter for latest <br /> security related <br /> knowledge</p>
+                            <p>Subscribe our newsletter for latest <br /> security related knowledge</p>
                             <SubscribeForm />
                         </div>
                         <div className="w-full max-w-[642px] flex justify-between flex-wrap gap-10">
@@ -132,10 +132,10 @@ export default async function Footer() {
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between text-white pt-10">
-                        <span>{copyRight?.data?.text || "Powered by Ontik Creative"}</span>
+                        <span className="text-[##E6E7EB] text-sm sm:text-base sm:leading-6 font-roboto font-medium">{copyRight?.data?.text || "Powered by Ontik Creative"}</span>
                         <div className="flex gap-4 flex-wrap">
-                            <Link href="/privacy-policy">Privacy Policy</Link>
-                            <Link href="/terms-conditions">Terms & Conditions</Link>
+                            <Link className="text-[#F4F4F6] text-sm sm:text-base sm:leading-6 font-dmsans font-medium transition-all hover:text-white/50 pr-5 border-r border-white last:border-r-0 last:pr-0" href="/privacy-policy">Privacy Policy</Link>
+                            <Link className="text-[#F4F4F6] text-sm sm:text-base sm:leading-6 font-dmsans font-medium transition-all hover:text-white/50 pr-5 border-r border-white last:border-r-0 last:pr-0" href="/terms-conditions">Terms & Conditions</Link>
                             <span>{infomation?.data?.address || "House No-15, Road No- 7, Block- C, Gulshan, Niketon, Dhaka-1212"}</span>
                         </div>
                     </div>

@@ -41,7 +41,7 @@ export default function SubscribeForm() {
         <form onSubmit={handleSubmit} className="mt-6">
             <div className="flex items-center gap-1">
                 <input
-                    className="bg-white rounded-full focus:outline-0 text-sm leading-3.5 font-roboto py-[13px] px-4 text-[#142149] w-full max-w-[241px]"
+                    className="bg-white rounded-full focus:outline-0 text-sm leading-3.5 font-roboto py-[13px] px-4 text-[#142149] w-full max-w-[241px] placeholder:text-[#142149] focus:outline-blue"
                     type="email"
                     required
                     placeholder="Enter your email"

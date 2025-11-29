@@ -20,20 +20,20 @@ export default async function HomePageSuccessStoriesRelated() {
                         <>
                             {successStoriesItem?.results?.data?.slice(0, 2)?.map((item: any) => {
                                 return (
-                                    <div className="group" key={item.id}>
-                                        <Link className="mb-3 sm:mb-6" href={`/case-studies/${item.slug}`}>
+                                    <div key={item.id}>
+                                        <Link className="mb-3 sm:mb-6 block" href={`/case-studies/${item.slug}`}>
                                             {item.image && (
                                                 <Image
                                                     src={item.image}
                                                     alt={item.title}
                                                     width={668}
                                                     height={516}
-                                                    className="transition-transform duration-500 ease-in-out group-hover:scale-105"
+                                                    className="transition-transform duration-500 ease-in-out hover:scale-105"
                                                 />
                                             )}
                                         </Link>
-                                        <span>{item.budget_description}</span>
-                                        <h3 className="mt-1 sm:mt-2 transition-all group-hover:text-blue">
+                                        <span className="block">{item.budget_description}</span>
+                                        <h3 className="mt-1 sm:mt-2 transition-all hover:text-blue">
                                             <Link href={`/case-studies/${item.slug}`}>
                                                 {item.title}
                                             </Link>
