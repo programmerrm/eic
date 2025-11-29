@@ -245,8 +245,6 @@ class Blog(models.Model):
         blank=True,
         upload_to='blogs/',
         validators=[VALIDATE_IMAGE_EXTENSION],
-        null=True,
-        blank=True,
         verbose_name=_('Author Image'),
         help_text=_('Upload blog author image...'),
     )
