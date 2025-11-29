@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django_filters',
     'configuration',
     'homepage',
+    'about_page',
     'services',
     'features',
     'contact',

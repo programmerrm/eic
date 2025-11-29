@@ -138,7 +138,7 @@ footer .menu ul li a:hover{
 }
 
 .custom-next, .custom-prev {
-  @apply relative! z-10 cursor-pointer bg-white rounded-full w-10 sm:w-12 h-10 sm:h-12 border border-[#E7E7E7] m-0 p-3 sm:p-4 text-body transition-all hover:bg-blue hover:text-white;
+  @apply relative! z-10 cursor-pointer bg-white rounded-full w-10 sm:w-12 h-10 sm:h-12 border border-[#E7E7E7] m-0 p-2 sm:p-3 text-body transition-all hover:bg-blue hover:text-white;
 }
 
 @media (max-width:768px) {
@@ -334,7 +334,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
 .pci-wrap{
     overflow: visible;
 }
@@ -420,4 +419,18 @@ html {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+
+:is(.swiper-button-prev,.swiper-button-next) svg {
+    fill: none !important;
+}
+
+.swiper-button-prev, .swiper-button-next {
+    color: #15374F !important;
+}
+
+:is(.custom-next,.custom-prev):hover {
+    background-color: #3384BD !important;
+    color: white !important;
 }
