@@ -12,6 +12,8 @@ from homepage.models import (
     CybersecuritySolutionTitle,
     OurProvenProcessSecurity,
     OurProvenProcessSecurityItems,
+    ReviewTopBar,
+    Review,
 )
 
 # ============ BANNER SERIALIZER ===============
@@ -54,4 +56,16 @@ class OurProvenProcessSecuritySerializer(serializers.ModelSerializer):
 class OurProvenProcessSecurityItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OurProvenProcessSecurityItems
+        fields = '__all__'
+
+# ============== Review Top Bar ===============
+class ReviewTopBarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReviewTopBar
+        fields = '__all__'
+
+# =========== REVIEW ==============
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
         fields = '__all__'

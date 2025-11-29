@@ -15,7 +15,9 @@ from homepage.models import (
     CybersecuritySolutionTitle, 
     CybersecuritySolutionItem,
     OurProvenProcessSecurity,
-    OurProvenProcessSecurityItems
+    OurProvenProcessSecurityItems,
+    ReviewTopBar,
+    Review,
 )
 from django import forms
 from django.db import models
@@ -315,3 +317,5 @@ admin.site.register(CybersecuritySolutionTitle)
 admin.site.register(CybersecuritySolutionItem)
 admin.site.register(OurProvenProcessSecurity)
 admin.site.register(OurProvenProcessSecurityItems)
+admin.site.register(ReviewTopBar)
+admin.site.register(Review)

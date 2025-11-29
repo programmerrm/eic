@@ -305,4 +305,64 @@ class OurProvenProcessSecurityItems(models.Model):
 
     def __str__(self):
         return f"Our proven process security item {self.title}"
-    
+
+# =========== REVIEW TOP BAR ===============
+class ReviewTopBar(models.Model):
+    title_before_span = models.CharField(
+        max_length=280, 
+        blank=True, 
+        null=True,
+        verbose_name=_('Review top bar title before span'),
+        help_text=_('Enter your review top bar before span...'),
+    )
+    title_span = models.CharField(
+        max_length=280, 
+        blank=True, 
+        null=True,
+        verbose_name=_('Review top bar title span'),
+        help_text=_('Enter your review top bar title span...'),
+    )
+    title_after_span = models.CharField(
+        max_length=280, 
+        blank=True, 
+        null=True,
+        verbose_name=_('Review top bar title after span'),
+        help_text=_('Enter your review top bar title after span...'),
+    )
+
+    def __str__(self):
+        return self.title_span or "Review Top"
+
+# =========== REVIEW ===============
+class Review(models.Model):
+    author_image = models.FileField(
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        upload_to='reviews',
+        null=True,
+        blank=True,
+        verbose_name=_('Author Image'),
+        help_text=_('Upload review author image...'),
+    )
+    author_name = models.CharField(
+        max_length=180,
+        null=True,
+        blank=True,
+        verbose_name=_('Author Name'),
+        help_text=_('Enter review author name...'),
+    )
+    author_bio = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Author Bio'),
+        help_text=_('Enter review author bio...'),
+    )
+    content = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('Review Content'),
+        help_text=_('Enter review content...'),
+    )
+
+    def __str__(self):
+        return self.author_name or "Autor data"

@@ -12,6 +12,8 @@ from api.homepage.views.homepage import (
     CybersecuritySolutionItemViewSet,
     OurProvenProcessSecurityViewSet,
     OurProvenProcessSecurityItemsViewSet,
+    ReviewViewSet,
+    ReviewTopBarViewSet,
 )
 
 router = DefaultRouter()
@@ -22,5 +24,7 @@ router.register(r'cyber-security-solution-title', CybersecuritySolutionTitleView
 router.register(r'cyber-security-solution-items', CybersecuritySolutionItemViewSet, basename='cyber_security_solution_items')
 router.register(r'our-proven-process-security', OurProvenProcessSecurityViewSet, basename='our_proven_process_security')
 router.register(r'our-proven-process-security-items', OurProvenProcessSecurityItemsViewSet, basename='our_proven_process_security_items')
+router.register(r'review-top-bar', ReviewTopBarViewSet, basename='review_top_bar')
+router.register(r'review-items', ReviewViewSet, basename='review_items')
 
 urlpatterns = router.urls

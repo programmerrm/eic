@@ -235,10 +235,14 @@ class Blog(models.Model):
         verbose_name=_('Slug'),
     )
     content = RichTextUploadingField(
+        null=True,
+        blank=True,
         verbose_name=_('Content'),
         help_text=_('Enter your blog content...'),
     )
     author_image = models.FileField(
+        null=True,
+        blank=True,
         upload_to='blogs/',
         validators=[VALIDATE_IMAGE_EXTENSION],
         null=True,
@@ -246,9 +250,20 @@ class Blog(models.Model):
         verbose_name=_('Author Image'),
         help_text=_('Upload blog author image...'),
     )
-    author_name = models.CharField(max_length=255)
-    author_bio = models.CharField(max_length=500)
-    author_description = models.TextField()
+    author_name = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    author_bio = models.CharField(
+        max_length=500,
+        null=True,
+        blank=True,
+    )
+    author_description = models.TextField(
+        null=True,
+        blank=True,
+    )
 
     author_facebook_url = models.URLField(blank=True, null=True)
     author_twitter_url = models.URLField(blank=True, null=True)

@@ -36,7 +36,7 @@ export default function Header() {
 
     return (
         <header
-            className={`home-page fixed top-0 left-0 right-0 z-50 transition-all duration-500 
+            className={`home-page fixed top-0 left-0 right-0 z-9999 transition-all duration-500 
             ${isScrolled ? "bg-white! shadow-md py-3 sm:py-6" : "py-7 md:py-[54px]"}`}
         >
             <div className="container">
