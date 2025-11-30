@@ -88,8 +88,15 @@ footer .menu ul li a:hover {
     @apply relative pl-6 mb-3.5 after:absolute after:top-1/2 after:left-0 after:-translate-y-1/2 after:w-3 after:h-3 after:bg-blue after:rounded-full last-of-type:mb-0
 }
 
+
 .our-core-value {
-    @apply max-w-[767px] h-[178px] sm:h-[345px] md:h-[428px] sm:w-full relative mx-auto w-[320px] 
+    @apply max-w-[767px] h-[178px] sm:h-[345px] md:h-[428px] sm:w-full relative mx-auto w-[320px];
+
+    background: linear-gradient(
+        180deg,
+        rgba(70, 129, 170, 0) 37.13%,
+        #146CA9 71.11%
+    );
 }
 
 .our-core-value {
@@ -170,9 +177,16 @@ footer .menu ul li a:hover {
 
 /* slider css end */
 
-/* .protection-active {
-    @apply shadow-[25px_36px_18px_rgba(0, 0, 0, 0.01), 14px_20px_15px_rgba(0, 0, 0, 0.05), 6px_9px_11px_rgba(0, 0, 0, 0.09), 2px_2px_6px_rgba(0, 0, 0, 0.1)];
-} */
+.protection-active {
+    /* Tailwind utilities */
+    @apply relative;
+
+    box-shadow:
+        25px 36px 18px rgba(0, 0, 0, 0.01),
+        14px 20px 15px rgba(0, 0, 0, 0.05),
+        6px 9px 11px rgba(0, 0, 0, 0.09),
+        2px 2px 6px rgba(0, 0, 0, 0.1);
+}
 
 .protection-list li {
     @apply list-disc ml-5 text-sm sm:text-base;
@@ -332,9 +346,9 @@ footer .menu ul li a:hover {
         @apply text-blue-dark;
     }
 
-    /* .security-active {
-        @apply filter drop-shadow-[6px_6px_8px_rgba(50, 50, 0, 0.1)];
-    } */
+    .security-active {
+        @apply filter drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)];
+    }
 
     .security-inner {
         @apply bg-blue;
@@ -431,13 +445,11 @@ html {
         height: 124%;
         transform: translateX(311px);
     }
-
     .eic-home .pci-wrap::after {
         width: 195%;
         height: 110%;
         transform: translateX(312px);
     }
-
 }
 
 @media(max-width:767px) {
@@ -492,7 +504,6 @@ html {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-
 
 :is(.swiper-button-prev, .swiper-button-next) svg {
     fill: none !important;
