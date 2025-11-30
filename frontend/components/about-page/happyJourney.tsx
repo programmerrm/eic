@@ -74,16 +74,16 @@ export default function HappyJourney() {
                     {happyJourneyItemData?.map((item: any) => {
                         return (
                             <div
-                                className="flex justify-center gap-5 sm:gap-[51px] group even:flex-row-reverse"
+                                className="flex justify-center gap-5 sm:12 lg:gap-24 group even:flex-row-reverse"
                                 key={item.id}
                             >
                                 <div className="w-[40%] sm:w-full max-w-[580px] pt-8 md:pt-[51px] pb-10 md:pb-20">
                                     <div
-                                        className="flex items-center justify-end gap-4 group-even:flex-row-reverse relative after:absolute after:top-1/2 after:-translate-y-1/2 group-even:after:-left-9 sm:group-even:after:-left-[65px] 2xl:group-even:after:-left-[67px] group-odd:after:-right-9 sm:group-odd:after:-right-[65px] 2xl:group-odd:after:-right-[67px] after:content-[''] after:w-6 after:h-6 after:rounded-full after:bg-white"
+                                        className="flex items-center justify-end gap-4 group-even:flex-row-reverse relative after:absolute after:top-1/2 after:-translate-y-1/2 group-even:after:-left-9 sm:group-even:after:-left-[34px] lg:group-even:after:-left-[111px] group-odd:after:-right-9 sm:group-odd:after:-right-[34px] lg:group-odd:after:-right-[111px] after:content-[''] after:w-6 after:h-6 after:rounded-full after:bg-white"
                                     >
 
 
-                                        <span className="absolute top-1/2 -translate-y-1/2 group-even:-left-9 sm:group-even:-left-[65px] 2xl:group-even:-left-[67px] group-odd:-right-9 sm:group-odd:-right-[65px] 2xl:group-odd:-right-[67px] content-[''] w-6 h-6 rounded-full bg-white z-10 "></span>
+                                        <span className="absolute top-1/2 -translate-y-1/2 group-even:-left-9 sm:group-even:-left-[34px] lg:group-even:-left-[111px] group-odd:-right-9 sm:group-odd:-right-[34px] lg:group-odd:-right-[111px] content-[''] w-6 h-6 rounded-full bg-white z-10 "></span>
 
 
                                         <h3 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl lg:leading-12">

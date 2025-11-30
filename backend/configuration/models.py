@@ -101,9 +101,9 @@ class SocialLink(models.Model):
 
 # ============= NOT FOUND CONTENT ==================
 class NotFoundContent(models.Model):
-    image = models.ImageField(
+    image = models.FileField(
         upload_to='not-found/',
-        validators=[VALIDATE_IMAGE_EXTENSION, VALIDATE_IMAGE_SIZE],
+        validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Image'),
         help_text=_('Upload your website not found image...'),
     )
