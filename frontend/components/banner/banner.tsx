@@ -11,7 +11,7 @@ export default async function Banner() {
     });
     return (
         <>
-            <section className="mobile-bg-hide relative pb-11 w-full mx-auto overflow-hidden bg-cover bg-top bg-no-repeat"
+            <section className="mobile-bg-hide relative pb-5 w-full mx-auto overflow-hidden bg-cover bg-top bg-no-repeat"
                 style={{
                     backgroundImage: `url(${BannerImg.src})`,
                 }}
@@ -25,7 +25,7 @@ export default async function Banner() {
                             {banner?.data?.description && (
                                 <p className="w-full max-w-[606px] text-base sm:text-xl md:text-2xl md:leading-8 font-normal text-[#245E86] font-spacegrotesk my-4 sm:my-8">{banner?.data?.description}</p>
                             )}
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                                 {banner?.data?.secure_business_btn_name && (
                                     <Link href={banner?.data?.secure_business_btn_url || ""} className="w-fit btn-primary group">{banner?.data?.secure_business_btn_name}
                                         <svg

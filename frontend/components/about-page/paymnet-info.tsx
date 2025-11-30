@@ -10,10 +10,10 @@ export default async function PaymentInfo() {
     return (
         <>
             {paymnetInfo?.data && (
-                <section className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
+                <div className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
                     <div className="container">
-                        <div className="flex flex-col lg:flex-row gap-y-10 gap-x-5 justify-between">
-                            <div className="w-full lg:max-w-[37.720%] pr-9 lg:mt-8 xl:mt-16 2xl:mt-28 order-2 lg:order-1">
+                        <div className="flex items-center flex-col lg:flex-row gap-y-10 gap-x-5 justify-between">
+                            <div className="w-full lg:max-w-[37.720%] pr-9 order-2 lg:order-1">
                                 <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
                                     <span className="text-blue">{paymnetInfo?.data?.title_span}</span> {paymnetInfo?.data?.title_after_span}</h2>
                                 <p className=" text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[555px]">{paymnetInfo?.data?.description}</p>
@@ -45,7 +45,7 @@ export default async function PaymentInfo() {
                             </div>
                         </div>
                     </div>
-                </section >
+                </div >
             )}
         </>
     );

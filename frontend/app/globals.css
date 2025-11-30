@@ -85,7 +85,7 @@ footer .menu ul li a:hover {
 }
 
 .why-choose ul li {
-    @apply relative pl-6 mb-3.5 after:absolute after:top-1/2 after:left-0 after:-translate-y-1/2 after:w-3 after:h-3 after:bg-blue after:rounded-full last-of-type:mb-0
+    @apply relative pl-6 mb-3.5 after:absolute after:top-1/2 after:left-0 after:-translate-y-1/2 after:w-3 after:h-3 after:bg-blue after:rounded-full last-of-type:mb-0 text-body
 }
 
 
@@ -122,57 +122,50 @@ footer .menu ul li a:hover {
 }
 
 /* slider css start */
-.swiper-wrapper {
+.swiper-wrapper{
     align-items: center;
     padding-bottom: 80px;
 }
 
 .swiper-slide {
-    filter: blur(2px);
-    transition: all 0.3s ease;
+  filter: blur(2px);
+  transition: all 0.3s ease;
 }
-
-.swiper-slide-active {
+.swiper-slide-active{
     filter: blur(0);
 }
-
-.swiper-slide-active .slide-content {
+ 
+.swiper-slide-active .slide-content{
     padding: 54px 34px !important;
 }
-
-.swiper-slide-active .content {
+.swiper-slide-active .content{
     margin-top: 96px !important;
 }
-
 .swiper-button-next::after,
 .swiper-button-prev::after {
-    content: none;
+  content: none;
 }
-
-.custom-next,
-.custom-prev {
+.custom-next, .custom-prev{
     top: inherit !important;
+    padding: 0;
 }
-
-.swiper-btn-wrap {
+.swiper-btn-wrap{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.custom-next,
-.custom-prev {
-    @apply relative z-10 cursor-pointer bg-white rounded-full w-10 sm:w-12 h-10 sm:h-12 border border-[#E7E7E7] m-0 p-2 sm:p-3 text-body transition-all hover:bg-blue hover:text-white;
+.custom-next, .custom-prev {
+  @apply relative! z-10 cursor-pointer bg-white rounded-full w-10 sm:w-12 h-10 sm:h-12 border border-[#E7E7E7] m-0 p-2 sm:p-3 text-body transition-all hover:bg-blue hover:text-white;
 }
 
 @media (max-width:768px) {
-    .swiper-slide-active .slide-content {
+     .swiper-slide-active .slide-content{
         padding: 32px 16px !important;
     }
-
-    .swiper-slide-active .content {
+    .swiper-slide-active .content{
         margin-top: 40px !important;
-    }
+}
 }
 
 /* slider css end */
@@ -594,4 +587,18 @@ html {
         font-size: 14px;
         line-height: 20px;
     }
+}
+
+@layer utilities {
+  .compliance-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/images/compliance-bg.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    z-index: -99;
+    top:185px;
+  }
 }

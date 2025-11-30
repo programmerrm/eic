@@ -45,7 +45,7 @@ export default async function Footer() {
             }}>
                 <div className="container">
                     <div className="flex items-center justify-between border-b border-[#EBF3F833]/20 py-5">
-                        <Link className="w-fit" href="/">
+                        <Link className="w-full max-w-16 md:max-w-[114px]" href="/">
                             {logo?.data?.image ? (
                                 <Image
                                     className="w-full"

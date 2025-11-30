@@ -13,7 +13,7 @@ export default async function SectionBanner({ topBarData }: any) {
                             <h1 className="uppercase">{topBarData?.title}</h1>
                         )}
                         {topBarData?.description && (
-                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-4 sm:mt-6 w-full max-w-4/5 lg:max-w-[60%] mx-auto">{topBarData?.description}</p>
+                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-2 sm:mt-4 w-full lg:max-w-[626px] mx-auto">{topBarData?.description}</p>
                         )}
                     </div>
                 </div>

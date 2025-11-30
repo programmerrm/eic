@@ -18,7 +18,7 @@ export default async function AboutSecurity() {
                             <span className="text-blue">{security_firm_data?.data?.title_span}</span> {security_firm_data?.data?.title_normal}
                         </h2>
                         {security_firm_data?.data?.main_img && (
-                            <div>
+                            <div className="mt-5 md:mt-10 lg:mt-20">
                                 {security_firm_data?.data?.main_img && (
                                     <Image src={`${MEDIA_URL}${security_firm_data?.data?.main_img}`} alt="security" width={655} height={555} />
                                 )}

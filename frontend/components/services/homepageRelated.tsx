@@ -9,7 +9,7 @@ export default async function HomePageRelated() {
         tag: "services-item",
     });
     return (
-        <section className="pt-12 md:pt-[100px] pb-6 md:pb-12 mb-12 lg:mb-24 bg-contain bg-top-right bg-no-repeat"
+        <section className="pt-5 md:pt-10 lg:pt-[52px] mt-5 md:mt-10 lg:mt-12 pb-3 md:pb-6 mb-12 lg:mb-24 bg-contain bg-top-right bg-no-repeat"
             style={{
                 backgroundImage: `url(${BannerImg.src})`,
             }}>
@@ -23,7 +23,7 @@ export default async function HomePageRelated() {
                             <Link className="h-full transition-all hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]" href={`/services/${item.slug}`} key={item.id}>
                                 <div className="h-full bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
                                     <div className="h-full bg-white rounded-2xl pt-5 xl:pt-8 pb-5 xl:pb-6 pl-6 xl:pl-10 pr-5 xl:pr-8 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
-                                        <div className="text-center sm:text-start">
+                                        <div className="text-center sm:text-start flex flex-col justify-between h-full">
                                             <div className="flex items-center justify-center px-16">
                                                 <Image
                                                     src={item.image}
@@ -32,8 +32,10 @@ export default async function HomePageRelated() {
                                                     height={220}
                                                 />
                                             </div>
-                                            <h3 className="mt-2.5">{item.title}</h3>
-                                            <p className=" mt-3 mx-auto sm:mx-0">{item.description}</p>
+                                            <div>
+                                                <h3 className="mt-2.5">{item.title}</h3>
+                                                <p className=" mt-3 mx-auto sm:mx-0">{item.description}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

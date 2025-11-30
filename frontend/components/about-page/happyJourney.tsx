@@ -102,7 +102,7 @@ export default function HappyJourney() {
                                     <h3 className="text-white text-xl sm:text-3xl md:text-4xl lg:text-[40px] lg:leading-12">
                                         {item.title}
                                     </h3>
-                                    <p className="text-sm sm:text-base sm:leading-6 font-medium font-dmsans text-white mt-4 text-justify">
+                                    <p className="text-sm sm:text-base sm:leading-6 font-medium font-dmsans text-white mt-4">
                                         {item.description}
                                     </p>
                                 </div>
@@ -110,7 +110,7 @@ export default function HappyJourney() {
                         );
                     })}
                     <div
-                        className="absolute left-1/2 -translate-x-1/2 w-full h-auto flex items-center justify-center z-20"
+                        className="absolute left-1/2 -translate-x-1/2 w-full max-w-10 lg:max-w-[74px] h-auto flex items-center justify-center z-20"
                         style={{
                             top: fingerTop > 40 ? `${fingerTop + 150}px` : `${fingerTop}px`,
                         }}
