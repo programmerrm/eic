@@ -70,10 +70,10 @@ export default function Services() {
                                                     </div>
                                                     <div className="content mt-5 sm:mt-0">
                                                         {item?.title && (
-                                                            <h3 className="mt-2.5 text-lg font-semibold">{item.title}</h3>
+                                                            <h3 className="mt-2.5">{item.title}</h3>
                                                         )}
                                                         {item?.description && (
-                                                            <p className="mt-3 text-sm text-gray-700">{item.description}</p>
+                                                            <p className="mt-3 text-base sm:text-lg font-normal">{item.description}</p>
                                                         )}
                                                         <span className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4 cursor-pointer">
                                                             Read More

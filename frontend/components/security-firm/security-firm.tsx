@@ -12,8 +12,8 @@ export default async function SecurityFirm() {
     return (
         <section className="bg-[#EBF3F8] py-12 md:py-[100px]">
             <div className="container">
-                <div className="flex flex-col md:flex-row">
-                    <div className="w-full md:max-w-[52.058%] lg:pt-8">
+                <div className="flex flex-col lg:flex-row">
+                    <div className="w-full lg:max-w-[52.058%] lg:pt-8">
                         <h2>
                             <span className="text-blue">{security_firm_data?.data?.title_span}</span> {security_firm_data?.data?.title_normal}
                         </h2>
@@ -67,7 +67,7 @@ export default async function SecurityFirm() {
             </div>
             <div className="border-t-2 border-[#C0D9EB] pt-12 md:pt-[100px]">
                 <div className="container">
-                    <div className="flex flex-col md:flex-row items-center gap-8 xl:gap-16">
+                    <div className="flex flex-col lg:flex-row items-center gap-8 xl:gap-16">
                         <Progressbar
                             response={security_firm_data?.data?.response_persentences}
                             compliance={security_firm_data?.data?.compliance_persentences}

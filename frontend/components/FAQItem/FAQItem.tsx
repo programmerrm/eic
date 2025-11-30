@@ -19,7 +19,7 @@ export default function FAQItem({ question, answer, isActive, onClick }: FAQItem
             onClick={onClick}
         >
             <div className="flex flex-row flex-wrap justify-between items-center w-full">
-                <h4 className={`${isActive ? "text-white!" : " text-[#4E5B76]!"}`}>{question}</h4>
+                <h4 className={`w-full max-w-[90%] ${isActive ? "text-white!" : " text-[#4E5B76]!"}`}>{question}</h4>
                 <Image
                     src={isActive ? Minus : Plus}
                     alt="icon"

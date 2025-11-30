@@ -19,7 +19,7 @@ export default function FAQ({ faqItems }: FAQProps) {
     };
 
     return (
-        <div className="w-full max-w-[696px] space-y-4 mt-10 md:mt-20">
+        <div className="w-full max-w-[696px] space-y-4 lg:mt-20">
             {faqItems.map((item, index) => (
                 <FAQItem
                     key={index}

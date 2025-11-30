@@ -78,7 +78,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                             </div>
                                             <h4 className="text-white mt-6 lg:min-h-[100px]">{item.title}</h4>
                                             <div className="h-0.5 w-full lg:max-w-full bg-white/30 mt-4"></div>
-                                            <p className="text-sm sm:text-base mt-4 text-justify">{item.description}</p>
+                                            <p className="text-sm sm:text-base mt-4">{item.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -214,11 +214,11 @@ export default async function SingleService({ params }: SingleServiceProps) {
                 <div className="container">
                     <div className="flex flex-col lg:flex-row gap-5 justify-between">
                         <div className="w-full lg:max-w-[37.720%] pr-9 mt-8 lg:mt-16 xl:mt-28">
-                            <h2 >
+                            <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">
                                 {singleServiceData?.payment_info?.title_after_span}<span
                                     className="text-blue"> {singleServiceData?.payment_info?.title_span}</span> {singleServiceData?.payment_info?.title_after_span}
                             </h2>
-                            <p className="text-base sm:text-xl md:text-2xl text-[#245E86] mt-3 sm:mt-3 mb-6 font-spacegrotesk">
+                            <p className="text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[575px] font-spacegrotesk">
                                 {singleServiceData?.payment_info?.description}
                             </p>
                         </div>
@@ -355,8 +355,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     <div className="container">
                         <div className="flex flex-col lg:flex-row items-center">
 
-                            <div className="w-full lg:max-w-[60.955%] order-2 lg:order-1">
-                                <h2 className="max-w-[658px]">
+                            <div className="w-full lg:max-w-[60.955%] order-2 lg:order-1 mt-5 lg:mt-0">
+                                <h2 className="max-w-[658px] text-center lg:text-right">
                                     <span className="text-blue">FAQs</span> {singleServiceData?.faqs?.[0]?.title}
                                 </h2>
                                 <div className="w-full max-w-[696px] space-y-4 mt-10">
@@ -364,7 +364,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 </div>
                             </div>
 
-                            <div className="w-full lg:max-w-[40%] order-1 lg:order-2">
+                            <div className="w-full lg:max-w-[40%] order-1 lg:order-2 flex lg:block items-center justify-center">
                                 {singleServiceData?.faqs?.[0]?.image && (
                                     <Image
                                         src={singleServiceData?.faqs?.[0]?.image}
