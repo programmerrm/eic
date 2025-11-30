@@ -17,6 +17,7 @@ from configuration.models import (
     ComplianceTitle,
     ComplianceItem,
     Subscribe,
+    ScheduleACall,
 )
 from api.configuration.serializers.configuration import (
     FaviconSerializer,
@@ -28,6 +29,7 @@ from api.configuration.serializers.configuration import (
     ComplianceTitleSerializer,
     ComplianceItemSeriliazer,
     SubscribeSeriliazer,
+    ScheduleACallSeriliazer,
 )
 
 # ======== FAVICON VIEW =========== 
@@ -201,4 +203,12 @@ class SubscribeView(viewsets.ModelViewSet):
                 'message': 'Failed to submit subscribe form.',
                 'error': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
-        
+
+class ScheduleACallView(viewsets.ModelViewSet):
+    serializer_class = ScheduleACallSeriliazer
+
+    def get_queryset(self):
+        obj = ScheduleACall.objects.first()
+        if obj:
+            return ScheduleACall.objects.filter(id=obj.id)
+        return ScheduleACall.objects.none()

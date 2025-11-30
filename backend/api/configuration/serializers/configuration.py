@@ -15,6 +15,7 @@ from configuration.models import (
     ComplianceItem,
     ComplianceItemList,
     Subscribe,
+    ScheduleACall,
 )
 
 # ============ FAVICON SERIALIZER ===============
@@ -77,3 +78,9 @@ class SubscribeSeriliazer(serializers.ModelSerializer):
     class Meta:
         model = Subscribe
         fields = '__all__'
+
+class ScheduleACallSeriliazer(serializers.ModelSerializer):
+    class Meta:
+        model = ScheduleACall
+        fields = '__all__'
+        

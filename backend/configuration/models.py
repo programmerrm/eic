@@ -228,3 +228,14 @@ class Subscribe(models.Model):
 
     def __str__(self):
         return self.email
+
+class ScheduleACall(models.Model):
+    number = models.CharField(
+        null=True,
+        blank=True,
+        max_length=50,
+        verbose_name=_('Number'),
+    )
+
+    def __str__(self):
+        return f"Schedule A Call"

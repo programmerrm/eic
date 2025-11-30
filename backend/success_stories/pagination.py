@@ -6,7 +6,7 @@ SUCCESS STORIES LIMIT PAGINATION
 from rest_framework.pagination import LimitOffsetPagination
 
 class CumulativePagination(LimitOffsetPagination):
-    default_limit = 2
+    default_limit = 6
     max_limit = 100
 
     def paginate_queryset(self, queryset, request, view=None):

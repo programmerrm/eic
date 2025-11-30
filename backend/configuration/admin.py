@@ -16,6 +16,7 @@ from configuration.models import (
     ComplianceItemList,
     ComplianceItem,
     Subscribe,
+    ScheduleACall,
 )
 
 class LogoAdmin(admin.ModelAdmin):
@@ -47,3 +48,4 @@ admin.site.register(ComplianceTitle)
 admin.site.register(ComplianceItemList)
 admin.site.register(ComplianceItem)
 admin.site.register(Subscribe)
+admin.site.register(ScheduleACall)

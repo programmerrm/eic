@@ -14,6 +14,7 @@ from api.configuration.views.configuration import (
     ComplianceTitleView,
     ComplianceItemView,
     SubscribeView,
+    ScheduleACallView,
 )
 
 router = DefaultRouter()
@@ -26,5 +27,6 @@ router.register(r'stay-compliant', StayCompliantView, basename='stay_compliant')
 router.register(r'compliance-title', ComplianceTitleView, basename='compliance_title')
 router.register(r'compliance-item', ComplianceItemView, basename='compliance_item')
 router.register(r'subscribe', SubscribeView, basename='subscribe')
+router.register(r'schedule-a-call', ScheduleACallView, basename='schedule_a_call')
 
 urlpatterns = router.urls
