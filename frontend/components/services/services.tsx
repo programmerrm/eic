@@ -47,7 +47,7 @@ export default function Services() {
                         {services && (
                             <div
                                 id="items"
-                                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6 md:mt-12"
+                                className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:mt-12"
                             >
                                 {services.map((item: any) => (
                                     <Link

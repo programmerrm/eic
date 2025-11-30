@@ -13,7 +13,7 @@ export default async function Features() {
     const featureTitle = featureTitleRes?.data || null;
     const featureItems = Array.isArray(featureItemsRes?.data) ? featureItemsRes.data : [];
     return (
-        <section className="py-12 md:py-[100px]">
+        <section className="py-6 md:py-12 lg:py-[100px]">
             <div className="container">
                 {featureTitle && (
                     <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-20 gap-5">

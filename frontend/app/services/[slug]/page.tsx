@@ -31,7 +31,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
             <SectionBanner topBarData={topBar} />
             {/* MAIN ITEM SECTION */}
             {singleServiceData?.main_item && (
-                <section className="py-12 md:py-[100px]">
+                <section className="py-6 md:py-12 lg:py-[100px]">
                     <div className="container">
                         <h2 className="w-full max-w-[692px]">
                             {singleServiceData?.main_item?.normal_title}{" "}
@@ -59,7 +59,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {/* INCLUDE TOP SECTION */}
             {(singleServiceData?.include_top_title ||
                 singleServiceData?.include_top_items?.length > 0) && (
-                    <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
+                    <section className="bg-blue pt-6 md:pt-12 lg:pt-[100px] pb-6 md:pb-11 lg:pb-[90px]">
                         <div className="container">
                             <div className="text-white">
                                 <div className="mb-10 md:mb-[114px] w-full max-w-[668px]">
@@ -146,7 +146,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                 Array.isArray(complianceItemData) &&
                 complianceItemData.length > 0 && (
                     <section
-                        className="pb-[270px] sm:pb-[300px] pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat lg:mt-[-290px]"
+                        className="pb-[270px] sm:pb-[300px] pt-6 md:pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat lg:mt-[-290px]"
                         style={{ backgroundImage: `url(${trustedForProven.src})` }}
                     >
                         <div
@@ -163,7 +163,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                         {complianceTitleData[0]?.title_after_span}
                                     </h2>
                                     {complianceTitleData[0]?.btn_url && (
-                                        <div className="flex items-center sm:max-w-[300px] w-full justify-center sm:justify-end">
+                                        <div className="flex items-center sm:max-w-[300px] w-full justify-start sm:justify-end">
                                             <Link href={complianceTitleData[0]?.btn_url} className="btn-primary group">
                                                 {complianceTitleData[0]?.btn_name}
                                                 <svg
@@ -242,7 +242,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {/* INCLUDE BOTTOM SECTION */}
             {(singleServiceData?.include_bottom_title ||
                 singleServiceData?.include_bottom_items?.length > 0) && (
-                    <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
+                    <section className="bg-blue pt-6 md:pt-12 lg:pt-[100px] pb-6 md:pb-11 lg:pb-[90px]">
                         <div className="container">
                             <div className="mb-5 md:mb-10 w-full max-w-[668px]">
                                 <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
@@ -274,7 +274,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {/* RELATED SERVICES */}
             {singleServiceData?.related_services?.length > 0 && (
                 <section
-                    className="mt-12 md:mt-[100px] pb-12 lg:pb-[164px] bg-contain bg-top-right bg-no-repeat"
+                    className="mt-12 lg:mt-[100px] pb-6 md:pb-12 lg:pb-[164px] bg-contain bg-top-right bg-no-repeat"
                     style={{ backgroundImage: `url(${RelatedBGImg.src})` }}
                 >
                     <div className="container">
@@ -290,38 +290,44 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 >
                                     <div className="h-full bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
                                         <div className="h-full bg-white rounded-2xl pt-5 xl:pt-8 pb-5 xl:pb-6 pl-6 xl:pl-10 pr-5 xl:pr-8 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
-                                            <div className="text-center sm:text-start">
-                                                <div className="flex items-center justify-center px-16">
-                                                    <Image
-                                                        src={item?.image}
-                                                        alt={item?.title}
-                                                        width={220}
-                                                        height={224}
-                                                    />
+                                            <div className="text-center sm:text-start flex flex-col justify-between h-full">
+                                                <div className="text-center sm:text-start">
+                                                    <div className="flex items-center justify-center px-16">
+                                                        <Image
+                                                            src={item?.image}
+                                                            alt={item?.title}
+                                                            width={235}
+                                                            height={224}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="content mt-5 sm:mt-0">
+                                                    <h3 className="mt-2.5">{item?.title}</h3>
+                                                    <p className=" mt-3 mx-auto sm:mx-0">
+                                                        {item.description}
+                                                    </p>
+                                                    <span
+                                                        className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4">Read
+                                                        More
+                                                        <svg
+                                                            className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                        >
+                                                            <path
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth={1.5}
+                                                                d="M6 18 18 6m0 0H9m9 0v9"
+                                                            />
+                                                        </svg>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <h3 className="mt-2.5">{item?.title}</h3>
-                                            <p className=" mt-3 mx-auto sm:mx-0">
-                                                {item.description}
-                                            </p>
-                                            <span
-                                                className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4">Read
-                                                More
-                                                <svg
-                                                    className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        stroke="currentColor"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={1.5}
-                                                        d="M6 18 18 6m0 0H9m9 0v9"
-                                                    />
-                                                </svg>
-                                            </span>
+                                            
+                                            
                                         </div>
                                     </div>
                                 </Link>
@@ -351,12 +357,12 @@ export default async function SingleService({ params }: SingleServiceProps) {
 
             {/* FAQ SECTION */}
             {singleServiceData?.faqs?.length > 0 && (
-                <section className="pb-12 md:pb-[100px]">
+                <section className="pb-12 lg:pb-[100px]">
                     <div className="container">
                         <div className="flex flex-col lg:flex-row items-center">
 
                             <div className="w-full lg:max-w-[60.955%] order-2 lg:order-1 mt-5 lg:mt-0">
-                                <h2 className="max-w-[658px] text-center lg:text-right">
+                                <h2 className="max-w-[500px]">
                                     <span className="text-blue">FAQs</span> {singleServiceData?.faqs?.[0]?.title}
                                 </h2>
                                 <div className="w-full max-w-[696px] space-y-4 mt-10">

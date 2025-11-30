@@ -8,12 +8,12 @@ export default async function SectionBanner({ topBarData }: any) {
                 <div className="bg-bottom bg-contain bg-no-repeat" style={{
                     backgroundImage: `url(${BannerImg.src})`,
                 }}>
-                    <div className="py-10 sm:py-20 md:py-40 lg:py-[232px] text-white text-center ">
+                    <div className="py-10 sm:py-20 lg:py-40 xl:py-[232px] text-white text-center ">
                         {topBarData?.title && (
                             <h1 className="uppercase">{topBarData?.title}</h1>
                         )}
                         {topBarData?.description && (
-                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-4 sm:mt-8 w-full max-w-4/5 lg:max-w-[60%] mx-auto">{topBarData?.description}</p>
+                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-4 sm:mt-6 w-full max-w-4/5 lg:max-w-[60%] mx-auto">{topBarData?.description}</p>
                         )}
                     </div>
                 </div>

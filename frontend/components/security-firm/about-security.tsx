@@ -5,15 +5,15 @@ import Link from "next/link";
 import PaymentInfo from "../about-page/paymnet-info";
 
 export default async function AboutSecurity() {
-    const security_firm_data = await getFetchData('/homepage/security-firm/', {
+    const security_firm_data = await getFetchData('/about/security-firm/', {
         tag: "security-firm-data",
     });
     const bgImage = security_firm_data?.data?.bg ? `${MEDIA_URL}${security_firm_data.data.bg}` : null;
     return (
         <section className="bg-white py-12 md:py-[100px]">
             <div className="container">
-                <div className="flex flex-col md:flex-row">
-                    <div className="w-full md:max-w-[52.058%] lg:pt-8">
+                <div className="flex flex-col lg:flex-row">
+                    <div className="w-full lg:max-w-[52.058%] lg:pt-8">
                         <h2>
                             <span className="text-blue">{security_firm_data?.data?.title_span}</span> {security_firm_data?.data?.title_normal}
                         </h2>
