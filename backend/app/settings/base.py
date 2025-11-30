@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'features',
     'contact',
     'blogs',
+    'faq',
     'success_stories',
     'privacy_policy',
     'terms_conditions',
