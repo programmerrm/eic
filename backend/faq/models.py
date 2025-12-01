@@ -92,6 +92,10 @@ class SeoTag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = _('SEO Tag')
+        verbose_name_plural = _('SEO Tag')
+
     def __str__(self):
         return self.title or "SEO Infomation added"
 
@@ -183,6 +187,10 @@ class Schema(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = _('SEO Schema')
+        verbose_name_plural = _('SEO Schema')
+
     def __str__(self):
         return f"{self.type} Schema"
 
@@ -229,6 +237,10 @@ class FaqTopBar(models.Model):
         help_text=_('Enter your faq top bar description...'),
     )
 
+    class Meta:
+        verbose_name = _('Faq Top Bar')
+        verbose_name_plural = _('Faq Top Bar')
+
     def __str__(self):
         return f"Faq top bar title : {self.title[:50]}"
     
@@ -246,6 +258,10 @@ class FaqSection(models.Model):
         help_text=_('Upload your faq section image...'),
     )
 
+    class Meta:
+        verbose_name = _('Faq Section')
+        verbose_name_plural = _('Faq Section')
+
     def __str__(self):
         return f"Faq section title : {self.title[:50]}"
 
@@ -260,6 +276,10 @@ class FaqItem(models.Model):
         verbose_name=_('Answer'),
         help_text=_('Enter your faq item answer...'),
     )
+
+    class Meta:
+        verbose_name = _('Faq Items')
+        verbose_name_plural = _('Faq Items')
 
     def __str__(self):
         return f"Faq item question : {self.question[:50]}"

@@ -22,6 +22,7 @@ urlpatterns = [
     path(f"{BASE_API}/success-stories/", include('api.success_stories.urls')),
     path(f"{BASE_API}/blogs/", include('api.blogs.urls')),
     path(f"{BASE_API}/contact/", include('api.contact.urls')),
+    path(f"{BASE_API}/faq/", include('api.faq.urls')),
     path(f"{BASE_API}/privacy-policy/", include('api.privacy_policy.urls')),
     path(f"{BASE_API}/terms-conditions/", include('api.terms_conditions.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),

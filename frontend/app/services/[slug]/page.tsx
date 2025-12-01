@@ -8,7 +8,6 @@ import complianceBG from "../../../public/images/compliance-bg.svg";
 import RelatedBGImg from "../../../public/images/related-image-bg.svg";
 import trustedForProven from "../../../public/images/trusted-for-proven.png";
 import FAQ from "@/components/FAQ/FAQ";
-import { MEDIA_URL } from "@/utils/api";
 
 type SingleServiceProps = {
     params: Promise<{ slug: string }>;
@@ -215,12 +214,30 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     <div className="flex flex-col lg:flex-row gap-5 justify-between">
                         <div className="w-full lg:max-w-[37.720%] pr-9 mt-8 lg:mt-16 xl:mt-28">
                             <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">
-                                {singleServiceData?.payment_info?.title_after_span}<span
+                                {singleServiceData?.payment_info?.title_before_span}<span
                                     className="text-blue"> {singleServiceData?.payment_info?.title_span}</span> {singleServiceData?.payment_info?.title_after_span}
                             </h2>
                             <p className="text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[575px] font-spacegrotesk">
                                 {singleServiceData?.payment_info?.description}
                             </p>
+                            <div className="btn-wrap">
+                                <Link href={""} className="btn-primary group inline-flex">Get Started
+                                    <svg
+                                        className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="M6 18 18 6m0 0H9m9 0v9"
+                                        />
+                                    </svg>
+                                </Link>
+                            </div>
                         </div>
                         <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end">
                             <div className="max-w-fit rounded-xl sm:rounded-3xl p-2 sm:p-[17px]">
@@ -326,8 +343,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                     </span>
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
                                         </div>
                                     </div>
                                 </Link>
