@@ -12,16 +12,20 @@ from ckeditor_uploader.fields import RichTextUploadingField
 # ==================== BLOG PAGE SEO TAGS ====================
 class SeoTag(models.Model):
     title = models.CharField(
-        max_length=255,
+        null=True,
+        blank=True,
+        max_length=380,
         verbose_name=_('SEO Title'),
         help_text=_('The title of the page for search engines and browser tab.')
     )
     description = models.TextField(
+        null=True,
+        blank=True,
         verbose_name=_('Meta Description'),
         help_text=_('A short description of the page for SEO purposes.')
     )
     keywords = models.TextField(
-        blank=True, 
+        blank=True,
         null=True,
         verbose_name=_('Meta Keywords'),
         help_text=_('Comma separated keywords for SEO.')
@@ -44,6 +48,14 @@ class SeoTag(models.Model):
         null=True,
         verbose_name=_('OG Image URL'),
         help_text=_('Image URL for Open Graph preview.')
+    )
+    og_image_file = models.ImageField(
+        upload_to="seo/",
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        blank=True,
+        null=True,
+        verbose_name=_('OG Image File'),
+        help_text=_('Upload OG image instead of or in addition to URL.')
     )
     og_url = models.URLField(
         blank=True, 
@@ -79,13 +91,17 @@ class SeoTag(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.title
+    class Meta:
+        verbose_name = _('SEO Tag')
+        verbose_name_plural = _('SEO Tag')
 
-# ==================== BLOG PAGE SCHEMA ====================
+    def __str__(self):
+        return self.title or "SEO Infomation added"
+
+# =========== BLOG PAGE SCHEMA ================
 class Schema(models.Model):
     context = models.CharField(
-        max_length=255,
+        max_length=280,
         default="https://schema.org",
         verbose_name=_('Context'),
         help_text=_('Always https://schema.org')
@@ -97,26 +113,33 @@ class Schema(models.Model):
         help_text=_('@type for JSON-LD')
     )
     name = models.CharField(
+        null=True,
+        blank=True,
         max_length=255,
         verbose_name=_('Page Name'),
         help_text=_('The name/title of the page.')
     )
     url = models.URLField(
+        null=True,
+        blank=True,
         verbose_name=_('URL'),
         help_text=_('Full URL of the page.')
     )
     description = models.TextField(
+        null=True,
+        blank=True,
         verbose_name=_('Description'),
         help_text=_('Page description for schema.org.')
     )
     contact_type = models.CharField(
-        max_length=100,
+        max_length=280,
         blank=True,
         null=True,
         verbose_name=_('Contact Type'),
         help_text=_('contactType for schema.org, e.g., Customer Support.')
     )
     email = models.EmailField(
+        max_length=280,
         blank=True,
         null=True,
         verbose_name=_('Email'),
@@ -129,7 +152,18 @@ class Schema(models.Model):
         verbose_name=_('Phone Number'),
         help_text=_('Contact phone number.')
     )
-
+    logo = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name=_('Logo URL'),
+        help_text=_('Logo URL for schema.org (recommended).')
+    )
+    address = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name=_('Address'),
+        help_text=_('Physical address for local business schema.')
+    )
     same_as_facebook = models.URLField(
         blank=True,
         null=True,
@@ -152,6 +186,10 @@ class Schema(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = _('SEO Schema')
+        verbose_name_plural = _('SEO Schema')
+
     def __str__(self):
         return f"{self.type} Schema"
 
@@ -169,6 +207,10 @@ class Schema(models.Model):
             data["email"] = self.email
         if self.phone_number:
             data["telephone"] = self.phone_number
+        if self.logo:
+            data["logo"] = self.logo
+        if self.address:
+            data["address"] = self.address
 
         same_as = []
         if self.same_as_facebook:
@@ -270,7 +312,31 @@ class Blog(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    tags = models.ManyToManyField(Tag, related_name="blogs", blank=True)
+    tags = models.ManyToManyField(
+        Tag,
+        related_name="blogs", 
+        blank=True,
+        null=True,
+        verbose_name=_('Tag'),
+    )
+    seo_tag = models.OneToOneField(
+        "SeoTag",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="blog",
+        verbose_name=_("SEO for this blog"),
+        help_text=_("Custom SEO meta for this blog detail page.")
+    )
+    schema = models.OneToOneField(
+        "Schema",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="blog",
+        verbose_name=_("Schema for this blog"),
+        help_text=_("JSON-LD schema for this blog detail page.")
+    )
 
     def __str__(self):
         return self.title
