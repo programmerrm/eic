@@ -12,7 +12,6 @@ from faq.models import FaqTopBar, FaqSection, FaqItem, SeoTag, Schema
 class SeoTagAdmin(admin.ModelAdmin):
     list_display = (
         "title",
-        "canonical",
         "og_type",
         "created_at",
         "updated_at",
@@ -24,7 +23,6 @@ class SeoTagAdmin(admin.ModelAdmin):
         "title",
         "description",
         "keywords",
-        "canonical",
         "og_title",
         "twitter_title",
     )
@@ -37,7 +35,6 @@ class SeoTagAdmin(admin.ModelAdmin):
                 "title",
                 "description",
                 "keywords",
-                "canonical",
                 "robots",
             )
         }),
