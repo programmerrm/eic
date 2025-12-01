@@ -15,10 +15,19 @@ export default async function Faq() {
     const faqItems = await getFetchData('/faq/item-list/', {
         tag: 'faq-items-data',
     });
+    const schemaData = await getFetchData('/faq/schema/', {
+        tag: 'faq-schema-data',
+    });
+    const jsonLd = schemaData?.data?.json_ld ? JSON.parse(schemaData.data.json_ld) : null;
 
     return (
         <>
-
+            {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
             <section className="mt-24 md:mt-36 banner-section bg-blue [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-60px)_100%,0_100%)] md:[clip-path:polygon(0_0,100%_0,100%_calc(100%-100px),calc(100%-150px)_100%,0_100%)]">
                 <div className="container">
                     <div className="bg-bottom bg-contain bg-no-repeat" style={{
@@ -35,7 +44,6 @@ export default async function Faq() {
                     </div>
                 </div>
             </section>
-
             <section className="py-12 md:py-[100px] ">
                 <div className="container">
                     <h2 className="w-full max-w-[458px] mx-auto lg:mx-0 text-center lg:text-start"><span className="text-blue">FAQs</span> {faqSection?.data?.title}</h2>
@@ -60,7 +68,6 @@ export default async function Faq() {
                     </div>
                 </div>
             </section>
-
             <StayCompliant />
         </>
     );
