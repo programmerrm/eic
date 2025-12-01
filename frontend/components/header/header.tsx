@@ -61,8 +61,8 @@ export default function Header() {
                     <nav
                         className={`absolute top-0 ${isOpen ? "left-0" : "left-[-9999px]"}
                         right-0 bg-white lg:bg-transparent w-full h-screen lg:h-auto 
-                        lg:w-auto lg:static flex items-center flex-col justify-between 
-                        lg:block py-10 lg:py-0 transition-all duration-500 ease-in-out overflow-y-auto`}
+                        lg:w-auto lg:static flex items-center flex-col justify-top 
+                        lg:block py-8 lg:py-0 transition-all duration-500 ease-in-out overflow-y-auto`}
                     >
                         <ul className="header-nav flex flex-col lg:flex-row items-center justify-center flex-wrap xl:gap-4">
                             <li>
@@ -84,7 +84,7 @@ export default function Header() {
                                 <Link href="/contact" className={isActive("/contact")} onClick={handleLinkClick}>Contact</Link>
                             </li>
                         </ul>
-                        <div className="lg:hidden flex items-center justify-center mt-5">
+                        <div className="lg:hidden flex items-center justify-center mt-20">
                             <a className="btn-primary group" href="">
                                 Schedule a Call
                                 <svg

@@ -35,6 +35,23 @@ export default async function HomePageRelated() {
                                             <div>
                                                 <h3 className="mt-2.5">{item.title}</h3>
                                                 <p className=" mt-3 mx-auto sm:mx-0">{item.description}</p>
+                                                <span className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4 cursor-pointer">
+                                                    Read More
+                                                    <svg
+                                                        className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6 ml-1"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            stroke="currentColor"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={1.5}
+                                                            d="M6 18 18 6m0 0H9m9 0v9"
+                                                        />
+                                                    </svg>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -44,7 +61,7 @@ export default async function HomePageRelated() {
                     })}
                 </div>
                 <div className="flex items-center justify-center mt-6 md:mt-12">
-                    <Link href="/services" className="btn-primary group">more services
+                    <Link href="/services" className="btn-primary group">View All Services
                         <svg
                             className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                             xmlns="http://www.w3.org/2000/svg"

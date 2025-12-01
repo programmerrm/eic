@@ -35,7 +35,7 @@ export default async function Page() {
                                     <h1 className="uppercase">{topBarData?.data?.title}</h1>
                                 )}
                                 {topBarData?.data?.description && (
-                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-bold font-spacegrotesk mt-4 sm:mt-8 w-full max-w-[626px] mx-auto">{topBarData?.data?.description}</p>
+                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-bold font-spacegrotesk mt-2 sm:mt-4 w-full max-w-[626px] mx-auto">{topBarData?.data?.description}</p>
                                 )}
                             </div>
                         </div>

@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
                     }}>
                         <div className="max-w-[1190px] mx-auto py-10 sm:py-20 md:py-40 lg:py-[232px] text-white text-center ">
                             <h1 className="uppercase">Privacy Policy</h1>
-                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-4 sm:mt-8 max-w-[626px] mx-auto">EIC the digital world by delivering innovative security solutions & promoting cybersecurity awareness.</p>
+                            <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-2 sm:mt-4 max-w-[626px] mx-auto">EIC the digital world by delivering innovative security solutions & promoting cybersecurity awareness.</p>
                         </div>
                     </div>
                 </div>

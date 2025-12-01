@@ -40,7 +40,7 @@ export default function CaseStudiesPage({ topBarData, initialItem, initialNext }
                             <div className="max-w-[740px] mx-auto py-10 sm:py-20 md:py-40 lg:py-[232px] text-white text-center ">
                                 {topBarData?.title && <h1 className="uppercase">{topBarData?.title}</h1>}
                                 {topBarData?.description && (
-                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-4 sm:mt-8 w-full max-w-[626px] mx-auto">
+                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-2 sm:mt-4 w-full max-w-[626px] mx-auto">
                                         {topBarData?.description}
                                     </p>
                                 )}

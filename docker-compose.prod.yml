@@ -23,13 +23,30 @@ services:
       - ./backend/media:/backend/media
     expose:
       - "8000"
+    depends_on:
+      - redis
     networks:
       - web
+      - backend
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_server
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
       - backend
 
   nginx:
     image: nginx:1.27-alpine
     restart: unless-stopped
+    depends_on:
+      - frontend
+      - backend
     ports:
       - "80:80"
       - "443:443"
@@ -46,3 +63,6 @@ networks:
     driver: bridge
   backend:
     driver: bridge
+
+volumes:
+  redis_data:

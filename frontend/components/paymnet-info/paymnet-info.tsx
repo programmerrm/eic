@@ -12,8 +12,8 @@ export default async function PaymentInfo() {
             {paymnetInfo?.data && (
                 <section className="relative z-10 pb-5 md:pb-10 mx-auto">
                     <div className="container">
-                        <div className="flex flex-col items-center md:mt-12 lg:mt-[90px] lg:flex-row  gap-5 justify-between">
-                            <div className="w-full lg:max-w-[37.720%] pr-9 order-2 lg:order-1">
+                        <div className="flex flex-col items-center md:mt-12 lg:mt-[108px] lg:flex-row  gap-5 justify-between">
+                            <div className="w-full lg:max-w-[37.720%] pr-9 order-2 lg:order-1 lg:-mt-9">
                                 <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
                                     <span className="text-blue">{paymnetInfo?.data?.title_span}</span> {paymnetInfo?.data?.title_after_span}</h2>
                                 <p className=" text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[555px]">{paymnetInfo?.data?.description}</p>

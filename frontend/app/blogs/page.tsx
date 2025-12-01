@@ -1,3 +1,4 @@
+import StayCompliant from "@/components/stay-compliant/stay-compliant";
 import { getFetchData } from "../../utils/getFetchData";
 import BlogsPage from "@/components/blogsPage/blogsPage";
 
@@ -14,6 +15,7 @@ export default async function Page() {
                 initialNext={blogsData?.next || null}
                 jsonLd={jsonLd}
             />
+            <StayCompliant />
         </>
     );
 }

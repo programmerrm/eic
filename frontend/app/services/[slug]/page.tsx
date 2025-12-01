@@ -33,7 +33,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {singleServiceData?.main_item && (
                 <section className="py-6 md:py-12 lg:py-[100px]">
                     <div className="container">
-                        <h2 className="w-full max-w-[692px]">
+                        <h2 className="w-full max-w-[692px] text-center sm:text-left">
                             {singleServiceData?.main_item?.normal_title}{" "}
                             <span className="text-blue">{singleServiceData?.main_item?.span_title}</span>
                         </h2>
@@ -48,7 +48,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                     </div>
                                     <div className="space-y-6 w-full max-w-[800px] text-center sm:text-start">
                                         <h3>{item.title}</h3>
-                                        <p className="text-justify">{item.description}</p>
+                                        <p className="text-center sm:text-left">{item.description}</p>
                                     </div>
                                 </div>
                             ))}
@@ -72,7 +72,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-full gap-5">
                                     {singleServiceData?.include_top_items?.map((item: any) => (
-                                        <div className="w-full max-w-[272px] flex flex-col items-start h-auto" key={item.id}>
+                                        <div className="w-full md:max-w-[272px] flex flex-col items-start h-auto" key={item.id}>
                                             <div className="w-full max-w-11 sm:max-w-[60px]">
                                                 <Image src={item?.image} alt={item.title} width={60} height={66} />
                                             </div>

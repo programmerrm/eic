@@ -32,7 +32,7 @@ export default async function AboutSecurity() {
                                 backgroundImage: `url(${bgImage})`,
                             }}></div>
                         <div className="content">
-                            <div className="pt-10 lg:pt-[70px] xl:pt-[152px] pl-16 lg:pl-20 xl:pl-40">
+                            <div className="pt-10 lg:pt-[70px] xl:pt-[152px] sm:pl-16 lg:pl-20 xl:pl-40">
                                 <div className=" text-body">
                                         <h3>{security_firm_data?.data?.mission_title}</h3>
                                         <p className="mt-3.5">{security_firm_data?.data?.mission_description}</p>

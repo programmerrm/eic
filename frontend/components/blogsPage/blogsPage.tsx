@@ -49,7 +49,7 @@ export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonL
                             <div className="max-w-[740px] mx-auto py-10 sm:py-20 md:py-30 lg:py-40 xl:py-[232px] text-white text-center ">
                                 {topBarData?.title && <h1 className="uppercase">{topBarData?.title}</h1>}
                                 {topBarData?.description && (
-                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-4 sm:mt-8 w-full max-w-[626px] mx-auto">{topBarData?.description}</p>
+                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-spacegrotesk mt-2 sm:mt-4 w-full max-w-[626px] mx-auto">{topBarData?.description}</p>
                                 )}
                             </div>
                         </div>

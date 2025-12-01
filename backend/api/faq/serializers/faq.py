@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from faq.models import FaqTopBar, FaqSection, FaqItem
+from faq.models import FaqTopBar, FaqSection, FaqItem, Schema, SeoTag
 
 class FaqTopBarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,3 +15,21 @@ class FaqItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FaqItem
         fields = '__all__'
+
+# =========== Seo Tag =================
+class SeoTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SeoTag
+        fields = '__all__'
+        read_only_fields = ('created_at', 'updated_at')
+
+# =========== Schema =================
+class SchemaSerializer(serializers.ModelSerializer):
+    json_ld = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Schema
+        fields = '__all__'
+
+    def get_json_ld(self, obj):
+        return obj.json_ld()

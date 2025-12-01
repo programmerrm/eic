@@ -53,7 +53,7 @@ export default async function Page() {
                                             />
                                             )}
                                         </div>
-                                        <p className="text-sm md:text-base leading-[26px] font-poppins font-normal text-justify">{item.description}</p>
+                                        <p className="text-sm md:text-base leading-[26px] font-poppins font-normal text-center sm:text-left">{item.description}</p>
                                     </div>
                                 </div>
                             );
