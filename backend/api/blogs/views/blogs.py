@@ -161,7 +161,7 @@ class BlogTopBarView(viewsets.ModelViewSet):
                 return Response({
                     'success': True,
                     'message': 'Blog top bar data fetching successfully.',
-                    'data': serializer.data,
+                    'data': cached_data,
                 }, status=status.HTTP_200_OK)
             obj = BlogTopBar.objects.first()
             if not obj:
@@ -199,14 +199,15 @@ class BlogTopBarView(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
         cache.delete(self.CACHE_KEY)
-        
+
+# ============ BLOG VIEW ===============
 class BlogView(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
     pagination_class = CumulativePagination
     queryset = Blog.objects.all().order_by('-id')
 
     CACHE_KEY = "blog_items_list"
-    CACHE_TIMEOUT = 60 * 60
+    CACHE_TIMEOUT = 60 * 60 
 
     def get_permissions(self):
         if self.action == 'list':
@@ -215,61 +216,76 @@ class BlogView(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         try:
-            page_number = request.query_params.get('page', 1)
-            paginated_cache_key = f"{self.CACHE_KEY}_page_{page_number}"
-            cached_page = cache.get(paginated_cache_key)
-            if cached_page:
+            page_number = request.query_params.get("page", 1)
+            cache_key = f"{self.CACHE_KEY}_page_{page_number}"
+
+            cached_data = cache.get(cache_key)
+            if cached_data:
                 return Response({
                     "success": True,
                     "message": "Blog data fetched successfully (from cache).",
-                    "data": cached_page["data"],
-                    "pagination": cached_page["pagination"],
-                })
+                    "data": cached_data.get("data", []),
+                    "pagination": cached_data.get("pagination", {})
+                }, status=status.HTTP_200_OK)
 
             page = self.paginate_queryset(self.queryset)
-            serializer = self.get_serializer(page, many=True)
-
-            paginated_response = self.get_paginated_response(serializer.data)
-
-            cache.set(
-                paginated_cache_key,
-                {
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                paginated = self.get_paginated_response({
+                    "success": True,
+                    "message": "Blog data fetched successfully.",
                     "data": serializer.data,
-                    "pagination": paginated_response.data.get("pagination", {})
-                },
-                timeout=self.CACHE_TIMEOUT
-            )
+                })
 
-            return paginated_response
+                cache.set(
+                    cache_key,
+                    {
+                        "data": serializer.data,
+                        "pagination": paginated.data.get("pagination", {})
+                    },
+                    timeout=self.CACHE_TIMEOUT
+                )
+
+                return paginated
+
+            serializer = self.get_serializer(self.queryset, many=True)
+            response_data = {
+                "success": True,
+                "message": "Blog data fetched successfully.",
+                "data": serializer.data,
+            }
+
+            cache.set(cache_key, {"data": serializer.data}, timeout=self.CACHE_TIMEOUT)
+
+            return Response(response_data)
 
         except Exception as e:
             return Response({
                 "success": False,
                 "message": "Something went wrong.",
-                "error": str(e),
-            })
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def _clear_cache(self):
+    def _clear_blog_cache(self):
         from django_redis import get_redis_connection
         redis = get_redis_connection("default")
-
-        keys = redis.keys(f"{self.CACHE_KEY}*")
+        keys = redis.keys(f"{self.CACHE_KEY}_page_*")
         if keys:
             redis.delete(*keys)
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        self._clear_cache()
+        self._clear_blog_cache()
         return instance
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        self._clear_cache()
+        self._clear_blog_cache()
         return instance
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        self._clear_cache()
+        self._clear_blog_cache()
         
 # ============ SINGLE BLOG VIEW ===============
 class SingleBlogView(viewsets.ModelViewSet):
@@ -334,4 +350,3 @@ class SingleBlogView(viewsets.ModelViewSet):
         slug = instance.slug
         super().perform_destroy(instance)
         self._clear_single_cache(slug)
-        
