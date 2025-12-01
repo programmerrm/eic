@@ -13,7 +13,7 @@ export default async function StayCompliant() {
                 <section className="stay-compliant-section pb-12 md:pb-[100px]">
                     <div className="container">
                         <div
-                            className="bg-blue pl-6 sm:pl-12 md:pl-[83px] pr-6 sm:pr-12 md:pr-[90px] rounded-2xl flex flex-col lg:flex-row items-center ">
+                            className="bg-blue pl-6 sm:pl-12 md:pl-[83px] pr-6 sm:pr-12 md:pr-[90px] rounded-2xl flex flex-col lg:flex-row items-center pt-6 sm:pt-11 pb-8 sm:pb-10 lg:pb-14">
                             <div className="w-full lg:max-w-[49.283%] xl:-mr-9 order-2 lg:order-1 mb-6 sm:mb-11 lg:mb-0">
                                 {data?.title && (
                                     <h2 className="text-white mb-6">{data?.title}</h2>
@@ -56,7 +56,7 @@ export default async function StayCompliant() {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="w-full lg:max-w-[53.664%] mt-6 sm:mt-11 mb-8 sm:mb-16 lg:mb-[124px] order-1 lg:order-2">
+                            <div className="w-full lg:max-w-[53.664%] order-1 lg:order-2">
                                 {data?.image && (
                                     <Image
                                         src={data?.image}

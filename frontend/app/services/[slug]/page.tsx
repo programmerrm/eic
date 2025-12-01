@@ -61,7 +61,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     <section className="bg-blue pt-6 md:pt-12 lg:pt-[100px] pb-6 md:pb-11 lg:pb-[90px]">
                         <div className="container">
                             <div className="text-white">
-                                <div className="mb-10 md:mb-[114px] w-full max-w-[668px]">
+                                <div className="mb-10 md:mb-20 w-full max-w-[668px]">
                                     <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
                                         {singleServiceData?.include_top_title?.title}
                                     </h2>
@@ -153,7 +153,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                             style={{ backgroundImage: `url(${complianceBG.src})` }}
                         >
                             <div className="container">
-                                <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-20 gap-5">
+                                <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-14 gap-5">
                                     <h2 className="sm:max-w-[636px] w-full">
                                         {complianceTitleData[0]?.title_before_span}
                                         <span className="text-[#2E78AC]">
@@ -270,16 +270,16 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 </p>
                             </div>
 
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 lg:gap-x-16 xl:gap-x-[125px] gap-y-5 md:gap-y-9">
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 2xl:gap-x-[125px] gap-y-5 md:gap-y-10 lg:gap-y-14">
                                 {singleServiceData?.include_bottom_items?.map((item: any, index: number) => (
-                                    <div className="flex flex-col justify-between gap-1 pr-4" key={item.id}>
-                                        <h2 className="text-6xl md:text-[88px] font-bold bg-linear-to-b from-white to-blue bg-clip-text text-transparent font-sans">
+                                    <div className="flex flex-col gap-1 pr-4" key={item.id}>
+                                        <h2 className="text-5xl md:text-6xl lg:text-[88px] font-bold bg-linear-to-b from-white to-blue bg-clip-text text-transparent font-sans">
                                             {index + 1}
                                         </h2>
                                         <div className="content">
                                             <h4 className="text-white">{item?.title}</h4>
                                             <div className="h-0.5 w-full bg-white/30 mt-4"></div>
-                                            <p className="text-white text-sm sm:text-base my-4 text-justify">{item?.description}</p>
+                                            <p className="text-white text-sm sm:text-base mt-4">{item?.description}</p>
                                         </div>
                                     </div>
                                 ))}

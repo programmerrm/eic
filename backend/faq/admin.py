@@ -35,7 +35,6 @@ class SeoTagAdmin(admin.ModelAdmin):
                 "title",
                 "description",
                 "keywords",
-                "robots",
             )
         }),
         (_("Open Graph (Facebook / LinkedIn)"), {

@@ -106,7 +106,7 @@ export default async function SingleBlog({ params }: SingleBlogProps) {
                                 </ol>
                             </nav>
                             <div className="space-y-8">
-                                <div>
+                                <div className="text-body">
                                     <BlogContent content={singleBlog?.data?.content.replace(/src="\/media/g, `src="${MEDIA_URL}/media`)} />
                                 </div>
                                 <div className="flex flex-col md:flex-row md:items-center gap-2 lg:gap-4 mt-12">
