@@ -2,7 +2,6 @@ import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
-import BannerImg from "../../public/images/hero-banner.svg";
 import PaymentInfo from "../paymnet-info/paymnet-info";
 
 export default async function Banner() {
@@ -11,13 +10,9 @@ export default async function Banner() {
     });
     return (
         <>
-            <section className="mobile-bg-hide relative pb-5 w-full mx-auto overflow-hidden bg-cover bg-top bg-no-repeat"
-                style={{
-                    backgroundImage: `url(${BannerImg.src})`,
-                }}
-            >
+            <section className="mobile-bg-hide relative pb-5 w-full mx-auto overflow-hidden hero-bg">
                 <div className="container relative z-10">
-                    <div className="flex flex-col lg:flex-row pt-[120px] lg:pt-[190px] pb-12 2xl:pb-[130px]">
+                    <div className="flex flex-col lg:flex-row pt-[120px] lg:pt-[182px] pb-12 2xl:pb-[130px]">
                         <div className="w-full lg:max-w-[754px] order-2 lg:order-1 mt-10 lg:mt-0">
                             {banner?.data?.title && (
                                 <h1 className="text-body uppercase">{banner?.data?.title}</h1>
@@ -71,6 +66,8 @@ export default async function Banner() {
                                     alt="hero-banner-image"
                                     width={710}
                                     height={640}
+                                    priority 
+                                    fetchPriority="high"
                                 />
                             )}
                         </div>

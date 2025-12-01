@@ -30,6 +30,8 @@ export default async function HomePageRelated() {
                                                     alt={item.title}
                                                     width={216}
                                                     height={220}
+                                                    priority 
+                                                    fetchPriority="high"
                                                 />
                                             </div>
                                             <div>

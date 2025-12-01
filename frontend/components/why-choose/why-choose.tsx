@@ -54,6 +54,8 @@ export default async function WhyChoose() {
                                     alt="eic"
                                     width={687}
                                     height={742}
+                                    priority 
+                                    fetchPriority="high"
                                 />
                             )}
                         </div>

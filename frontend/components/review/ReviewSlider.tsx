@@ -69,6 +69,8 @@ export default function ReviewSlider({ items }: Props) {
                                         alt={item.author_name}
                                         width={97}
                                         height={97}
+                                        priority 
+                                        fetchPriority="high"
                                     />
                                 </div>
                                 <p className="text-body text-lg sm:text-xl md:text-2xl md:leading-8 text-center sm:text-start">
@@ -83,6 +85,8 @@ export default function ReviewSlider({ items }: Props) {
                                         alt="icon"
                                         width={95}
                                         height={76}
+                                        priority 
+                                        fetchPriority="high"
                                     />
                                 </div>
                                 <div className="text-center sm:text-start">
@@ -158,8 +162,6 @@ export default function ReviewSlider({ items }: Props) {
                     </svg>
                 </div>
             </div>
-
-
         </div>
     );
 }

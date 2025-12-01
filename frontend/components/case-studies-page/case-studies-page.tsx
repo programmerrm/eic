@@ -63,6 +63,8 @@ export default function CaseStudiesPage({ topBarData, initialItem, initialNext }
                                             width={435}
                                             height={290}
                                             className="transition-transform duration-500 ease-in-out group-hover:scale-105"
+                                            priority 
+                                            fetchPriority="high"
                                         />
                                     </Link>
                                     <div className="group">

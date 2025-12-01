@@ -121,6 +121,8 @@ export default function HappyJourney() {
                             alt="finger"
                             width={74}
                             height={98}
+                            priority 
+                            fetchPriority="high"
                         />
                     </div>
                 </div>

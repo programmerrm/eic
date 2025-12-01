@@ -1,8 +1,42 @@
+@font-face {
+    font-family: 'Svatopluk';
+    src: url('../public/fonts/Svatopluk-Bold.eot');
+    src: url('../public/fonts/Svatopluk-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../public/fonts/Svatopluk-Bold.woff') format('woff'),
+        url('../public/fonts/Svatopluk-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
 @import "tailwindcss";
+/* 2 */
 
+/* width: 51px;
+height: 34px;
+
+font-family: 'Svatopluk';
+font-style: normal;
+font-weight: 700;
+font-size: 88px;
+line-height: 33px;
+display: flex;
+align-items: center;
+text-align: center;
+
+background: linear-gradient(180deg, #FFFFFF 0%, #3384BD 142.65%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent; */
+
+
+@theme {
+  --font-svatopluk: "Svatopluk", sans-serif; 
+}
 /* ----------------------------------------------- */
 /* 🔥 FIX: Add custom font utilities for Tailwind4 */
 /* ----------------------------------------------- */
+
 @utility font-dmsans {
     font-family: var(--font-dmsans);
 }
@@ -62,10 +96,6 @@
 
 body {
     @apply text-sm sm:text-base md:text-lg sm:leading-[26px] text-gray font-dmsans;
-}
-
-body {
-    overscroll-behavior: none;
 }
 
 /* ----------------------------------------------- */
@@ -605,4 +635,36 @@ html {
     z-index: -99;
     top:185px;
   }
+  .hero-bg::after {
+    content: "";
+    position: absolute;
+    background-image: url("/images/hero-banner.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    z-index: -99;
+    left: 0;
+    top: 0;
+    right: -32px;
+    bottom: 0;
+  }
+  /* .text-linear::after{
+    content:"";
+    position: absolute;
+    top:0;
+    left:0;
+    width: 51px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #FFFFFF 0%, #3384BD 142.65%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 4px 20px rgba(51, 132, 189, 0.6);
+    z-index: 99;
+    
+  } */
 }

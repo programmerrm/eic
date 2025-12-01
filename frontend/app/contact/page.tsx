@@ -59,6 +59,8 @@ export default async function Page() {
                                             height={525}
                                             src={`${MEDIA_URL}${topBarData?.data?.image}`}
                                             alt="contact form background image"
+                                            priority 
+                                            fetchPriority="high"
                                         />
                                     )}
                                 </div>

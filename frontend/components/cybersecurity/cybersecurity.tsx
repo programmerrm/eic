@@ -29,6 +29,8 @@ export default async function Cybersecurity() {
                                 alt="syber security"
                                 width={762}
                                 height={762}
+                                priority 
+                                fetchPriority="high"
                             />
                             )}
                         </div>

@@ -65,6 +65,8 @@ export default function Services() {
                                                                 alt={item?.title || "service image"}
                                                                 width={220}
                                                                 height={224}
+                                                                priority 
+                                                                fetchPriority="high"
                                                             />
                                                         )}
                                                     </div>
@@ -103,6 +105,7 @@ export default function Services() {
                         {nextUrl && (
                             <div className="flex items-center justify-center mt-6 md:mt-12">
                                 <button
+                                    type="button"
                                     onClick={handleLoadMore}
                                     disabled={loading}
                                     className="btn-primary group inline-flex items-center"

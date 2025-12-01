@@ -11,6 +11,8 @@ export default function NotFound() {
                         alt="not-found-icon"
                         width={302}
                         height={300}
+                        priority 
+                        fetchPriority="high"
                     />
                 </div>
                 <div className="error-content">

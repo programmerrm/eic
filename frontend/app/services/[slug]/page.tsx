@@ -105,7 +105,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                 <li key={item.id}>{item.name}</li>
                                             ))}
                                         </ul>
-                                        <Link href="" className="btn-primary group inline-flex mt-10">Secure Your DATA
+                                        <Link href="https://eic.com.bd/" className="btn-primary group inline-flex mt-10">Secure Your DATA
                                             <svg
                                                 className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -132,6 +132,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                 alt="components"
                                                 width={536}
                                                 height={640}
+                                                priority 
+                                                fetchPriority="high"
                                             />
                                         )}
                                     </div>
@@ -192,7 +194,14 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                         >
                                             <div className="max-w-10 md:max-w-[60px] w-full">
                                                 {item?.image && (
-                                                    <Image src={item?.image} alt={item?.title} width={60} height={66} />
+                                                    <Image src=
+                                                    {item?.image} 
+                                                    alt={item?.title} 
+                                                    width={60} 
+                                                    height={66}
+                                                    priority 
+                                                    fetchPriority="high"
+                                                />
                                                 )}
                                             </div>
                                             <h4 className="mt-4">{item?.title}</h4>
@@ -221,7 +230,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 {singleServiceData?.payment_info?.description}
                             </p>
                             <div className="btn-wrap">
-                                <Link href={""} className="btn-primary group inline-flex">Get Started
+                                <Link href="https://eic.com.bd/" 
+                                className="btn-primary group inline-flex">Get Started
                                     <svg
                                         className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -248,6 +258,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                             alt="ieps"
                                             width={840}
                                             height={406}
+                                            priority 
+                                            fetchPriority="high"
                                         />
                                     )}
                                 </div>
@@ -273,7 +285,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 2xl:gap-x-[125px] gap-y-5 md:gap-y-10 lg:gap-y-14">
                                 {singleServiceData?.include_bottom_items?.map((item: any, index: number) => (
                                     <div className="flex flex-col gap-1 pr-4" key={item.id}>
-                                        <h2 className="text-5xl md:text-6xl lg:text-[88px] font-bold bg-linear-to-b from-white to-blue bg-clip-text text-transparent font-sans">
+                                        <h2 className="text-5xl md:text-6xl lg:text-[88px] font-bold bg-linear-to-b from-white from-30% to-blue bg-clip-text text-transparent font-svatopluk py-1">
                                             {index + 1}
                                         </h2>
                                         <div className="content">
@@ -315,6 +327,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                             alt={item?.title}
                                                             width={235}
                                                             height={224}
+                                                            priority 
+                                                            fetchPriority="high"
                                                         />
                                                     </div>
                                                 </div>
@@ -394,6 +408,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                         alt="faq"
                                         width={515}
                                         height={485}
+                                        priority 
+                                        fetchPriority="high"
                                     />
                                 )}
                             </div>

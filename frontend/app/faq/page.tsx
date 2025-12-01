@@ -62,6 +62,8 @@ export default async function Faq() {
                                     alt="faq"
                                     width={515}
                                     height={482}
+                                    priority 
+                                    fetchPriority="high"
                                 />
                             )}
                         </div>

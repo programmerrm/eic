@@ -10,9 +10,9 @@ export default async function PaymentInfo() {
     return (
         <>
             {paymnetInfo?.data && (
-                <section className="relative z-10 pb-5 md:pb-10 mx-auto">
+                <div className="relative z-10 pb-5 md:pb-10 mx-auto">
                     <div className="container">
-                        <div className="flex flex-col items-center md:mt-12 lg:mt-[108px] lg:flex-row  gap-5 justify-between">
+                        <div className="flex flex-col items-center md:mt-12 lg:mt-[98px] lg:flex-row  gap-5 justify-between">
                             <div className="w-full lg:max-w-[37.720%] pr-9 order-2 lg:order-1 lg:-mt-9">
                                 <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
                                     <span className="text-blue">{paymnetInfo?.data?.title_span}</span> {paymnetInfo?.data?.title_after_span}</h2>
@@ -39,13 +39,20 @@ export default async function PaymentInfo() {
                             <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end order-1 lg:order-2">
                                 <div className="w-full lg:max-w-fit flex flex-col items-end">
                                     {paymnetInfo?.data?.image && (
-                                        <Image src={`${MEDIA_URL}${paymnetInfo?.data?.image}`} alt="payment-logo" width={840} height={406} />
+                                        <Image 
+                                            src={`${MEDIA_URL}${paymnetInfo?.data?.image}`}
+                                            alt="payment-logo" 
+                                            width={840} 
+                                            height={406} 
+                                            priority 
+                                            fetchPriority="high"
+                                        />
                                     )}
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section >
+                </div >
             )}
         </>
     );

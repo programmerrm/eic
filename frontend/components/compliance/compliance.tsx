@@ -50,6 +50,8 @@ export default async function Compliance() {
                                                 alt={item?.title}
                                                 width={60}
                                                 height={66}
+                                                priority 
+                                                fetchPriority="high"
                                             />
                                         )}
                                     </div>

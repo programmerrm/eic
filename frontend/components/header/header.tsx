@@ -104,7 +104,7 @@ export default function Header() {
                             </a>
                         </div>
                         <div className="w-6 absolute top-5 right-5 lg:hidden">
-                            <button className="w-full cursor-pointer" onClick={() => setIsOpen(false)}>
+                            <button className="w-full cursor-pointer" type="button" aria-label="Open menu" onClick={() => setIsOpen(false)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-full">
                                     <path
                                         fill="none"
@@ -119,7 +119,7 @@ export default function Header() {
                         </div>
                     </nav>
                     <div className="hidden lg:block min-w-[212px]">
-                        <a className="btn-primary group" href="">
+                        <a className="btn-primary group" href="https://eic.com.bd/">
                             Schedule a Call
                             <svg
                                 className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
@@ -138,7 +138,7 @@ export default function Header() {
                         </a>
                     </div>
                     <div className="block lg:hidden w-8">
-                        <button className="w-8 cursor-pointer" onClick={() => setIsOpen(true)}>
+                        <button className="w-8 cursor-pointer" type="button" aria-label="Close sidebar" onClick={() => setIsOpen(true)}>
                             <svg className="w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path
                                     fill="none"

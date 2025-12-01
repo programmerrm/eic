@@ -62,6 +62,8 @@ export default async function Features() {
                                         alt={item.name}
                                         width={200}
                                         height={300}
+                                        priority 
+                                        fetchPriority="high"
                                     />
                                 </div>
                             </div>

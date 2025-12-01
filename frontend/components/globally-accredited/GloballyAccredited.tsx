@@ -45,6 +45,8 @@ export default async function GloballyAccredited() {
                                 alt="Globally Accredited"
                                 width={338}
                                 height={334}
+                                priority 
+                                fetchPriority="high"
                             />
                         )}
                     </div>

@@ -22,7 +22,7 @@ export default async function StayCompliant() {
                                     <p className="text-white mb-8">{data?.description}</p>
                                 )}
                                 <div className="flex flex-wrap items-center gap-4">
-                                    <Link href="" className="btn-secondary group">Get started with us
+                                    <Link href="https://eic.com.bd/" className="btn-secondary group">Get started with us
                                         <svg
                                             className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -63,6 +63,8 @@ export default async function StayCompliant() {
                                         alt="stay compliant"
                                         width={640}
                                         height={485}
+                                        priority 
+                                        fetchPriority="high"
                                     />
                                 )}
                             </div>

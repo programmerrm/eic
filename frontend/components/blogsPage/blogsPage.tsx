@@ -67,6 +67,8 @@ export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonL
                                     width={670}
                                     height={480}
                                     className="w-full h-auto transition-transform duration-500 ease-in-out group-hover:scale-105"
+                                    priority 
+                                    fetchPriority="high"
                                 />
                             </Link>
                             <div className="w-full sm:max-w-[50.882%] sm:pl-6 md:pl-12">
@@ -79,7 +81,7 @@ export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonL
                                 {firstBlog?.tags && (
                                     <div className="flex gap-2 flex-wrap">
                                     {firstBlog?.tags?.map((item: any) => (
-                                        <button key={item.id} className="bg-[#EBF3F8] px-3 py-1 rounded-lg text-body font-medium text-sm leading-5 -tracking-[0.14px] font-inter cursor-pointer transition-all hover:text-blue">{item.name}</button>
+                                        <button type="button" key={item.id} className="bg-[#EBF3F8] px-3 py-1 rounded-lg text-body font-medium text-sm leading-5 -tracking-[0.14px] font-inter cursor-pointer transition-all hover:text-blue">{item.name}</button>
                                     ))}
                                 </div>
                                 )}
@@ -116,7 +118,7 @@ export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonL
                                             {item?.tags && (
                                                 <div className="flex gap-2 flex-wrap">
                                                 {item?.tags?.map((tag: any) => (
-                                                    <button key={tag.id} className="bg-[#EBF3F8] px-3 py-1 rounded-lg text-body font-medium text-sm leading-5 -tracking-[0.14px] font-inter cursor-pointer transition-all hover:text-blue">
+                                                    <button type="button" key={tag.id} className="bg-[#EBF3F8] px-3 py-1 rounded-lg text-body font-medium text-sm leading-5 -tracking-[0.14px] font-inter cursor-pointer transition-all hover:text-blue">
                                                         {tag?.name}
                                                     </button>
                                                 ))}

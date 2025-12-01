@@ -51,6 +51,8 @@ export default async function HomePageRelatedBlog() {
                                             width={429}
                                             height={312}
                                             className="w-full h-auto transition-transform duration-500 ease-in-out hover:scale-105"
+                                            priority 
+                                            fetchPriority="high"
                                         />
                                     )}
                                 </Link>
@@ -66,7 +68,8 @@ export default async function HomePageRelatedBlog() {
 
                                     <div className="flex gap-2 flex-wrap">
                                         {item.tags?.map((tag: any) => (
-                                            <button
+                                            <button 
+                                                type="button"
                                                 key={tag.id}
                                                 className="bg-[#EBF3F8] px-3 py-1 rounded-lg text-body font-medium text-sm leading-5 -tracking-[0.14px] font-inter cursor-pointer transition-all hover:text-blue"
                                             >

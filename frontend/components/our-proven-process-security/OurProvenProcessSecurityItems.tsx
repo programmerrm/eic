@@ -145,6 +145,8 @@ export default function OurProvenProcessSecurityClient({
                                     width={345}
                                     height={345}
                                     className="circle"
+                                    priority 
+                                    fetchPriority="high"
                                 />
                                 {activeItem && (
                                     <div className="bg-white rounded-full p-5 circle-icon w-full max-w-24 lg:max-w-[149px] absolute top-0 left-0">
@@ -153,7 +155,8 @@ export default function OurProvenProcessSecurityClient({
                                             alt={activeItem.title}
                                             width={142}
                                             height={142}
-                                            className=""
+                                            priority 
+                                            fetchPriority="high"
                                         />
                                     </div>
                                 )}
@@ -190,6 +193,8 @@ export default function OurProvenProcessSecurityClient({
                                             alt={item.title}
                                             width={100}
                                             height={106}
+                                            priority 
+                                            fetchPriority="high"
                                         />
                                     </div>
                                     <h3 className="mb-2 lg:mb-4">{item.title}</h3>

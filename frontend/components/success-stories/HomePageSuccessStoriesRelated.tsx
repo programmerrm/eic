@@ -29,6 +29,8 @@ export default async function HomePageSuccessStoriesRelated() {
                                                     width={668}
                                                     height={516}
                                                     className="transition-transform duration-500 ease-in-out hover:scale-105"
+                                                    priority 
+                                                    fetchPriority="high"
                                                 />
                                             )}
                                         </Link>

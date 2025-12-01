@@ -81,6 +81,8 @@ export default async function SecurityFirm() {
                                         alt="security"
                                         width={605}
                                         height={400}
+                                        priority 
+                                        fetchPriority="high"
                                     />
                                 )}
                             </div>

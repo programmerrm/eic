@@ -218,13 +218,11 @@ class BlogAdmin(admin.ModelAdmin):
     list_filter = ["created_at", "tags"]
     ordering = ["-created_at"]
 
-    readonly_fields = ("slug", "created_at")
-
-    prepopulated_fields = {"slug": ("title",)}
+    readonly_fields = ("created_at",)
 
     fieldsets = (
         ("Blog Information", {
-            "fields": ("image", "title", "slug", "content", "tags")
+            "fields": ("image", "title", "content", "tags")
         }),
         ("Author Details", {
             "fields": ("author_image", "author_name", "author_bio", "author_description")
@@ -277,6 +275,7 @@ class BlogAdmin(admin.ModelAdmin):
 
     def get_tags(self, obj):
         return ", ".join(tag.name for tag in obj.tags.all())
+
     get_tags.short_description = "Tags"
 
     def action_buttons(self, obj):
