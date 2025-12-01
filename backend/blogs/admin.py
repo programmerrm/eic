@@ -294,7 +294,7 @@ class BlogAdmin(admin.ModelAdmin):
             change_url,
             delete_url,
         )
-    
+
     action_buttons.short_description = "Actions"
 
 # REGISTER MODELS HERE.
