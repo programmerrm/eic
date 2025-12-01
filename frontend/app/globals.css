@@ -64,6 +64,10 @@ body {
     @apply text-sm sm:text-base md:text-lg sm:leading-[26px] text-gray font-dmsans;
 }
 
+body {
+    overscroll-behavior: none;
+}
+
 /* ----------------------------------------------- */
 /* YOUR ORIGINAL CSS (NO CHANGE, NO REMOVAL)       */
 /* ----------------------------------------------- */

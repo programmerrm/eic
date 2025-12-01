@@ -318,29 +318,145 @@ class Blog(models.Model):
 
     tags = models.ManyToManyField(
         Tag,
-        related_name="blogs", 
+        related_name="blogs",
         blank=True,
-        null=True,
         verbose_name=_('Tag'),
     )
-    seo_tag = models.OneToOneField(
-        "SeoTag",
-        on_delete=models.SET_NULL,
+
+    seo_title = models.CharField(
+        max_length=380,
         null=True,
         blank=True,
-        related_name="blog",
-        verbose_name=_("SEO for this blog"),
-        help_text=_("Custom SEO meta for this blog detail page.")
+        verbose_name=_('SEO Title'),
+        help_text=_('Custom title for this blog detail page (for browser tab & search engines).'),
     )
-    schema = models.OneToOneField(
-        "Schema",
-        on_delete=models.SET_NULL,
+    seo_description = models.TextField(
         null=True,
         blank=True,
-        related_name="blog",
-        verbose_name=_("Schema for this blog"),
-        help_text=_("JSON-LD schema for this blog detail page.")
+        verbose_name=_('Meta Description'),
+        help_text=_('Short description for this blog (SEO meta description).'),
+    )
+    seo_keywords = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('Meta Keywords'),
+        help_text=_('Comma separated keywords for this blog.'),
+    )
+
+    og_title = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_('OG Title'),
+        help_text=_('Title for Facebook / LinkedIn when this blog is shared.'),
+    )
+    og_description = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('OG Description'),
+        help_text=_('Description for Open Graph.'),
+    )
+    og_image = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('OG Image URL'),
+        help_text=_('Full URL of image for OG (optional).'),
+    )
+    og_image_file = models.ImageField(
+        upload_to="seo/",
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        null=True,
+        blank=True,
+        verbose_name=_('OG Image File'),
+        help_text=_('Upload OG image for this blog. If set, this will be used.'),
+    )
+    og_type = models.CharField(
+        max_length=50,
+        default="article",
+        verbose_name=_('OG Type'),
+        help_text=_('Type of Open Graph object, e.g., article.'),
+    )
+
+    twitter_title = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_('Twitter Title'),
+        help_text=_('Title for Twitter card.'),
+    )
+    twitter_description = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('Twitter Description'),
+        help_text=_('Description for Twitter card.'),
+    )
+    twitter_image = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('Twitter Image URL'),
+        help_text=_('Image URL for Twitter card preview.'),
+    )
+
+    schema_type = models.CharField(
+        max_length=50,
+        default="BlogPosting",
+        null=True,
+        blank=True,
+        verbose_name=_('Schema Type'),
+        help_text=_('JSON-LD @type, e.g., BlogPosting, Article, NewsArticle.'),
+    )
+    schema_context = models.CharField(
+        max_length=280,
+        default="https://schema.org",
+        null=True,
+        blank=True,
+        verbose_name=_('Schema Context'),
+        help_text=_('Usually https://schema.org'),
+    )
+    schema_custom_json = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('Custom Schema JSON'),
+        help_text=_('Optional: paste full JSON-LD here to override auto-generated schema.'),
     )
 
     def __str__(self):
-        return self.title
+        return self.title[:50]
+
+    def get_schema_json(self):
+        if self.schema_custom_json:
+            return self.schema_custom_json
+
+        data = {
+            "@context": self.schema_context or "https://schema.org",
+            "@type": self.schema_type or "BlogPosting",
+            "headline": self.seo_title or self.title,
+            "description": self.seo_description,
+            "datePublished": self.created_at.isoformat() if self.created_at else None,
+        }
+        if self.author_name:
+            data["author"] = {
+                "@type": "Person",
+                "name": self.author_name,
+            }
+
+        image_url = None
+        if self.og_image:
+            image_url = self.og_image
+        elif self.og_image_file:
+            try:
+                image_url = self.og_image_file.url
+            except ValueError:
+                pass
+        elif self.image:
+            try:
+                image_url = self.image.url
+            except ValueError:
+                pass
+
+        if image_url:
+            data["image"] = image_url
+
+        data = {k: v for k, v in data.items() if v is not None}
+
+        return json.dumps(data, ensure_ascii=False)

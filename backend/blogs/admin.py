@@ -214,11 +214,13 @@ class BlogAdmin(admin.ModelAdmin):
         "action_buttons",
     ]
 
-    search_fields = ["title", "author_name", "content"]
+    search_fields = ["title", "author_name", "content", "seo_title", "seo_description"]
     list_filter = ["created_at", "tags"]
     ordering = ["-created_at"]
 
     readonly_fields = ("slug", "created_at")
+
+    prepopulated_fields = {"slug": ("title",)}
 
     fieldsets = (
         ("Blog Information", {
@@ -234,13 +236,39 @@ class BlogAdmin(admin.ModelAdmin):
                 "author_medium_url",
             )
         }),
-        ("SEO Information", {
+        ("SEO Meta Information", {
             "classes": ("collapse",),
-            "fields": ("seo_tag",)
+            "fields": (
+                "seo_title",
+                "seo_description",
+                "seo_keywords",
+            )
+        }),
+        ("Open Graph (OG) Information", {
+            "classes": ("collapse",),
+            "fields": (
+                "og_title",
+                "og_description",
+                "og_image",
+                "og_image_file",
+                "og_type",
+            )
+        }),
+        ("Twitter Card Information", {
+            "classes": ("collapse",),
+            "fields": (
+                "twitter_title",
+                "twitter_description",
+                "twitter_image",
+            )
         }),
         ("Schema Information", {
             "classes": ("collapse",),
-            "fields": ("schema",)
+            "fields": (
+                "schema_type",
+                "schema_context",
+                "schema_custom_json",
+            )
         }),
         ("System Information", {
             "fields": ("created_at",),
@@ -266,7 +294,7 @@ class BlogAdmin(admin.ModelAdmin):
             change_url,
             delete_url,
         )
-
+    
     action_buttons.short_description = "Actions"
 
 # REGISTER MODELS HERE.
