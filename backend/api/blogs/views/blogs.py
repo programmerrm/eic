@@ -206,8 +206,8 @@ class BlogView(viewsets.ModelViewSet):
     pagination_class = CumulativePagination
     queryset = Blog.objects.all().order_by('-id')
 
-    CACHE_KEY = "blog_items_list"
-    CACHE_TIMEOUT = 60 * 60 
+    CACHE_KEY_PREFIX = "blog_items_list"
+    CACHE_TIMEOUT = 60 * 60
 
     def get_permissions(self):
         if self.action == 'list':
@@ -216,48 +216,39 @@ class BlogView(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         try:
-            page_number = request.query_params.get("page", 1)
-            cache_key = f"{self.CACHE_KEY}_page_{page_number}"
+            query_string = request.META.get("QUERY_STRING", "")
+            cache_key = f"{self.CACHE_KEY_PREFIX}_{query_string or 'no_params'}"
 
             cached_data = cache.get(cache_key)
             if cached_data:
-                return Response({
-                    "success": True,
-                    "message": "Blog data fetched successfully (from cache).",
-                    "data": cached_data.get("data", []),
-                    "pagination": cached_data.get("pagination", {})
-                }, status=status.HTTP_200_OK)
+                return Response(cached_data, status=status.HTTP_200_OK)
 
-            page = self.paginate_queryset(self.queryset)
+            queryset = self.get_queryset()
+            page = self.paginate_queryset(queryset)
+
             if page is not None:
                 serializer = self.get_serializer(page, many=True)
-                paginated = self.get_paginated_response({
+
+                inner_results = {
                     "success": True,
                     "message": "Blog data fetched successfully.",
                     "data": serializer.data,
-                })
+                }
 
-                cache.set(
-                    cache_key,
-                    {
-                        "data": serializer.data,
-                        "pagination": paginated.data.get("pagination", {})
-                    },
-                    timeout=self.CACHE_TIMEOUT
-                )
+                paginated_response = self.get_paginated_response(inner_results)
 
-                return paginated
+                cache.set(cache_key, paginated_response.data, timeout=self.CACHE_TIMEOUT)
 
-            serializer = self.get_serializer(self.queryset, many=True)
+                return paginated_response
+
+            serializer = self.get_serializer(queryset, many=True)
             response_data = {
                 "success": True,
                 "message": "Blog data fetched successfully.",
                 "data": serializer.data,
             }
-
-            cache.set(cache_key, {"data": serializer.data}, timeout=self.CACHE_TIMEOUT)
-
-            return Response(response_data)
+            cache.set(cache_key, response_data, timeout=self.CACHE_TIMEOUT)
+            return Response(response_data, status=status.HTTP_200_OK)
 
         except Exception as e:
             return Response({
@@ -266,12 +257,16 @@ class BlogView(viewsets.ModelViewSet):
                 "error": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    # ===== cache clear helper =====
     def _clear_blog_cache(self):
-        from django_redis import get_redis_connection
-        redis = get_redis_connection("default")
-        keys = redis.keys(f"{self.CACHE_KEY}_page_*")
-        if keys:
-            redis.delete(*keys)
+        try:
+            from django_redis import get_redis_connection
+            redis = get_redis_connection("default")
+            keys = redis.keys(f"{self.CACHE_KEY_PREFIX}_*")
+            if keys:
+                redis.delete(*keys)
+        except Exception:
+            cache.clear()
 
     def perform_create(self, serializer):
         instance = serializer.save()

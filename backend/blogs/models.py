@@ -227,11 +227,15 @@ class Schema(models.Model):
 # ============== BLOG TOP BAR ====================
 class BlogTopBar(models.Model):
     title = models.CharField(
+        null=True,
+        blank=True,
         max_length=280,
         verbose_name=_('Title'),
         help_text=_('Enter your blog section top bar title...')
     )
     description = models.TextField(
+        null=True,
+        blank=True,
         verbose_name=_('Description'),
         help_text=('Enter your blog section top bar description...')
     )
