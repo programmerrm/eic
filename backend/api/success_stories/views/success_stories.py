@@ -200,7 +200,7 @@ class SuccessStorieView(viewsets.ModelViewSet):
     pagination_class = CumulativePagination
     queryset = SuccessStorie.objects.all().order_by('-id')
 
-    CACHE_KEY_PREFIX = "blog_items_list"
+    CACHE_KEY_PREFIX = "success_storie_items_list"
     CACHE_TIMEOUT = 60 * 60
 
     def get_permissions(self):
