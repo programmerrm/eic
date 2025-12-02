@@ -180,7 +180,7 @@ class SuccessStorieAdmin(admin.ModelAdmin):
     list_filter = ["created_at", "categories"]
     ordering = ["-created_at"]
 
-    readonly_fields = ("created_at",)
+    readonly_fields = ("created_at", "slug")
 
     fieldsets = (
         ("Success Story Information", {

@@ -12,7 +12,8 @@ type SinglePageProps = {
 
 export default async function SinglePage({ params }: SinglePageProps) {
     const { slug } = await params;
-    const singleSuccessStories = await getFetchData(`/success-stories/single/${slug}/`);
+    const singleSuccessStoriesData = await getFetchData(`/success-stories/single/${slug}/`);
+    const singleSuccessStories = singleSuccessStoriesData?.data;
     return (
         <>
             <section className="mt-24 md:mt-36 banner-section bg-blue [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-60px)_100%,0_100%)] md:[clip-path:polygon(0_0,100%_0,100%_calc(100%-100px),calc(100%-150px)_100%,0_100%)]">
