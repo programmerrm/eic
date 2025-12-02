@@ -27,7 +27,7 @@ export default async function WhyChoose() {
                                     })}
                                 </ul>
                             )}
-                            <Link href={experienceEic?.data?.btn_url} className="btn-primary group inline-flex mt-10">{experienceEic?.data?.btn_name}
+                            <Link href={experienceEic?.data?.btn_url || ""} className="btn-primary group inline-flex mt-10">{experienceEic?.data?.btn_name}
                                 <svg
                                     className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                     xmlns="http://www.w3.org/2000/svg"
