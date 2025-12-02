@@ -117,6 +117,10 @@ class NotFoundContent(models.Model):
         help_text=_('Enter your website not found description...')
     )
 
+    class Meta:
+        verbose_name = _('Not Found')
+        verbose_name_plural = _('Not Found')
+
     def __str__(self):
         return f"Not found infomation added."
 
@@ -126,18 +130,33 @@ class StayCompliant(models.Model):
         upload_to='stay-compliant/',
         validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name='Image',
+        null=True,
+        blank=True,
     )
     title = models.CharField(
         max_length=280,
         verbose_name=_('Title'),
     )
     description = models.TextField(
+        null=True,
+        blank=True,
         verbose_name=_('Description'),
+    )
+    btn_name = models.CharField(
+        max_length=280,
+        verbose_name=_('Button Name'),
+        null=True,
+        blank=True,
+    )
+    btn_url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('Button URL'),
     )
 
     class Meta:
-        verbose_name = _('Stay-Compliant')
-        verbose_name_plural = _('Stay-Compliant')
+        verbose_name = _('Stay Compliant')
+        verbose_name_plural = _('Stay Compliant')
 
     def __str__(self):
         return self.title[:50]
@@ -173,8 +192,8 @@ class ComplianceTitle(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Compliance-Title')
-        verbose_name_plural = _('Compliance-Title')
+        verbose_name = _('Compliance Title')
+        verbose_name_plural = _('Compliance Title')
 
     def __str__(self):
         return self.title_span[:50]
@@ -187,11 +206,11 @@ class ComplianceItemList(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Compliance-Item-List')
-        verbose_name_plural = _('Compliance-Item-List')
+        verbose_name = _('Compliance Items')
+        verbose_name_plural = _('Compliance Items')
     
     def __str__(self):
-        return self.name
+        return self.name[:50]
 
 # =========== Compliance Item ==============
 class ComplianceItem(models.Model):
@@ -199,6 +218,8 @@ class ComplianceItem(models.Model):
         upload_to='compliance/',
         validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Image'),
+        null=True,
+        blank=True,
     )
     title = models.CharField(
         max_length=280,
@@ -211,8 +232,8 @@ class ComplianceItem(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Compliance-Item')
-        verbose_name_plural = _('Compliance-Item')
+        verbose_name = _('Compliance Items')
+        verbose_name_plural = _('Compliance Items')
 
     def __str__(self):
         return self.title[:50]
@@ -224,7 +245,10 @@ class Subscribe(models.Model):
         verbose_name=_('Email'),
         help_text=_('Email Address'),
     )
-    # created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('Subscribe')
+        verbose_name_plural = _('Subscribe')
 
     def __str__(self):
         return self.email
@@ -236,6 +260,10 @@ class ScheduleACall(models.Model):
         max_length=50,
         verbose_name=_('Number'),
     )
+
+    class Meta:
+        verbose_name = _('Schedule A Call')
+        verbose_name_plural = _('Schedule A Call')
 
     def __str__(self):
         return f"Schedule A Call"

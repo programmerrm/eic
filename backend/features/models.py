@@ -45,11 +45,6 @@ class Feature(models.Model):
         verbose_name = _('Feature Top Bar')
         verbose_name_plural = _('Feature Top Bar')
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        Feature.objects.exclude(id=self.id).delete()
-
     def __str__(self):
         return f"Feature item added"
 
@@ -92,6 +87,18 @@ class FeatureItem(models.Model):
         help_text=_('Enter your feature description...'),
     )
 
+    brn_name = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Button Name'),
+    )
+    btn_url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('Button URL'),
+    )
+    
     class Meta:
         verbose_name = _('Feature-Item')
         verbose_name_plural = _('Feature-Item')

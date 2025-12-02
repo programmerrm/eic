@@ -109,7 +109,7 @@ class Schema(models.Model):
     )
     type = models.CharField(
         max_length=50,
-        default="ContactPage",
+        default="FaqPage",
         verbose_name=_('Type'),
         help_text=_('@type for JSON-LD')
     )
