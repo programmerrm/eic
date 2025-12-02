@@ -20,7 +20,7 @@ docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate 
 echo "STEP FIVE ::: COLLECT STATIC FILES"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
 
-echo "STEP SIX ::: CREATE DJANGO SUPERUSER IF NOT EXISTS"
+echo "STEP SIX ::: VALIDATE NGINX CONFIGRATION"
 docker-compose -f docker-compose.prod.yml exec nginx nginx -t
 
 echo "STEP EIGHT ::: RELOAD NGINX"

@@ -554,8 +554,11 @@ class ServiceWhyChooseUsTitle(models.Model):
         blank=True
     )
     title_before_span = models.CharField(
-        max_length=255,
-        verbose_name=_('Title before span'),
+        max_length=280,
+        null=True,
+        blank=True,
+        default='Default Title',
+        verbose_name="Title before span"
     )
     title_span = models.CharField(
         max_length=255, 

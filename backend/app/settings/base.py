@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # LOAD ENVIRON
 try:
     from dotenv import load_dotenv
-    load_dotenv(BASE_DIR / '.env.prod')
+    load_dotenv(BASE_DIR / '.env.dev')
 except Exception as e:
     print(f'Cannot load dotenv variables. Error: {str(e)}')
 
