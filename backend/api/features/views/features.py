@@ -69,7 +69,7 @@ class FeatureViewSet(viewsets.ModelViewSet):
 class FeatureItemViewSet(viewsets.ModelViewSet):
     queryset = FeatureItem.objects.all().order_by('-id')
     serializer_class = FeatureItemSerializer
-    CACHE_KEY = "feature_topbar"
+    CACHE_KEY = "feature_items"
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
