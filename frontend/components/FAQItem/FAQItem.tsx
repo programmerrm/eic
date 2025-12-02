@@ -14,7 +14,7 @@ type FAQItemProps = {
 export default function FAQItem({ question, answer, isActive, onClick }: FAQItemProps) {
     return (
         <div
-            className={`flex flex-col flex-wrap faq-item cursor-pointer p-4 rounded-md mb-2 transition-colors ${isActive ? "bg-blue text-white" : "bg-white text-black"
+            className={`flex flex-col flex-wrap faq-item cursor-pointer p-4 rounded-md mb-2 transition-all duration-700 ${isActive ? "bg-blue text-white" : "bg-white text-black"
                 }`}
             onClick={onClick}
         >

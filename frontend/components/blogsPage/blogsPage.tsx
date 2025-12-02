@@ -75,9 +75,9 @@ export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonL
                                 <time className="text-body text-sm font-medium leading-5 -tracking-[0.14px] mt-3 md:mt-7 inline-block transition-all">
                                     {formattedDate}
                                 </time>
-                                <h4 className="my-1 md:my-3 font-dmsans transition-all hover:text-blue">
+                                <h3 className="my-1 md:my-3 font-dmsans transition-all hover:text-blue">
                                     <Link href={`/blogs/${firstBlog.slug}`}>{firstBlog?.title}</Link>
-                                </h4>
+                                </h3>
                                 {firstBlog?.tags && (
                                     <div className="flex gap-2 flex-wrap">
                                     {firstBlog?.tags?.map((item: any) => (

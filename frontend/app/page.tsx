@@ -13,7 +13,7 @@ import WhyChoose from "@/components/why-choose/why-choose";
 
 export default function Page() {
     return (
-        <>
+        <main>
             <Banner />
             <SecurityFirm />
             <Features />
@@ -25,6 +25,6 @@ export default function Page() {
             <HomePageSuccessStoriesRelated />
             <GloballyAccredited />
             <HomePageRelatedBlog />
-        </>
+        </main>
     );
 }

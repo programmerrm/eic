@@ -6,6 +6,7 @@ SERVICES MODELS HERE.
 import json
 from django.db import models
 from django.core.validators import MinLengthValidator
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.translation import gettext_lazy as _
 from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
 
@@ -631,10 +632,21 @@ class ServicePaymnet(models.Model):
         null=True,
         verbose_name=_('Title after span'),
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
         blank=True, 
         null=True,
         verbose_name=_('Description'),
+    )
+    btn_name = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Button Name'),
+    )
+    btn_url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('Button URL'),
     )
 
     def __str__(self):

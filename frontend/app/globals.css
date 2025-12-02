@@ -9,26 +9,6 @@
     font-display: swap;
 }
 @import "tailwindcss";
-/* 2 */
-
-/* width: 51px;
-height: 34px;
-
-font-family: 'Svatopluk';
-font-style: normal;
-font-weight: 700;
-font-size: 88px;
-line-height: 33px;
-display: flex;
-align-items: center;
-text-align: center;
-
-background: linear-gradient(180deg, #FFFFFF 0%, #3384BD 142.65%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-text-fill-color: transparent; */
-
 
 @theme {
   --font-svatopluk: "Svatopluk", sans-serif; 
@@ -362,7 +342,7 @@ footer .menu ul li a:hover {
 
 @layer components {
     .btn-primary {
-        @apply bg-blue rounded-full px-4 md:px-5 py-2 md:py-3 text-sm md:text-base tracking-[2%] uppercase text-white flex items-center gap-2 border border-blue cursor-pointer transition-all duration-500 hover:bg-body;
+        @apply bg-blue rounded-full px-4 md:px-5 py-2 md:py-3 text-sm md:text-base tracking-[2%] uppercase text-white flex items-center gap-2 border border-blue cursor-pointer transition-all duration-500 hover:bg-blue-dark;
     }
 
     .btn-secondary {
@@ -648,23 +628,10 @@ html {
     right: -32px;
     bottom: 0;
   }
-  /* .text-linear::after{
-    content:"";
-    position: absolute;
-    top:0;
-    left:0;
-    width: 51px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(180deg, #FFFFFF 0%, #3384BD 142.65%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 4px 20px rgba(51, 132, 189, 0.6);
-    z-index: 99;
-    
-  } */
+}
+
+@media(max-width:1024px){
+    .hero-bg:after {
+        background-image: unset;
+    }
 }

@@ -3,188 +3,640 @@
 # ADMIN UI DESIGN SETUP
 # """
 # #########################################
-from django.contrib import admin, messages
+from django.contrib import admin
+from django.urls import reverse
 from django.utils.html import format_html
-from django.urls import path, reverse
-from django.shortcuts import redirect
-from services.models import ServicePageTopBar, Service, Categories, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem
-from django import forms
-from django.db import models
+from django.utils.translation import gettext_lazy as _
+from services.models import (
+    SeoTag,
+    Schema,
+    ServicePageTopBar, 
+    Service, 
+    Categories, 
+    Faq, 
+    FaqItem, 
+    ServiceItemMain, 
+    ServiceItem, 
+    ServicesIncludeTopTitle, 
+    ServicesIncludeTopItem, 
+    ServicesIncludeBottomTitle, 
+    ServicesIncludeBottomItem, 
+    ServicePaymnet, 
+    ServiceWhyChooseUsTitle, 
+    ServiceWhyChooseUsItem,
+)
 
+# ========== SEO TAG TOP BAR ADMIN ==========
+class SeoTagAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "og_type",
+        "created_at",
+        "updated_at",
+        "action_buttons",
+    )
+    list_display_links = ("title",)
+    list_filter = ("og_type", "created_at", "updated_at")
+    search_fields = (
+        "title",
+        "description",
+        "keywords",
+        "og_title",
+        "twitter_title",
+    )
+    list_per_page = 25
+    readonly_fields = ("created_at", "updated_at")
 
-# @admin.register(Services)
-# class ServiceAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'styled_name',
-#         'styled_slug',
-#         'styled_description',
-#         'image_preview',
-#         'bg_image_preview',
-#         'edit_link',
-#         'delete_link',
-#     )
+    fieldsets = (
+        (_("Basic SEO"), {
+            "fields": (
+                "title",
+                "description",
+                "keywords",
+            )
+        }),
+        (_("Open Graph (Facebook / LinkedIn)"), {
+            "classes": ("collapse",),
+            "fields": (
+                "og_title",
+                "og_description",
+                "og_image",
+                "og_image_file",
+                "og_url",
+                "og_type",
+            )
+        }),
+        (_("Twitter Card"), {
+            "classes": ("collapse",),
+            "fields": (
+                "twitter_title",
+                "twitter_description",
+                "twitter_image",
+            )
+        }),
+        (_("System Info"), {
+            "classes": ("collapse",),
+            "fields": ("created_at", "updated_at"),
+        }),
+    )
 
-#     readonly_fields = ('slug', 'image_preview', 'bg_image_preview')
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
 
-#     fields = (
-#         'name',
-#         'slug',
-#         'description',
-#         'image',
-#         'bg',
-#         'image_preview',
-#         'bg_image_preview',
-#     )
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
 
-#     formfield_overrides = {
-#         models.CharField: {
-#             'widget': forms.TextInput(
-#                 attrs={
-#                     'style': 'width:100%; border:1px solid #ccc; border-radius:6px; padding:6px;'
-#                 }
-#             )
-#         },
-#         models.TextField: {
-#             'widget': forms.Textarea(
-#                 attrs={
-#                     'style': 'width:100%; border:1px solid #ccc; border-radius:6px; padding:6px;'
-#                 }
-#             )
-#         },
-#     }
+        return format_html(
+            '<a href="{}" '
+            'style="padding:4px 8px; background:#4caf50; color:white; border-radius:4px; text-decoration:none; margin-right:4px;">Edit</a>'
+            '<a href="{}" '
+            'style="padding:4px 8px; background:#f44336; color:white; border-radius:4px; text-decoration:none;">Delete</a>',
+            change_url,
+            delete_url,
+        )
 
-#     # ==============================
-#     # 🔹 Custom URL for image delete
-#     # ==============================
-#     def get_urls(self):
-#         urls = super().get_urls()
-#         custom_urls = [
-#             path(
-#                 '<int:service_id>/delete-image/',
-#                 self.admin_site.admin_view(self.delete_image_view),
-#                 name='services_service_delete_image',
-#             ),
-#             path(
-#                 '<int:service_id>/delete-bg/',
-#                 self.admin_site.admin_view(self.delete_bg_view),
-#                 name='services_service_delete_bg',
-#             ),
-#         ]
-#         return custom_urls + urls
+    action_buttons.short_description = _("Actions")
+    action_buttons.allow_tags = True
 
-#     # ✅ Delete main image
-#     def delete_image_view(self, request, service_id):
-#         service = Services.objects.get(pk=service_id)
-#         if service.image:
-#             service.image.delete(save=False)
-#             service.image = None
-#             service.save()
-#             self.message_user(request, "✅ Image deleted successfully.", messages.SUCCESS)
-#         else:
-#             self.message_user(request, "⚠ No image to delete.", messages.WARNING)
-#         return redirect(reverse('admin:services_services_change', args=[service_id]))
+# =========== Schema Admin =============
+class SchemaAdmin(admin.ModelAdmin):
+    list_display = (
+        "type",
+        "name",
+        "url",
+        "created_at",
+        "updated_at",
+        "action_buttons",
+    )
+    list_display_links = ("name",)
 
-#     # ✅ Delete background image
-#     def delete_bg_view(self, request, service_id):
-#         service = Services.objects.get(pk=service_id)
-#         if hasattr(service, 'bg') and service.bg:
-#             service.bg.delete(save=False)
-#             service.bg = None
-#             service.save()
-#             self.message_user(request, "✅ Background image deleted successfully.", messages.SUCCESS)
-#         else:
-#             self.message_user(request, "⚠ No background image to delete.", messages.WARNING)
-#         return redirect(reverse('admin:services_services_change', args=[service_id]))
+    list_filter = ("type", "created_at", "updated_at")
 
-#     # ==============================
-#     # 🔹 Styled Fields
-#     # ==============================
-#     def styled_name(self, obj):
-#         return format_html(
-#             '<div style="border:1px solid #ccc; border-radius:6px; padding:6px; background:#f9f9f9;">{}</div>',
-#             obj.name,
-#         )
-#     styled_name.short_description = "Service Name"
+    search_fields = (
+        "type",
+        "name",
+        "url",
+        "email",
+        "phone_number",
+    )
 
-#     def styled_slug(self, obj):
-#         return format_html(
-#             '<div style="border:1px solid #ccc; border-radius:6px; padding:6px; background:#fcfcfc;">{}</div>',
-#             obj.slug,
-#         )
-#     styled_slug.short_description = "Slug"
+    list_per_page = 25
 
-#     def styled_description(self, obj):
-#         text = obj.description or "No Description"
-#         return format_html(
-#             '<div style="border:1px solid #ccc; border-radius:6px; padding:6px; background:#fdfdfd; '
-#             'max-width:400px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{}</div>',
-#             text,
-#         )
-#     styled_description.short_description = "Description"
+    readonly_fields = ("created_at", "updated_at")
 
-#     # ==============================
-#     # 🔹 Main Image Preview
-#     # ==============================
-#     def image_preview(self, obj):
-#         if obj.image:
-#             delete_url = reverse('admin:services_service_delete_image', args=[obj.id])
-#             return format_html(
-#                 '''
-#                 <div style="border:1px solid #ccc; border-radius:8px; padding:4px; display:inline-block; text-align:center;">
-#                     <img src="{}" style="width:50px; height:auto; border-radius:6px; box-shadow:0 0 5px rgba(0,0,0,0.1);" />
-#                 </div>
-#                 ''',
-#                 obj.image.url,
-#                 delete_url,
-#             )
-#         return format_html('<span style="color:#999;">No image uploaded</span>')
-#     image_preview.short_description = "Main Image Preview"
+    fieldsets = (
+        (_("Basic Info"), {
+            "fields": (
+                "context",
+                "type",
+                "name",
+                "url",
+                "description",
+            )
+        }),
+        (_("Contact Info"), {
+            "classes": ("collapse",),
+            "fields": (
+                "contact_type",
+                "email",
+                "phone_number",
+                "address",
+                "logo",
+            )
+        }),
+        (_("Social Profiles (sameAs)"), {
+            "classes": ("collapse",),
+            "fields": (
+                "same_as_facebook",
+                "same_as_instagram",
+                "same_as_linkedin",
+            )
+        }),
+        (_("System Info"), {
+            "classes": ("collapse",),
+            "fields": ("created_at", "updated_at"),
+        }),
+    )
 
-#     # ==============================
-#     # 🔹 Background Image Preview
-#     # ==============================
-#     def bg_image_preview(self, obj):
-#         if hasattr(obj, 'bg') and obj.bg:
-#             delete_url = reverse('admin:services_service_delete_bg', args=[obj.id])
-#             return format_html(
-#                 '''
-#                 <div style="border:1px solid #ccc; border-radius:8px; padding:4px; display:inline-block; text-align:center;">
-#                     <img src="{}" style="width:50px; height:auto; border-radius:6px; box-shadow:0 0 5px rgba(0,0,0,0.1);" />
-#                 </div>
-#                 ''',
-#                 obj.bg.url,
-#                 delete_url,
-#             )
-#         return format_html('<span style="color:#999;">No background image uploaded</span>')
-#     bg_image_preview.short_description = "Background Image Preview"
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
 
-#     # ==============================
-#     # 🔹 Edit/Delete links
-#     # ==============================
-#     def edit_link(self, obj):
-#         return format_html(
-#             '<a href="/admin/services/services/{}/change/" style="color:#0066cc;">✏ Edit</a>', obj.id
-#         )
-#     edit_link.short_description = "Edit"
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
 
-#     def delete_link(self, obj):
-#         return format_html(
-#             '<a href="/admin/services/services/{}/delete/" style="color:#d00;">🗑 Delete</a>', obj.id
-#         )
-#     delete_link.short_description = "Delete"
+        return format_html(
+            '<a href="{}" '
+            'style="padding:4px 8px; background:#4caf50; color:white; border-radius:4px; text-decoration:none; margin-right:4px;">Edit</a>'
+            '<a href="{}" '
+            'style="padding:4px 8px; background:#f44336; color:white; border-radius:4px; text-decoration:none;">Delete</a>',
+            change_url,
+            delete_url,
+        )
 
+    action_buttons.short_description = _("Actions")
+    action_buttons.allow_tags = True
 
-admin.site.register(ServicePageTopBar)
-admin.site.register(Service)
-admin.site.register(Categories)
-admin.site.register(Faq)
-admin.site.register(FaqItem)
-admin.site.register(ServiceItemMain)
-admin.site.register(ServiceItem)
-admin.site.register(ServicesIncludeTopTitle)
-admin.site.register(ServicesIncludeTopItem)
-admin.site.register(ServicesIncludeBottomTitle)
-admin.site.register(ServicesIncludeBottomItem)
-admin.site.register(ServicePaymnet)
-admin.site.register(ServiceWhyChooseUsTitle)
-admin.site.register(ServiceWhyChooseUsItem)
+class ServicePageTopBarAdmin(admin.ModelAdmin):
+    list_display = ["title", "description", "action_buttons"]
+    search_fields = ["title", "description"]
+    ordering = ["title"]
+
+    fieldsets = (
+        ("Top Bar Information", {
+            "fields": ("title", "description")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = [
+        "title",
+        "description",
+        "get_categories",
+        "action_buttons",
+    ]
+    search_fields = ["title", "description", "seo_title", "seo_description"]
+    list_filter = ["categories"]
+    ordering = ["-title"]
+
+    readonly_fields = ("slug",)
+
+    fieldsets = (
+        ("Service Information", {
+            "fields": ("image", "title", "slug", "description", "categories")
+        }),
+        ("SEO Meta Information", {
+            "classes": ("collapse",),
+            "fields": ("seo_title", "seo_description", "seo_keywords")
+        }),
+        ("Open Graph (OG) Information", {
+            "classes": ("collapse",),
+            "fields": ("og_title", "og_description", "og_image", "og_image_file", "og_type")
+        }),
+        ("Twitter Card Information", {
+            "classes": ("collapse",),
+            "fields": ("twitter_title", "twitter_description", "twitter_image")
+        }),
+        ("Schema Information", {
+            "classes": ("collapse",),
+            "fields": ("schema_type", "schema_context", "schema_custom_json")
+        }),
+    )
+
+    def get_categories(self, obj):
+        return ", ".join(category.name for category in obj.categories.all())
+
+    get_categories.short_description = "Categories"
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class CategoriesAdmin(admin.ModelAdmin):
+    list_display = ["name", "action_buttons"]
+    search_fields = ["name"]
+    ordering = ["-name"]
+
+    fieldsets = (
+        ("Category Information", {
+            "fields": ("name",)
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class FaqAdmin(admin.ModelAdmin):
+    list_display = ["title", "service", "action_buttons"]
+    search_fields = ["title", "service__title"]
+    list_filter = ["service"]
+    ordering = ["-title"]
+
+    fieldsets = (
+        ("FAQ Information", {
+            "fields": ("service", "title", "image")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class FaqItemAdmin(admin.ModelAdmin):
+    list_display = ["question", "service", "action_buttons"]
+    search_fields = ["question", "service__title"]
+    list_filter = ["service"]
+    ordering = ["-question"]
+
+    fieldsets = (
+        ("FAQ Item Information", {
+            "fields": ("service", "question", "answer")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServiceItemMainAdmin(admin.ModelAdmin):
+    list_display = ["service", "normal_title", "span_title", "action_buttons"]
+    search_fields = ["normal_title", "span_title", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Information", {
+            "fields": ("service", "normal_title", "span_title")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServiceItemAdmin(admin.ModelAdmin):
+    list_display = ["service", "title", "description", "action_buttons"]
+    search_fields = ["title", "description", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Item Information", {
+            "fields": ("service", "image", "title", "description")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServicesIncludeTopTitleAdmin(admin.ModelAdmin):
+    list_display = ["service", "title", "action_buttons"]
+    search_fields = ["title", "service__title"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Include Top Title Information", {
+            "fields": ("service", "title", "description")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServicesIncludeTopItemAdmin(admin.ModelAdmin):
+    list_display = ["service", "title", "description", "action_buttons"]
+    search_fields = ["title", "description", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Include Top Item Information", {
+            "fields": ("service", "image", "title", "description")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServicesIncludeBottomTitleAdmin(admin.ModelAdmin):
+    list_display = ["service", "title", "description", "action_buttons"]
+    search_fields = ["title", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Bottom Title Information", {
+            "fields": ("service", "title", "description")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServicesIncludeBottomItemAdmin(admin.ModelAdmin):
+    list_display = ["service", "title", "description", "action_buttons"]
+    search_fields = ["title", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Bottom Item Information", {
+            "fields": ("service", "title", "description")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServicePaymnetAdmin(admin.ModelAdmin):
+    list_display = ["service", "title_span", "btn_name", "action_buttons"]
+    search_fields = ["title_span", "btn_name", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Payment Information", {
+            "fields": ("service", "image", "title_before_span", "title_span", "title_after_span", "description", "btn_name", "btn_url")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServiceWhyChooseUsTitleAdmin(admin.ModelAdmin):
+    list_display = ["service", "title_before_span", "title_span", "title_after_span", "action_buttons"]
+    search_fields = ["title_before_span", "title_span", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Why Choose Us Title Information", {
+            "fields": ("service", "title_before_span", "title_span", "title_after_span", "image")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ServiceWhyChooseUsItemAdmin(admin.ModelAdmin):
+    list_display = ["service", "name", "action_buttons"]
+    search_fields = ["name", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Why Choose Us Item Information", {
+            "fields": ("service", "name")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+# REGISTER MODELS HERE.
+admin.site.register(SeoTag, SeoTagAdmin)
+admin.site.register(Schema, SchemaAdmin)
+admin.site.register(ServicePageTopBar, ServicePageTopBarAdmin)
+admin.site.register(Service, ServiceAdmin)
+admin.site.register(Categories, CategoriesAdmin)
+admin.site.register(Faq, FaqAdmin)
+admin.site.register(FaqItem, FaqItemAdmin)
+admin.site.register(ServiceItemMain, ServiceItemMainAdmin)
+admin.site.register(ServiceItem, ServiceItemAdmin)
+admin.site.register(ServicesIncludeTopTitle, ServicesIncludeTopTitleAdmin)
+admin.site.register(ServicesIncludeTopItem, ServicesIncludeTopItemAdmin)
+admin.site.register(ServicesIncludeBottomTitle, ServicesIncludeBottomTitleAdmin)
+admin.site.register(ServicesIncludeBottomItem, ServicesIncludeBottomItemAdmin)
+admin.site.register(ServicePaymnet, ServicePaymnetAdmin)
+admin.site.register(ServiceWhyChooseUsTitle, ServiceWhyChooseUsTitleAdmin)
+admin.site.register(ServiceWhyChooseUsItem, ServiceWhyChooseUsItemAdmin)

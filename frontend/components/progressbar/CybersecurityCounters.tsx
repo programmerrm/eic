@@ -66,9 +66,9 @@ export default function CybersecurityCounters({ items }: any) {
                         />
                     </div>
                     <div>
-                        <h5 className="text-base sm:text-lg leading-6 font-dmsans font-normal">
+                        <h3 className="text-base sm:text-lg leading-6 font-dmsans font-normal text-white">
                             {item.title}
-                        </h5>
+                        </h3>
                         <div className="h-0.5 w-full lg:max-w-[206px] bg-white/30 mt-4"></div>
                         <span className="text-3xl sm:text-[40px] leading-10 font-semibold text-white font-spacegrotesk mt-4 block">
                             {counters[index]}+
