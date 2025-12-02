@@ -50,13 +50,13 @@ export default function Services() {
                                 className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
                             >
                                 {services.map((item: any) => (
-                                    <Link
-                                        key={item.id}
-                                        href={`/services/${item.slug}`}
-                                        className="h-full block transition-all hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]"
-                                    >
-                                        <div className="h-full bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
-                                            <div className="h-full bg-white pt-5 rounded-2xl xl:pt-8 pb-5 px-5 xl:px-10 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
+                                    <div key={item.id} className="hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)] transition-all">
+                                        <div className="group h-full bg-[#E6E7EB] hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative transition-all ">
+                                            <Link
+                                                href={`/services/${item.slug}`}
+                                                className="absolute inset-0 z-10"
+                                            ></Link>
+                                            <div className="h-full bg-white transition-all group-hover:bg-blue group-hover:border-blue group-hover:text-white pt-5 rounded-2xl xl:pt-8 pb-5 px-5 xl:px-10 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
                                                 <div className="text-center sm:text-start flex flex-col justify-between h-full">
                                                     <div className="flex items-center justify-center px-16">
                                                         {item?.image && (
@@ -72,15 +72,15 @@ export default function Services() {
                                                     </div>
                                                     <div className="content mt-5 sm:mt-0">
                                                         {item?.title && (
-                                                            <h3 className="mt-2.5">{item.title}</h3>
+                                                            <h3 className="mt-2.5 group-hover:text-white">{item.title}</h3>
                                                         )}
                                                         {item?.description && (
                                                             <p className="mt-3 text-base sm:text-lg font-normal">{item.description}</p>
                                                         )}
-                                                        <span className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4 cursor-pointer">
+                                                        <span className="btn-primary group-hover:text-white inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4 cursor-pointer">
                                                             Read More
                                                             <svg
-                                                                className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6 ml-1"
+                                                                className="transition-all duration-500 w-5 md:w-6 h-5 md:h-6 ml-1 group-hover:rotate-45"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none"
                                                                 viewBox="0 0 24 24"
@@ -98,7 +98,7 @@ export default function Services() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                                 ))}
                             </div>
                         )}

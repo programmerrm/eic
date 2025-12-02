@@ -4,9 +4,9 @@ import AboutSecurity from "@/components/security-firm/about-security";
 import StayCompliant from "@/components/stay-compliant/stay-compliant";
 import { getFetchData } from "@/utils/getFetchData";
 import GlobalBGImg from "../../public/images/world-map.svg";
-import CoreImg from "../../public/images/core-principles.svg";
 import Image from "next/image";
 import HappyJourney from "@/components/about-page/happyJourney";
+import Core from "./core";
 
 export default async function Page() {
     const topBarFetchData = await getFetchData('/about/top-bar/', {
@@ -26,7 +26,7 @@ export default async function Page() {
     })
 
     return (
-        <>
+        <main>
             <SectionBanner topBarData={topBarFetchData?.data} />
             <AboutSecurity />
             <HappyJourney />
@@ -80,7 +80,7 @@ export default async function Page() {
                                     <div className="items-info" key={item.id}>
                                         <span
                                             className="text-2xl sm:text-3xl md:text-[40px] md:leading-[72px] font-bold font-spacegrotesk tracking-[-2%] mb-3 inline-block">{item.count}</span>
-                                        <h4 className="text-white mb-2">{item.title}</h4>
+                                        <h3 className="text-lg md:text-xl lg:text-2xl text-white mb-2">{item.title}</h3>
                                         <p>{item.description}</p>
                                     </div>
                                 );
@@ -90,22 +90,9 @@ export default async function Page() {
                 </div>
             </section>
 
-            <section className="bg-white py-12 md:py-[100px] relative">
-                <div className="container">
-                    <h2 className="text-center sm:-mb-20">The <span className="text-blue">Core Principles</span> We Uphold</h2>
-                    <div className="flex items-center justify-center">
-                        <Image
-                            src={CoreImg}
-                            alt={'core'}
-                            width={844}
-                            height={296}
-                            priority
-                            fetchPriority="high"
-                        />
-                    </div>
-                </div>
-            </section>
+            <Core />
+
             <StayCompliant />
-        </>
+        </main>
     );
 }

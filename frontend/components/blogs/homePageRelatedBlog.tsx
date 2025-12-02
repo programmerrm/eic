@@ -62,9 +62,9 @@ export default async function HomePageRelatedBlog() {
                                         {formattedDate}
                                     </time>
 
-                                    <h4 className="my-1 md:my-3 font-dmsans transition-all hover:text-blue">
+                                    <h3 className="text-lg md:text-xl lg:text-2xl my-1 md:my-3 font-dmsans transition-all hover:text-blue">
                                         <Link href={`/blogs/${item.slug}`}>{item.title}</Link>
-                                    </h4>
+                                    </h3>
 
                                     <div className="flex gap-2 flex-wrap">
                                         {item.tags?.map((tag: any) => (

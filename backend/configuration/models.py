@@ -13,7 +13,7 @@ from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
 
 # ================ FAVICON MODEL ==============
 class Favicon(models.Model):
-    icon = models.ImageField(
+    icon = models.FileField(
         null=True,
         blank=True,
         validators=[VALIDATE_IMAGE_SIZE],
@@ -31,7 +31,7 @@ class Favicon(models.Model):
 
 # =============== LOGO MODEL ==================
 class Logo(models.Model):
-    image = models.ImageField(
+    image = models.FileField(
         null=True,
         blank=True,
         validators=[VALIDATE_IMAGE_SIZE],

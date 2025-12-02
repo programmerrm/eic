@@ -1,10 +1,10 @@
 UNFOLD = {
     "SITE_TITLE": "EIC Admin Panel",
     "SITE_HEADER": "EIC Dashboard",
-    "SITE_URL": "http://127.0.0.1:8000",
+    "SITE_URL": "https://eicsec.com/admin",
     "SITE_ICON": "https://cdn-icons-png.flaticon.com/512/3081/3081840.png",
-    "SITE_LOGO": "/static/images/eic-logo.png",
-    "SITE_FAVICON": "/static/images/eic-logo.png",
+    "SITE_LOGO": "/static/images/eic-logo.svg",
+    "SITE_FAVICON": "/static/images/eic-logo.svg",
     "THEME": {
         "primary_color": "#2563EB",
         "dark_mode": True,

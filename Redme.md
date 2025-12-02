@@ -32,3 +32,6 @@ sudo find backend/staticfiles -type d -exec chmod 755 {} \;
 sudo find backend/staticfiles -type f -exec chmod 644 {} \;
 sudo find backend/media -type d -exec chmod 755 {} \;
 sudo find backend/media -type f -exec chmod 644 {} \;
+
+
+#3384bd

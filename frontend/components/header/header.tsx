@@ -14,13 +14,19 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [logo, setLogo] = useState<any>(null);
+    const [number, setNumber] = useState<any>(null);
 
     useEffect(() => {
         async function fetchLogo() {
             const res = await getFetchData("/configuration/logo/");
             setLogo(res?.data);
         }
+        async function fetchNumber() {
+            const res = await getFetchData("/configuration/schedule-a-call/");
+            setNumber(res[0]);
+        }
         fetchLogo();
+        fetchNumber();
     }, []);
 
     useEffect(() => {
@@ -85,7 +91,7 @@ export default function Header() {
                             </li>
                         </ul>
                         <div className="lg:hidden flex items-center justify-center mt-20">
-                            <a className="btn-primary group" href="">
+                            <a className="btn-primary group" href={`mailto:${number?.number}`}>
                                 Schedule a Call
                                 <svg
                                     className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
@@ -119,7 +125,7 @@ export default function Header() {
                         </div>
                     </nav>
                     <div className="hidden lg:block min-w-[212px]">
-                        <a className="btn-primary group" href="https://eic.com.bd/">
+                        <a className="btn-primary group" href={`mailto:${number?.number}`}>
                             Schedule a Call
                             <svg
                                 className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"

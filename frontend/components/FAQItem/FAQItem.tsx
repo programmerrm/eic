@@ -25,6 +25,8 @@ export default function FAQItem({ question, answer, isActive, onClick }: FAQItem
                     alt="icon"
                     width={12}
                     height={12}
+                    priority 
+                    fetchPriority="high"
                 />
             </div>
             {isActive && <p className="mt-2 text-sm sm:text-base w-full">{answer}</p>}

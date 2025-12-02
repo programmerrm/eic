@@ -67,10 +67,10 @@ export default async function Footer() {
                             <div className="flex items-center gap-2 sm:gap-4">
                                 <Image src={phoneImage} alt="phone" width={40} height={40} />
                                 <div className="flex flex-col">
-                                    <Link className="text-sm sm:text-base font-medium font-roboto" href={`tel:${infomation?.data?.phone_number1 || ""}`}>
+                                    <Link className="text-sm sm:text-base font-medium font-roboto py-1" href={`tel:${infomation?.data?.phone_number1 || ""}`}>
                                         {infomation?.data?.phone_number1 || ""}
                                     </Link>
-                                    <Link className="text-sm sm:text-base font-medium font-roboto" href={`tel:${infomation?.data?.phone_number2 || ""}`}>
+                                    <Link className="text-sm sm:text-base font-medium font-roboto py-1" href={`tel:${infomation?.data?.phone_number2 || ""}`}>
                                         {infomation?.data?.phone_number2 || ""}
                                     </Link>
                                 </div>
@@ -90,7 +90,7 @@ export default async function Footer() {
                         </div>
                         <div className="w-full max-w-[642px] flex justify-between flex-wrap gap-10">
                             <div className="menu">
-                                <h5>Main Page</h5>
+                                <h4>Main Page</h4>
                                 <ul>
                                     <li><Link href="/">Home</Link></li>
                                     <li><Link href="/about-us">About Us</Link></li>
@@ -101,7 +101,7 @@ export default async function Footer() {
                                 </ul>
                             </div>
                             <div className="menu">
-                                <h5>Services</h5>
+                                <h4>Services</h4>
                                 <ul>
                                     {servicesList.map((item: any) => (
                                         <li key={item.id}>
@@ -111,7 +111,7 @@ export default async function Footer() {
                                 </ul>
                             </div>
                             <div className="menu">
-                                <h5>Social Link</h5>
+                                <h4>Social Link</h4>
                                 {socialLink && (
                                     <ul>
                                         {socialLink.map((item: any) => (
@@ -122,6 +122,8 @@ export default async function Footer() {
                                                         alt="social"
                                                         width={16}
                                                         height={16}
+                                                        priority 
+                                                        fetchPriority="high"
                                                     />
                                                 </Link>
                                             </li>

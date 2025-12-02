@@ -10,7 +10,7 @@ export default async function Banner() {
     });
     return (
         <>
-            <section className="mobile-bg-hide relative pb-5 w-full mx-auto overflow-hidden hero-bg">
+            <section className="mobile-bg-hide relative w-full mx-auto overflow-hidden hero-bg pb-5">
                 <div className="container relative z-10">
                     <div className="flex flex-col lg:flex-row pt-[120px] lg:pt-[182px] pb-12 2xl:pb-[130px]">
                         <div className="w-full lg:max-w-[754px] order-2 lg:order-1 mt-10 lg:mt-0">

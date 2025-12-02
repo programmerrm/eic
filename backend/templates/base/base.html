@@ -3,17 +3,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        {% if favicon %}
-            <link rel="icon" href="{{ favicon.icon.url }}" type="image/png">
-        {% endif %}
+        <link rel="icon" href="{% static 'images/eic-logo.svg' %}" type="image/png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block title %}{% endblock %}</title>
         {% block meta_tags %}{% endblock %}
         <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     </head>
     <body>
-        {% include "../components/messages/messages.html" %}
-        {% include "../components/loader/loader.html" %}
         {% block full_content %}{% endblock %}
         {% block js_links %}{% endblock %}
     </body>
