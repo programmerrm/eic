@@ -6,6 +6,7 @@ HOMEPAGE MODELS HERE.
 import json
 from django.db import models
 from django.core.validators import MinLengthValidator
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.translation import gettext_lazy as _
 from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -32,6 +33,10 @@ class SeoTag(models.Model):
         null=True,
         verbose_name=_('Meta Keywords'),
         help_text=_('Comma separated keywords for SEO.')
+    )
+    author = models.CharField(
+        max_length=280,
+        verbose_name=_('Author Name'),
     )
     og_title = models.CharField(
         max_length=255, 
@@ -111,7 +116,7 @@ class Schema(models.Model):
     )
     type = models.CharField(
         max_length=50,
-        default="ContactPage",
+        default="HomePage",
         verbose_name=_('Type'),
         help_text=_('@type for JSON-LD')
     )
@@ -278,8 +283,12 @@ class Banner(models.Model):
         help_text=_('Enter company profile button URL...'),
     )
 
+    class Meta:
+        verbose_name = 'Banner'
+        verbose_name_plural = _('Banner')
+
     def __str__(self):
-        return f"{self.title[:50]}"
+        return f"{self.title[:50]}" or "Banner"
 
 # ================ Paymnet Info ===================
 class PaymnetInfo(models.Model):
@@ -309,15 +318,29 @@ class PaymnetInfo(models.Model):
         null=True,
         verbose_name=_('Title after span'),
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
+        null=True,
+        blank=True,
         verbose_name=_('Description'),
+    )
+    btn_name = models.CharField(
+        max_length=280,
+        verbose_name=_('Button Name'),
+        null=True,
+        blank=True,
     )
     btn_url = models.URLField(
         verbose_name=_('URL'),
+        null=True,
+        blank=True,
     )
 
+    class Meta:
+        verbose_name = 'Payment'
+        verbose_name_plural = _('Payment')
+
     def __str__(self):
-        return self.title_span
+        return self.title_span[:50] or "Paymnet"
 
 # ================= SECURITY ====================
 class SecurityFirm(models.Model):
@@ -419,19 +442,23 @@ class CybersecuritySolutionTitle(models.Model):
         null=True,
         blank=True,
         max_length=280,
-        verbose_name=_('Cyber Security Solution Title'),
+        verbose_name=_('Cyber Security Title'),
     )
     description = models.TextField(
         null=True,
         blank=True,
-        verbose_name=_('Cyber Security Solution Description')
+        verbose_name=_('Cyber Security Description')
     )
     image = models.FileField(
         null=True,
         blank=True,
         upload_to='cyber-ecurity/',
-        verbose_name=_('Cyber Security Solution Image'),
+        verbose_name=_('Cyber Security Image'),
     )
+
+    class Meta:
+        verbose_name = 'Cybersecurity Excellence Title'
+        verbose_name_plural = _('Cybersecurity Excellence Title')
 
     def __str__(self):
         return f"Cyber Security Solution Title"
@@ -442,21 +469,25 @@ class CybersecuritySolutionItem(models.Model):
         null=True,
         blank=True,
         upload_to='cybers-ecurity/',
-        verbose_name=_('Cyber Security Solution Item Image'),
-        help_text=_('Upload cyber security solution item image...'),
+        verbose_name=_('Cyber Security Item Image'),
+        help_text=_('Upload cyber security item image...'),
     )
     title = models.CharField(
         null=True,
         blank=True,
         max_length=280,
-        verbose_name=_('Cyber Security Solution Item Title'),
-        help_text=_('Enter cyber security solution item title...'),
+        verbose_name=_('Cyber Security Item Title'),
+        help_text=_('Enter cyber security item title...'),
     )
     count = models.IntegerField(
         default=0,
-        verbose_name=_('Cyber Security Solution Item Count'),
-        help_text=_('Enter cyber security solution item count...'),
+        verbose_name=_('Cyber Security Item Count'),
+        help_text=_('Enter cyber security item count...'),
     )
+
+    class Meta:
+        verbose_name = 'Cybersecurity Excellence Items'
+        verbose_name_plural = _('Cybersecurity Excellence Items')
 
     def __str__(self):
         return f"Cyber Security Solution Item"
@@ -495,6 +526,10 @@ class OurProvenProcessSecurity(models.Model):
         null=True,
         verbose_name=_('our proven process security description'),
     )
+
+    class Meta:
+        verbose_name = 'Proven Process Security'
+        verbose_name_plural = _('Proven Process Security')
     
     def __str__(self):
         return f"our proven process security"
@@ -518,6 +553,10 @@ class OurProvenProcessSecurityItems(models.Model):
         blank=True,
         verbose_name=_('our proven process security item description'),
     )
+
+    class Meta:
+        verbose_name = 'Proven Process Security Items'
+        verbose_name_plural = _('Proven Process Security Items')
 
     def __str__(self):
         return f"Our proven process security item {self.title}"
@@ -545,6 +584,10 @@ class ReviewTopBar(models.Model):
         verbose_name=_('Review top bar title after span'),
         help_text=_('Enter your review top bar title after span...'),
     )
+
+    class Meta:
+        verbose_name = 'Review Top Bar'
+        verbose_name_plural = _('Review Top Bar')
 
     def __str__(self):
         return self.title_span or "Review Top"
@@ -580,6 +623,10 @@ class Review(models.Model):
         help_text=_('Enter review content...'),
     )
 
+    class Meta:
+        verbose_name = 'Reviews'
+        verbose_name_plural = _('Reviews')
+
     def __str__(self):
         return self.author_name or "Autor data"
 
@@ -601,6 +648,10 @@ class GloballyAccredited(models.Model):
         validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Background Image'),
     )
+
+    class Meta:
+        verbose_name = 'Globally Accredited'
+        verbose_name_plural = _('Globally Accredited')
 
     def __str__(self):
         return self.title or "Globally Accredited"
@@ -636,6 +687,10 @@ class ExperienceEic(models.Model):
         verbose_name=_('Button URL'),
     )
 
+    class Meta:
+        verbose_name = 'Experience Top Bar'
+        verbose_name_plural = _('Experience Top Bar')
+
     def __str__(self):
         return self.normal_title or "Experience Eic"
 
@@ -645,6 +700,10 @@ class ExperienceEicItem(models.Model):
         max_length=280,
         verbose_name=_('Item Name'),
     )
+
+    class Meta:
+        verbose_name = 'Experience Impact Items'
+        verbose_name_plural = _('Experience Impact Items')
 
     def __str__(self):
         return self.name or "Experience Eic Item"
