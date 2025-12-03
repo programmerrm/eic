@@ -232,10 +232,16 @@ class ContactFormView(viewsets.ModelViewSet):
             text_content = strip_tags(html_content)
 
             subject = f"New contact form submission from {contact.full_name}"
-            from_email = contact.email
+            from_email = env('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
             to_emails = [env('SITE_ADMIN_EMAIL', EMAIL_HOST_USER)]
 
-            msg = EmailMultiAlternatives(subject, text_content, from_email, to_emails)
+            msg = EmailMultiAlternatives(
+                subject,
+                text_content,
+                from_email,
+                to_emails,
+                reply_to=[contact.email]
+            )
             msg.attach_alternative(html_content, "text/html")
             msg.send(fail_silently=False)
 
