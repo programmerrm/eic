@@ -44,6 +44,9 @@ export default async function Footer() {
                 backgroundImage: `url(${footerBgImg.src})`,
             }}>
                 <div className="container">
+
+
+
                     <div className="flex items-center justify-between border-b border-[#EBF3F833]/20 py-5">
                         <Link className="w-full max-w-16 md:max-w-[114px]" href="/">
                             {logo?.data?.image ? (
@@ -83,7 +86,65 @@ export default async function Footer() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col lg:flex-row justify-between pt-6 border-b border-[#EBF3F8]/20 pb-12 gap-10 text-white">
+
+
+                    <div className="grid grid-cols-3 lg:grid-cols-[35%_22%_22%_15.5%] gap-6 w-full pt-6 border-b border-[#EBF3F8]/20 pb-12 text-white">
+
+                        <div className="w-full col-span-full lg:col-span-1">
+                            <p>Subscribe our newsletter for latest <br /> security related knowledge</p>
+                            <SubscribeForm />
+                        </div>
+
+                        <div className="menu">
+                            <h4>Main Page</h4>
+                            <ul>
+                                <li><Link href="/">Home</Link></li>
+                                <li><Link href="/about-us">About Us</Link></li>
+                                <li><Link href="/case-studies">Case Studies</Link></li>
+                                <li><Link href="/faq">FAQ</Link></li>
+                                <li><Link href="/blogs">Blog</Link></li>
+                                <li><Link href="/contact">Contact</Link></li>
+                            </ul>
+                        </div>
+
+                        <div className="menu">
+                            <h4>Services</h4>
+                            <ul>
+                                {servicesList.map((item: any) => (
+                                    <li key={item.id}>
+                                        <Link href={`/services/${item.slug}`}>{item.title}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="menu">
+                            <h4>Social Link</h4>
+                            {socialLink && (
+                                <ul>
+                                    {socialLink.map((item: any) => (
+                                        <li key={item.id}>
+                                            <Link href={item.url} target="_blank">
+                                                <Image
+                                                    src={item?.icon || ""}
+                                                    alt="social"
+                                                    width={16}
+                                                    height={16}
+                                                    priority
+                                                    fetchPriority="high"
+                                                />
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    {/* <div className="flex flex-col lg:flex-row justify-between pt-6 border-b border-[#EBF3F8]/20 pb-12 gap-10 text-white">
+
                         <div className="w-full max-w-[352px]">
                             <p>Subscribe our newsletter for latest <br /> security related knowledge</p>
                             <SubscribeForm />
@@ -132,7 +193,10 @@ export default async function Footer() {
                                 )}
                             </div>
                         </div>
-                    </div>
+
+                    </div> */}
+
+
                     <div className="flex flex-col xl:flex-row justify-between items-center text-white pt-10 gap-5">
                         <span className="text-[##E6E7EB] text-sm sm:text-base sm:leading-6 font-roboto font-medium">{copyRight?.data?.text || "Powered by Ontik Creative"}</span>
                         <div className="flex gap-4 flex-wrap flex-col items-center lg:flex-row">
@@ -141,6 +205,9 @@ export default async function Footer() {
                             <span className="text-center">{infomation?.data?.address || "House No-15, Road No- 7, Block- C, Gulshan, Niketon, Dhaka-1212"}</span>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </footer>

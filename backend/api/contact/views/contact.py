@@ -7,6 +7,9 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
 from django.core.cache import cache
 from contact.models import (
     ContactTopBar, 
@@ -215,13 +218,33 @@ class ContactFormView(viewsets.ModelViewSet):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            contact = serializer.save()
+
+            context = {
+                'full_name': contact.full_name,
+                'email': contact.email,
+                'phone_number': contact.phone_number,
+                'company_name': contact.company_name,
+                'message': contact.message,
+            }
+
+            html_content = render_to_string('emails/contact_email.html', context)
+            text_content = strip_tags(html_content)
+
+            subject = f"New contact form submission from {contact.full_name}"
+            from_email = contact.email
+            to_emails = [env('SITE_ADMIN_EMAIL', EMAIL_HOST_USER)]
+
+            msg = EmailMultiAlternatives(subject, text_content, from_email, to_emails)
+            msg.attach_alternative(html_content, "text/html")
+            msg.send(fail_silently=False)
 
             return Response({
                 'success': True,
                 'message': 'Your contact form has been submitted successfully.',
                 'data': serializer.data
             }, status=status.HTTP_201_CREATED)
+
         except Exception as e:
             return Response({
                 'success': False,
