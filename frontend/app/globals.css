@@ -68,6 +68,7 @@ body {
 header .header-nav li a {
     @apply px-3 lg:px-5 py-2 text-sm sm:text-base tracking-[2%] uppercase font-spacegrotesk font-bold inline-block text-blue transition-all hover:text-blue-dark
 }
+
 footer .menu h5 {
     @apply mb-2 sm:mb-4
 }
@@ -475,9 +476,39 @@ html {
     z-index: -99;
     left: 0;
     top: 0;
-    right: -32px;
+    right: 0;
     bottom: 0;
+    width: 102%;
+    height: 100%;
   }
+  @media(max-width:1858px){
+    .hero-bg:after {
+        background-size: cover;
+    }
+}
+
+  @media(min-width:1672px) and (max-width:1868px){
+    .hero-bg:after {
+        width: 107% !important;
+    }
+}
+  @media(min-width:1485px) and (max-width:1671px){
+    .hero-bg:after {
+        width: 112% !important;
+    }
+}
+
+  @media(min-width:1280px) and (max-width:1484px){
+    .hero-bg:after {
+        width: 118% !important;
+    }
+}
+
+  @media(min-width:1025px) and (max-width:1279px){
+    .hero-bg:after {
+        width: 122% !important;
+    }
+}
 }
 @media(max-width:1024px){
     .hero-bg:after {

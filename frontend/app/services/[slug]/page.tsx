@@ -230,8 +230,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 {singleServiceData?.payment_info?.description}
                             </p>
                             <div className="btn-wrap">
-                                <Link href="https://eic.com.bd/" 
-                                className="btn-primary group inline-flex">Get Started
+                                <Link href={singleServiceData?.payment_info?.btn_url || ""} 
+                                className="btn-primary group inline-flex">{singleServiceData?.payment_info?.btn_name}
                                     <svg
                                         className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                         xmlns="http://www.w3.org/2000/svg"

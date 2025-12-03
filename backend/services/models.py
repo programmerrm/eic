@@ -636,7 +636,7 @@ class ServicePaymnet(models.Model):
         verbose_name=_('Title after span'),
     )
     description = RichTextUploadingField(
-        blank=True, 
+        blank=True,
         null=True,
         verbose_name=_('Description'),
     )
@@ -653,7 +653,7 @@ class ServicePaymnet(models.Model):
     )
 
     def __str__(self):
-        return self.title_span[:50]
+        return self.title_span[:50] or "paymnet"
 
 # ======== Services Include Bottom Title ===========
 class ServicesIncludeBottomTitle(models.Model):
