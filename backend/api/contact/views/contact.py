@@ -215,26 +215,39 @@ class ContactFormView(viewsets.ModelViewSet):
         return [IsAdminUser()]
 
     def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        
+        if not serializer.is_valid():
+            print("Serializer errors:", serializer.errors)
+            return Response({
+                'success': False,
+                'message': 'Validation failed.',
+                'errors': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        contact = serializer.save()
+
+        context = {
+            'full_name': contact.full_name,
+            'email': contact.email,
+            'phone_number': contact.phone_number,
+            'company_name': contact.company_name,
+            'message': contact.message,
+        }
+
+        html_content = render_to_string('emails/contact_email.html', context)
+        text_content = strip_tags(html_content)
+
+        subject = f"New contact form submission from {contact.full_name}"
+        from_email = env('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+        to_emails = [env('SITE_ADMIN_EMAIL', EMAIL_HOST_USER)]
+
+        print("Sending email to:", to_emails)
+        print("From:", from_email)
+        print("Reply-To:", [contact.email])
+        print("Subject:", subject)
+
         try:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            contact = serializer.save()
-
-            context = {
-                'full_name': contact.full_name,
-                'email': contact.email,
-                'phone_number': contact.phone_number,
-                'company_name': contact.company_name,
-                'message': contact.message,
-            }
-
-            html_content = render_to_string('emails/contact_email.html', context)
-            text_content = strip_tags(html_content)
-
-            subject = f"New contact form submission from {contact.full_name}"
-            from_email = env('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
-            to_emails = [env('SITE_ADMIN_EMAIL', EMAIL_HOST_USER)]
-
             msg = EmailMultiAlternatives(
                 subject,
                 text_content,
@@ -244,19 +257,20 @@ class ContactFormView(viewsets.ModelViewSet):
             )
             msg.attach_alternative(html_content, "text/html")
             msg.send(fail_silently=False)
-
-            return Response({
-                'success': True,
-                'message': 'Your contact form has been submitted successfully.',
-                'data': serializer.data
-            }, status=status.HTTP_201_CREATED)
-
+            print("Email sent successfully.")
         except Exception as e:
+            print("Email sending failed:", str(e))
             return Response({
                 'success': False,
-                'message': 'Failed to submit contact form.',
+                'message': 'Failed to send email.',
                 'error': str(e)
-            }, status=status.HTTP_400_BAD_REQUEST)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        return Response({
+            'success': True,
+            'message': 'Your contact form has been submitted successfully.',
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)
 
 # =========== Conatct Infomation ===============
 class ConatctInfomationView(viewsets.ModelViewSet):
