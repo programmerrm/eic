@@ -1,23 +1,92 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" style="margin:0; padding:0;">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Contact Form Submission</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+      }
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #3384BD;
+        color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      h2 {
+        margin-top: 0;
+        color: #ffffff;
+        font-size: 24px;
+        text-align: center;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 8px 0;
+      }
+      strong {
+        display: inline-block;
+        width: 90px;
+      }
+      hr {
+        border: 0;
+        border-top: 1px solid rgba(255,255,255,0.3);
+        margin: 20px 0;
+      }
+      h4 {
+        margin: 15px 0 5px 0;
+        font-size: 18px;
+        text-decoration: underline;
+      }
+      .footer {
+        font-size: 12px;
+        text-align: center;
+        margin-top: 20px;
+        color: rgba(255,255,255,0.7);
+      }
+
+      @media only screen and (max-width: 600px) {
+        .email-container {
+          padding: 15px;
+        }
+        strong {
+          width: 80px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        p {
+          font-size: 14px;
+        }
+        h4 {
+          font-size: 16px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <h2>New contact form submission</h2>
-
-    <p><strong>Name:</strong> {{ full_name }}</p>
-    <p><strong>Email:</strong> {{ email }}</p>
-    <p><strong>Phone:</strong> {{ phone_number }}</p>
-    <p><strong>Company:</strong> {{ company_name }}</p>
-
-    <hr/>
-
-    <h4>Message</h4>
-    <p>{{ message|linebreaks }}</p>
-
-    <hr/>
-    <p>Sent from your website contact form.</p>
+    <div class="email-container">
+      <h2>New Contact Form Submission</h2>
+      <p><strong>Name:</strong> {{ full_name }}</p>
+      <p><strong>Email:</strong> {{ email }}</p>
+      <p><strong>Phone:</strong> {{ phone_number }}</p>
+      <p><strong>Company:</strong> {{ company_name }}</p>
+      <hr/>
+      <h4>Message</h4>
+      <p>{{ message|linebreaks }}</p>
+      <hr/>
+      <p class="footer">
+        Sent from your website contact form.<br/>
+        &copy; {{ now|date:"Y" }} EIC. All rights reserved.<br/>
+        Thanks for connecting with us!
+      </p>
+    </div>
   </body>
 </html>

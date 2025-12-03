@@ -219,7 +219,6 @@ class ContactFormView(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         
         if not serializer.is_valid():
-            print("Serializer errors:", serializer.errors)
             return Response({
                 'success': False,
                 'message': 'Validation failed.',
@@ -243,11 +242,6 @@ class ContactFormView(viewsets.ModelViewSet):
         from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER)
         to_emails = [getattr(settings, 'SITE_ADMIN_EMAIL', settings.EMAIL_HOST_USER)]
 
-        print("Sending email to:", to_emails)
-        print("From:", from_email)
-        print("Reply-To:", [contact.email])
-        print("Subject:", subject)
-
         try:
             msg = EmailMultiAlternatives(
                 subject,
@@ -258,9 +252,7 @@ class ContactFormView(viewsets.ModelViewSet):
             )
             msg.attach_alternative(html_content, "text/html")
             msg.send(fail_silently=False)
-            print("Email sent successfully.")
         except Exception as e:
-            print("Email sending failed:", str(e))
             return Response({
                 'success': False,
                 'message': 'Failed to send email.',
