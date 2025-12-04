@@ -36,7 +36,11 @@ export default function ServicesGrid({ items }: { items: ServiceItem[] }) {
                         className="transition-all hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]"
                     >
                         <div className="h-full group bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
-                            <Link href={`/services/${item.slug}`} className="absolute inset-0 z-10" />
+
+
+                            <Link href={`/services/${item.slug}`} className="absolute inset-0 z-10"></Link>
+
+
                             <div className="h-full bg-white transition-all duration-500 group-hover:bg-blue group-hover:text-white group-hover:border-blue rounded-2xl pt-5 xl:pt-8 pb-5 xl:pb-6 pl-6 xl:pl-10 pr-5 xl:pr-8 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
                                 <div className="text-center sm:text-start flex flex-col justify-between h-full">
                                     <div className="flex items-center justify-center px-16">

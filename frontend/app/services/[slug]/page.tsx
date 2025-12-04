@@ -132,7 +132,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                 alt="components"
                                                 width={536}
                                                 height={640}
-                                                priority 
+                                                priority
                                                 fetchPriority="high"
                                             />
                                         )}
@@ -195,13 +195,13 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                             <div className="max-w-10 md:max-w-[60px] w-full">
                                                 {item?.image && (
                                                     <Image src=
-                                                    {item?.image} 
-                                                    alt={item?.title} 
-                                                    width={60} 
-                                                    height={66}
-                                                    priority 
-                                                    fetchPriority="high"
-                                                />
+                                                        {item?.image}
+                                                        alt={item?.title}
+                                                        width={60}
+                                                        height={66}
+                                                        priority
+                                                        fetchPriority="high"
+                                                    />
                                                 )}
                                             </div>
                                             <h4 className="mt-4">{item?.title}</h4>
@@ -230,8 +230,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 {singleServiceData?.payment_info?.description}
                             </p>
                             <div className="btn-wrap">
-                                <Link href={singleServiceData?.payment_info?.btn_url || ""} 
-                                className="btn-primary group inline-flex">{singleServiceData?.payment_info?.btn_name}
+                                <Link href={singleServiceData?.payment_info?.btn_url || ""}
+                                    className="btn-primary group inline-flex">{singleServiceData?.payment_info?.btn_name}
                                     <svg
                                         className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -258,7 +258,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                             alt="ieps"
                                             width={840}
                                             height={406}
-                                            priority 
+                                            priority
                                             fetchPriority="high"
                                         />
                                     )}
@@ -312,13 +312,14 @@ export default async function SingleService({ params }: SingleServiceProps) {
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
                             {singleServiceData?.related_services?.slice(0, 3)?.map((item: any) => (
-                                <Link
-                                    key={item.id}
-                                    href={`/services/${item?.slug}`}
-                                    className="h-full transition-all hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]"
-                                >
-                                    <div className="h-full bg-[#E6E7EB] transition-all hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative">
-                                        <div className="h-full bg-white rounded-2xl pt-5 xl:pt-8 pb-5 xl:pb-6 pl-6 xl:pl-10 pr-5 xl:pr-8 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
+                                <div key={item.id} className="hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]">
+                                    <div className="group h-full bg-[#E6E7EB] hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative transition-all ">
+                                        <Link 
+                                            
+                                            href={`/services/${item?.slug}`}
+                                            className=" absolute inset-0 z-10"
+                                        > </Link>
+                                        <div className="h-full bg-white group-hover:bg-blue transition-all duration-500 rounded-2xl pt-5 xl:pt-8 pb-5 xl:pb-6 pl-6 xl:pl-10 pr-5 xl:pr-8 [clip-path:polygon(0_0,100%_0,100%_calc(100%-49px),calc(100%-49px)_100%,0_100%)]">
                                             <div className="text-center sm:text-start flex flex-col justify-between h-full">
                                                 <div className="text-center sm:text-start">
                                                     <div className="flex items-center justify-center px-16">
@@ -333,12 +334,12 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                     </div>
                                                 </div>
                                                 <div className="content mt-5 sm:mt-0">
-                                                    <h3 className="mt-2.5">{item?.title}</h3>
-                                                    <p className=" mt-3 mx-auto sm:mx-0">
+                                                    <h3 className="mt-2.5 group-hover:text-white">{item?.title}</h3>
+                                                    <p className=" mt-3 mx-auto sm:mx-0 group-hover:text-white">
                                                         {item.description}
                                                     </p>
                                                     <span
-                                                        className="btn-primary group inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4">Read
+                                                        className="btn-primary inline-flex p-0 bg-transparent text-body text-sm capitalize underline border-0 underline-offset-6 mt-4 group-hover:text-white">Read
                                                         More
                                                         <svg
                                                             className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
@@ -361,7 +362,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
 
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             ))}
                         </div>
                         <div className="flex items-center justify-center mt-6 md:mt-12">
@@ -390,26 +391,30 @@ export default async function SingleService({ params }: SingleServiceProps) {
             {singleServiceData?.faqs?.length > 0 && (
                 <section className="pb-12 lg:pb-[100px]">
                     <div className="container">
-                        <div className="flex flex-col lg:flex-row items-center">
+                        <div className="w-full lg:flex lg:items-center lg:justify-between lg:gap-8">
 
-                            <div className="w-full lg:max-w-[60.955%] order-2 lg:order-1 mt-5 lg:mt-0">
+                            {/* LEFT: FAQ */}
+                            <div className="w-full lg:w-[60%] order-2 lg:order-1 mt-5 lg:mt-0">
                                 <h2 className="max-w-[500px]">
-                                    <span className="text-blue">FAQs</span> {singleServiceData?.faqs?.[0]?.title}
+                                    <span className="text-blue">FAQs</span>{" "}
+                                    {singleServiceData?.faqs?.[0]?.title}
                                 </h2>
                                 <div className="w-full max-w-[696px] space-y-4 mt-10">
                                     <FAQ faqItems={singleServiceData?.faq_items || []} />
                                 </div>
                             </div>
 
-                            <div className="w-full lg:max-w-[40%] order-1 lg:order-2 flex lg:block items-center justify-center">
+                            {/* RIGHT: IMAGE */}
+                            <div className="w-full lg:w-[40%] order-1 lg:order-2 lg:flex lg:justify-end">
                                 {singleServiceData?.faqs?.[0]?.image && (
                                     <Image
                                         src={singleServiceData?.faqs?.[0]?.image}
                                         alt="faq"
                                         width={515}
                                         height={485}
-                                        priority 
+                                        priority
                                         fetchPriority="high"
+                                        className="h-auto w-auto max-w-full"
                                     />
                                 )}
                             </div>
@@ -418,6 +423,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </div>
                 </section>
             )}
+
 
             <StayCompliant />
         </>
