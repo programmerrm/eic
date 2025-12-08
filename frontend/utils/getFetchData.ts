@@ -13,6 +13,7 @@ export const getFetchData = async (
 
   const fetchOptions: RequestInit & { next?: { tags?: string[] } } = {
     ...rest,
+    cache: 'force-cache',
   };
 
   if (tag) {
@@ -28,10 +29,11 @@ export const getFetchData = async (
   try {
     const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
 
-    // if (!response.ok) {
-    //   console.error("Fetch failed:", response.status, response.statusText);
-    //   return null;
-    // }
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Fetch failed:", response.status, response.statusText, errorData);
+      return null;
+    }
 
     return await response.json();
   } catch (error) {
