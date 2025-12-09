@@ -11,11 +11,11 @@ import FAQ from "@/components/FAQ/FAQ";
 import Description from "@/components/paymnet-info/description";
 
 type SingleServiceProps = {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 };
 
 export default async function SingleService({ params }: SingleServiceProps) {
-    const { slug } = params;
+    const { slug } = await params;
     const singleService = await getFetchData(`/services/single/${slug}`);
     const complianceTitleData = await getFetchData('/configuration/compliance-title/');
     const complianceItemData = await getFetchData('/configuration/compliance-item/');
