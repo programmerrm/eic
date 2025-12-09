@@ -94,7 +94,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                             <div className="flex flex-col lg:flex-row justify-between">
                                 <div className="w-full lg:w-1/2 order-2 lg:order-1">
                                     <div className="w-full lg:max-w-[400px] xl:max-w-[673px] pt-10 xl:pt-64">
-                                        <h2 className="w-full md:w-[540px] lg:w-[673px] mx-auto relative z-20">
+                                        <h2 className="w-full md:w-[520px] relative z-20">
                                             {singleServiceData?.why_choose_us_title?.title_before_span}{" "}
                                             <span className="text-blue">
                                                 {singleServiceData?.why_choose_us_title?.title_span}
@@ -227,9 +227,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 {singleServiceData?.payment_info?.title_before_span}<span
                                     className="text-blue"> {singleServiceData?.payment_info?.title_span}</span> {singleServiceData?.payment_info?.title_after_span}
                             </h2>
-                            <p className="text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[575px] font-spacegrotesk">
-                                <Description content={singleServiceData?.payment_info?.description} />
-                            </p>
+                            <Description content={singleServiceData?.payment_info?.description} />
                             <div className="btn-wrap">
                                 <Link href={singleServiceData?.payment_info?.btn_url || ""}
                                     className="btn-primary group inline-flex">{singleServiceData?.payment_info?.btn_name}
