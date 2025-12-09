@@ -245,7 +245,7 @@ class ServiceView(viewsets.ModelViewSet):
             })
 
     # ===== cache clear helper =====
-    def _clear_blog_cache(self):
+    def _clear_service_cache(self):
         try:
             from django_redis import get_redis_connection
             redis = get_redis_connection("default")
@@ -257,17 +257,17 @@ class ServiceView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        self._clear_blog_cache()
+        self._clear_service_cache()
         return instance
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        self._clear_blog_cache()
+        self._clear_service_cache()
         return instance
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        self._clear_blog_cache()
+        self._clear_service_cache()
 
 class SingleServiceView(viewsets.ModelViewSet):
     queryset = Service.objects.all()
@@ -307,17 +307,17 @@ class SingleServiceView(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def _clear_single_cache(self, slug):
+    def _clear_single_service_cache(self, slug):
         cache_key = f"{self.CACHE_KEY_PREFIX}_{slug}"
         cache.delete(cache_key)
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        self._clear_single_cache(instance.slug)
+        self._clear_single_service_cache(instance.slug)
         return instance
 
     def perform_destroy(self, instance):
         slug = instance.slug
         super().perform_destroy(instance)
-        self._clear_single_cache(slug)
+        self._clear_single_service_cache(slug)
         
