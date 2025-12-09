@@ -148,7 +148,7 @@ class BlogTopBarView(viewsets.ModelViewSet):
     serializer_class = BlogTopBarSerializer
 
     CACHE_KEY = "blog_topbar_first"
-
+ 
     def get_permissions(self):
         if self.action == 'list':
             return [AllowAny()]
