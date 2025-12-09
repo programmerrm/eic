@@ -8,6 +8,7 @@ import complianceBG from "../../../public/images/compliance-bg.svg";
 import RelatedBGImg from "../../../public/images/related-image-bg.svg";
 import trustedForProven from "../../../public/images/trusted-for-proven.png";
 import FAQ from "@/components/FAQ/FAQ";
+import Description from "@/components/paymnet-info/description";
 
 type SingleServiceProps = {
     params: Promise<{ slug: string }>;
@@ -227,7 +228,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                     className="text-blue"> {singleServiceData?.payment_info?.title_span}</span> {singleServiceData?.payment_info?.title_after_span}
                             </h2>
                             <p className="text-base sm:text-xl md:text-2xl md:leading-8 mt-2 sm:mt-3 mb-3 sm:mb-6 w-full lg:w-[400px] xl:w-[575px] font-spacegrotesk">
-                                {singleServiceData?.payment_info?.description}
+                                <Description content={singleServiceData?.payment_info?.description} />
                             </p>
                             <div className="btn-wrap">
                                 <Link href={singleServiceData?.payment_info?.btn_url || ""}

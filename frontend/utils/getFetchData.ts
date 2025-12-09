@@ -13,9 +13,7 @@ export const getFetchData = async (
 
   const fetchOptions: RequestInit & { next?: { tags?: string[] } } = {
     ...rest,
-    cache: 'force-cache',
   };
-
   if (tag) {
     fetchOptions.next = {
       ...(rest as any).next,
@@ -25,7 +23,6 @@ export const getFetchData = async (
       ],
     };
   }
-
   try {
     const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
 
