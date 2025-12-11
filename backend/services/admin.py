@@ -20,7 +20,10 @@ from services.models import (
     ServicesIncludeTopTitle, 
     ServicesIncludeTopItem, 
     ServicesIncludeBottomTitle, 
-    ServicesIncludeBottomItem, 
+    ServicesIncludeBottomItem,
+    ComplianceTitle,
+    ComplianceItemList,
+    ComplianceItem,
     ServicePaymnet, 
     ServiceWhyChooseUsTitle, 
     ServiceWhyChooseUsItem,
@@ -533,6 +536,96 @@ class ServicesIncludeBottomItemAdmin(admin.ModelAdmin):
 
     action_buttons.short_description = "Actions"
 
+class ComplianceTitleAdmin(admin.ModelAdmin):
+    list_display = ["service", "title_before_span", 'title_span', 'title_after_span', "btn_name", "action_buttons"]
+    search_fields = ["title_span", "btn_name", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Compliance Title", {
+            "fields": ("service", "title_before_span", 'title_span', 'title_after_span', "btn_name", "btn_url")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ComplianceItemListAdmin(admin.ModelAdmin):
+    list_display = ["service", "name", "action_buttons"]
+    search_fields = ["name", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Compliance List", {
+            "fields": ("service", "name")
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
+class ComplianceItemAdmin(admin.ModelAdmin):
+    list_display = ["service", "title", "action_buttons"]
+    search_fields = ["title", "service__title"]
+    list_filter = ["service"]
+    ordering = ["service"]
+
+    fieldsets = (
+        ("Service Compliance Title", {
+            "fields": ("service", "title", 'image')
+        }),
+    )
+
+    def action_buttons(self, obj):
+        app_label = obj._meta.app_label
+        model_name = obj._meta.model_name
+
+        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
+        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
+
+        return format_html(
+            '<a href="{}" style="padding:5px 10px; background:#3c8dbc; color:white; '
+            'border-radius:4px; margin-right:6px;">Edit</a>'
+            '<a href="{}" style="padding:5px 10px; background:#dd4b39; color:white; '
+            'border-radius:4px;">Delete</a>',
+            change_url,
+            delete_url,
+        )
+
+    action_buttons.short_description = "Actions"
+
 class ServicePaymnetAdmin(admin.ModelAdmin):
     list_display = ["service", "title_span", "btn_name", "action_buttons"]
     search_fields = ["title_span", "btn_name", "service__title"]
@@ -637,6 +730,9 @@ admin.site.register(ServicesIncludeTopTitle, ServicesIncludeTopTitleAdmin)
 admin.site.register(ServicesIncludeTopItem, ServicesIncludeTopItemAdmin)
 admin.site.register(ServicesIncludeBottomTitle, ServicesIncludeBottomTitleAdmin)
 admin.site.register(ServicesIncludeBottomItem, ServicesIncludeBottomItemAdmin)
+admin.site.register(ComplianceTitle, ComplianceTitleAdmin)
+admin.site.register(ComplianceItemList, ComplianceItemListAdmin)
+admin.site.register(ComplianceItem, ComplianceItemAdmin)
 admin.site.register(ServicePaymnet, ServicePaymnetAdmin)
 admin.site.register(ServiceWhyChooseUsTitle, ServiceWhyChooseUsTitleAdmin)
 admin.site.register(ServiceWhyChooseUsItem, ServiceWhyChooseUsItemAdmin)

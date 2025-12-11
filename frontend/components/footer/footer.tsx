@@ -132,8 +132,8 @@ export default async function Footer() {
                         </div>
                     </div>
                     <div className="flex flex-col xl:flex-row justify-between items-center text-white pt-10 gap-5">
-                        <span className="text-[##E6E7EB] text-sm sm:text-base sm:leading-6 font-roboto font-medium">{copyRight?.data?.text || ""}</span>
-                        <div className="flex gap-4 flex-wrap flex-col items-center lg:flex-row">
+                        <span className="hidden text-[##E6E7EB] text-sm sm:text-base sm:leading-6 font-roboto font-medium">{copyRight?.data?.text || ""}</span>
+                        <div className="flex gap-4 flex-wrap flex-col items-center justify-center text-center lg:flex-row">
                             <Link className="text-[#F4F4F6] text-sm sm:text-base sm:leading-6 font-dmsans font-medium transition-all hover:text-white/50 pr-5 lg:border-r border-white last:border-r-0 last:pr-0" href="/privacy-policy">Privacy Policy</Link>
                             <Link className="text-[#F4F4F6] text-sm sm:text-base sm:leading-6 font-dmsans font-medium transition-all hover:text-white/50 pr-5 lg:border-r border-white last:border-r-0 last:pr-0" href="/terms-conditions">Terms & Conditions</Link>
                             <span className="text-center">{infomation?.data?.address || "House No-15, Road No- 7, Block- C, Gulshan, Niketon, Dhaka-1212"}</span>

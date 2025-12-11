@@ -601,6 +601,97 @@ class ServiceWhyChooseUsItem(models.Model):
     def __str__(self):
         return f"Service item why choose us item name : {self.name[:50]}"
 
+# ============== Compliance Title =================
+class ComplianceTitle(models.Model):
+    service = models.OneToOneField(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='service_compliance_title',
+        null=True,
+        blank=True
+    )
+    title_before_span = models.CharField(
+        max_length=255, 
+        blank=True, 
+        null=True,
+        verbose_name=_('Title before span'),
+    )
+    title_span = models.CharField(
+        max_length=255, 
+        blank=True, 
+        null=True,
+        verbose_name=_('Title span'),
+    )
+    title_after_span = models.CharField(
+        max_length=255, 
+        blank=True, 
+        null=True,
+        verbose_name=_('Title after span'),
+    )
+    btn_name = models.CharField(
+        max_length=280,
+        verbose_name=_('Button Name'),
+    )
+    btn_url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name=_('Button URL'),
+    )
+
+    class Meta:
+        verbose_name = _('Compliance Title')
+        verbose_name_plural = _('Compliance Title')
+
+    def __str__(self):
+        return self.title_span[:50]
+
+# ========== Compliance Item List ===========
+class ComplianceItemList(models.Model):
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='service_compliance_item',
+        null=True,
+        blank=True
+    )
+    name = models.CharField(
+        max_length=280,
+        verbose_name=_('Name'),
+    )
+
+    class Meta:
+        verbose_name = _('Compliance Items')
+        verbose_name_plural = _('Compliance Items')
+    
+    def __str__(self):
+        return self.name[:50]
+
+# =========== Compliance Item ==============
+class ComplianceItem(models.Model):
+    image = models.FileField(
+        upload_to='compliance/',
+        validators=[VALIDATE_IMAGE_EXTENSION],
+        verbose_name=_('Image'),
+        null=True,
+        blank=True,
+    )
+    title = models.CharField(
+        max_length=280,
+        verbose_name=_('Title'),
+    )
+
+    item_list = models.ManyToManyField(
+        ComplianceItemList,
+        related_name='items',
+    )
+
+    class Meta:
+        verbose_name = _('Compliance Items')
+        verbose_name_plural = _('Compliance Items')
+
+    def __str__(self):
+        return self.title[:50]
+
 # ========= Service Paymnet ===========
 class ServicePaymnet(models.Model):
     service = models.OneToOneField(

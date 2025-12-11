@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from services.models import ServicePageTopBar, Categories, Service, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem, SeoTag, Schema
+from services.models import ServicePageTopBar, Categories, Service, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem, SeoTag, Schema, ComplianceTitle, ComplianceItemList, ComplianceItem
 
 # =========== Seo Tag =================
 class SeoTagSerializer(serializers.ModelSerializer):
@@ -98,6 +98,22 @@ class ServiceWhyChooseUsItemSerializer(serializers.ModelSerializer):
         model = ServiceWhyChooseUsItem
         fields = '__all__'
 
+class ComplianceTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComplianceTitle
+        fields = '__all__'
+
+class ComplianceItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComplianceItem
+        fields = '__all__'
+
+class ComplianceItemListSerializer(serializers.ModelSerializer):
+    items = ComplianceItemSerializer(many=True, read_only=True)
+    class Meta:
+        model = ComplianceItemList
+        fields = '__all__'
+
 class SingleServiceSerializer(serializers.ModelSerializer):
     categories = CategoriesSerializer(many=True)
     main_item = ServiceItemMainSerializer(read_only=True)
@@ -118,6 +134,15 @@ class SingleServiceSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True,
         source='service_why_choose_us_item'
+    )
+    compliance_title = ComplianceTitleSerializer(
+        read_only=True, 
+        source='service_compliance_title'
+    )
+    compliance_item = ComplianceItemListSerializer(
+        many=True,
+        read_only=True,
+        source='service_compliance_item'
     )
 
     class Meta:
