@@ -597,14 +597,12 @@ class ComplianceItemListAdmin(admin.ModelAdmin):
     action_buttons.short_description = "Actions"
 
 class ComplianceItemAdmin(admin.ModelAdmin):
-    list_display = ["service", "title", "action_buttons"]
-    search_fields = ["title", "service__title"]
-    list_filter = ["service"]
-    ordering = ["service"]
+    list_display = ["title", "action_buttons"]
+    search_fields = ["title",]
 
     fieldsets = (
-        ("Service Compliance Title", {
-            "fields": ("service", "title", 'image')
+        ("Service Compliance Item", {
+            "fields": ("title", 'image')
         }),
     )
 
