@@ -98,20 +98,21 @@ class ServiceWhyChooseUsItemSerializer(serializers.ModelSerializer):
         model = ServiceWhyChooseUsItem
         fields = '__all__'
 
-class ComplianceTitleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComplianceTitle
-        fields = '__all__'
-
 class ComplianceItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ComplianceItem
-        fields = '__all__'
+        fields = ['id', 'title', 'image']
 
 class ComplianceItemListSerializer(serializers.ModelSerializer):
     items = ComplianceItemSerializer(many=True, read_only=True)
+
     class Meta:
         model = ComplianceItemList
+        fields = ['id', 'name', 'items']
+
+class ComplianceTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComplianceTitle
         fields = '__all__'
 
 class SingleServiceSerializer(serializers.ModelSerializer):
@@ -135,10 +136,12 @@ class SingleServiceSerializer(serializers.ModelSerializer):
         read_only=True,
         source='service_why_choose_us_item'
     )
+    
     compliance_title = ComplianceTitleSerializer(
-        read_only=True, 
+        read_only=True,
         source='service_compliance_title'
     )
+
     compliance_item = ComplianceItemListSerializer(
         many=True,
         read_only=True,
