@@ -8,6 +8,7 @@ import {
   Roboto,
   Space_Grotesk,
 } from "next/font/google";
+export const dynamic = "force-dynamic";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import ScrollTopBottom from "@/components/scroll/scrollTopBottom";
