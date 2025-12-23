@@ -46,7 +46,7 @@ class SeoTagView(viewsets.ModelViewSet):
     queryset = SeoTag.objects.all()
     serializer_class = SeoTagSerializer
 
-    CACHE_KEY = "blog_seotag_first"
+    CACHE_KEY = "home_seotag_first"
 
     def get_permissions(self):
         if self.action == 'list':
@@ -59,14 +59,14 @@ class SeoTagView(viewsets.ModelViewSet):
             if cached_data:
                 return Response({
                     'success': True,
-                    'message': 'Blog seo tags data fetching successfully.',
+                    'message': 'Homepage seo tags data fetching successfully.',
                     'data': cached_data,
                 }, status=status.HTTP_200_OK)
             obj = SeoTag.objects.first()
             if not obj:
                 return Response({
                     'success': False,
-                    'message': 'Blog seo tags records not found',
+                    'message': 'Homepage seo tags records not found',
                     'data': {},
                 }, status=status.HTTP_404_NOT_FOUND)
             serializer = self.serializer_class(obj)
@@ -76,7 +76,7 @@ class SeoTagView(viewsets.ModelViewSet):
 
             return Response({
                 'success': True,
-                'message': 'Blog seo tags data fetching successfully.',
+                'message': 'Homepage seo tags data fetching successfully.',
                 'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
@@ -105,7 +105,7 @@ class SchemaView(viewsets.ModelViewSet):
     queryset = Schema.objects.all()
     serializer_class = SchemaSerializer
 
-    CACHE_KEY = "blog_schema_first"
+    CACHE_KEY = "home_schema_first"
 
     def get_permissions(self):
         if self.action == 'list':
@@ -118,14 +118,14 @@ class SchemaView(viewsets.ModelViewSet):
             if cached_data:
                 return Response({
                     'success': True,
-                    'message': 'Blog schema data fetching successfully.',
+                    'message': 'Homepage schema data fetching successfully.',
                     'data': cached_data,
                 }, status=status.HTTP_200_OK)
             obj = Schema.objects.first()
             if not obj:
                 return Response({
                     'success': False,
-                    'message': 'Blog schema records not found',
+                    'message': 'Homepage schema records not found',
                     'data': {},
                 }, status=status.HTTP_404_NOT_FOUND)
             serializer = self.serializer_class(obj)
@@ -135,7 +135,7 @@ class SchemaView(viewsets.ModelViewSet):
 
             return Response({
                 'success': True,
-                'message': 'Blog schema data fetching successfully.',
+                'message': 'Homepage schema data fetching successfully.',
                 'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:

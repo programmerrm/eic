@@ -25,13 +25,6 @@ export const getFetchData = async (
   }
   try {
     const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Fetch failed:", response.status, response.statusText, errorData);
-      return null;
-    }
-
     return await response.json();
   } catch (error) {
     console.error("Fetch error:", error);
