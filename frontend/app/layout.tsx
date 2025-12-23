@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (error) {
     console.error("Favicon fetch error:", error);
     return {
-      title: "Eic",
+      title: "Eic - Home",
       icons: {
         icon: "/images/eic-logo.svg",
       },
