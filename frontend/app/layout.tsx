@@ -11,23 +11,8 @@ import {
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import ScrollTopBottom from "@/components/scroll/scrollTopBottom";
-import { getFetchData } from "@/utils/getFetchData";
-
-const fetchSeoTag = async () => {
-  const res = await getFetchData('/homepage/seo-tag/');
-  return res?.data || null;
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seo = await fetchSeoTag();
-  console.log("Homepage SEO Data:", seo);
-  if (!seo) {
-    return {
-      title: "Eic - Home Page",
-      description: "Eic - Home page",
-    };
-  }
-
   try {
     return {
       title: "Eic - Home Page",
