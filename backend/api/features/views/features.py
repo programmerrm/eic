@@ -2,16 +2,17 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from django.core.cache import cache
-from django.db import transaction
-from api.features.serializers.features import FeatureSerializer, FeatureItemSerializer
 from features.models import Feature, FeatureItem
+from api.features.serializers.features import FeatureSerializer, FeatureItemSerializer
+from features.cache import FEATURE_CACHE_KEY, FEATURE_ITEM_CACHE_KEY
 
-# ========== FEATURE VIEWSET =============
+# -------------------------------
+# Feature ViewSet
+# -------------------------------
 class FeatureViewSet(viewsets.ModelViewSet):
     queryset = Feature.objects.all()
     serializer_class = FeatureSerializer
-
-    CACHE_KEY = "feature_topbar"
+    CACHE_KEY = FEATURE_CACHE_KEY
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -19,60 +20,39 @@ class FeatureViewSet(viewsets.ModelViewSet):
         return [IsAdminUser()]
 
     def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data is not None:
-                return Response({
-                    "success": True,
-                    "message": "Feature data fetched successfully.",
-                    "data": cached_data,
-                }, status=status.HTTP_200_OK)
-
-            obj = Feature.objects.first()
-            if not obj:
-                return Response({
-                    "success": True,
-                    "message": "No feature found.",
-                    "data": []
-                }, status=status.HTTP_200_OK)
-
-            serializer = self.get_serializer(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=60*60)
-
+        cached_data = cache.get(self.CACHE_KEY)
+        if cached_data is not None:
             return Response({
                 "success": True,
-                "message": "Feature data fetched successfully.",
-                "data": data
+                "message": "Feature data fetched from cache",
+                "data": cached_data,
             }, status=status.HTTP_200_OK)
 
-        except Exception as e:
+        obj = Feature.objects.first()
+        if not obj:
             return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                "success": True,
+                "message": "No feature found.",
+                "data": []
+            }, status=status.HTTP_200_OK)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
-        return instance
+        serializer = self.get_serializer(obj)
+        data = serializer.data
 
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
-        return instance
+        cache.set(self.CACHE_KEY, data, timeout=60*60)  # 1 hour
+        return Response({
+            "success": True,
+            "message": "Feature data fetched from DB",
+            "data": data
+        }, status=status.HTTP_200_OK)
 
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
-
-
-# ============ FEATURE ITEM VIEWSET =============
+# -------------------------------
+# FeatureItem ViewSet
+# -------------------------------
 class FeatureItemViewSet(viewsets.ModelViewSet):
     queryset = FeatureItem.objects.all().order_by('-id')
     serializer_class = FeatureItemSerializer
-    CACHE_KEY = "feature_items"
+    CACHE_KEY = FEATURE_ITEM_CACHE_KEY
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -80,49 +60,28 @@ class FeatureItemViewSet(viewsets.ModelViewSet):
         return [IsAdminUser()]
 
     def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data is not None:
-                return Response({
-                    "success": True,
-                    "message": "Feature items fetched successfully.",
-                    "data": cached_data,
-                }, status=status.HTTP_200_OK)
-
-            obj = self.get_queryset()
-            if not obj.exists():
-                return Response({
-                    "success": True,
-                    "message": "No feature items found.",
-                    "data": []
-                }, status=status.HTTP_200_OK)
-            
-            serializer = self.get_serializer(obj, many=True)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=60*60)
-
+        cached_data = cache.get(self.CACHE_KEY)
+        if cached_data is not None:
             return Response({
                 "success": True,
-                "message": "Feature items fetched successfully.",
-                "data": data
+                "message": "Feature items fetched from cache",
+                "data": cached_data,
             }, status=status.HTTP_200_OK)
-        except Exception as e:
+
+        obj = self.get_queryset()
+        if not obj.exists():
             return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                "success": True,
+                "message": "No feature items found.",
+                "data": []
+            }, status=status.HTTP_200_OK)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
-        return instance
+        serializer = self.get_serializer(obj, many=True)
+        data = serializer.data
 
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
+        cache.set(self.CACHE_KEY, data, timeout=60*60)
+        return Response({
+            "success": True,
+            "message": "Feature items fetched from DB",
+            "data": data
+        }, status=status.HTTP_200_OK)

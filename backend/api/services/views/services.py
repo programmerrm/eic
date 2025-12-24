@@ -190,7 +190,7 @@ class ServicePageTopBarView(viewsets.ModelViewSet):
 
 class ServiceView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
-    queryset = Service.objects.all().order_by('-id')
+    queryset = Service.objects.all()
     pagination_class = CumulativePagination
 
     CACHE_KEY_PREFIX = "service_items_list"
