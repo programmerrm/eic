@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from django.core.cache import cache
+from django.db import transaction
 from api.features.serializers.features import FeatureSerializer, FeatureItemSerializer
 from features.models import Feature, FeatureItem
 
@@ -20,12 +21,13 @@ class FeatureViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
+            if cached_data is not None:
                 return Response({
                     "success": True,
                     "message": "Feature data fetched successfully.",
                     "data": cached_data,
                 }, status=status.HTTP_200_OK)
+
             obj = Feature.objects.first()
             if not obj:
                 return Response({
@@ -53,17 +55,18 @@ class FeatureViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
+        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
         return instance
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
+        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
         return instance
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
+        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
+
 
 # ============ FEATURE ITEM VIEWSET =============
 class FeatureItemViewSet(viewsets.ModelViewSet):
@@ -79,14 +82,15 @@ class FeatureItemViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         try:
             cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
+            if cached_data is not None:
                 return Response({
                     "success": True,
                     "message": "Feature items fetched successfully.",
                     "data": cached_data,
                 }, status=status.HTTP_200_OK)
+
             obj = self.get_queryset()
-            if not obj:
+            if not obj.exists():
                 return Response({
                     "success": True,
                     "message": "No feature items found.",
@@ -111,15 +115,14 @@ class FeatureItemViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
+        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
         return instance
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
+        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))
         return instance
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-        
+        transaction.on_commit(lambda: cache.delete(self.CACHE_KEY))

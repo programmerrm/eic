@@ -56,36 +56,38 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </div>
                 </section>
             )}
-            {/* INCLUDE TOP SECTION */}
-            {(singleServiceData?.include_top_title ||
-                singleServiceData?.include_top_items?.length > 0) && (
+            {/* INCLUDE BOTTOM SECTION */}
+            {(singleServiceData?.include_bottom_title ||
+                singleServiceData?.include_bottom_items?.length > 0) && (
                     <section className="bg-blue pt-6 md:pt-12 lg:pt-[100px] pb-6 md:pb-11 lg:pb-[90px]">
                         <div className="container">
-                            <div className="text-white">
-                                <div className="mb-10 md:mb-20 w-full max-w-[668px]">
-                                    <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
-                                        {singleServiceData?.include_top_title?.title}
-                                    </h2>
-                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">
-                                        {singleServiceData?.include_top_title?.description}
-                                    </p>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-full gap-5">
-                                    {singleServiceData?.include_top_items?.map((item: any) => (
-                                        <div className="w-full md:max-w-[272px] flex flex-col items-start h-auto" key={item.id}>
-                                            <div className="w-full max-w-11 sm:max-w-[60px]">
-                                                <Image src={item?.image} alt={item.title} width={60} height={66} />
-                                            </div>
-                                            <h4 className="text-white mt-6 lg:min-h-[100px]">{item.title}</h4>
-                                            <div className="h-0.5 w-full lg:max-w-full bg-white/30 mt-4"></div>
-                                            <p className="text-sm sm:text-base mt-4">{item.description}</p>
+                            <div className="mb-5 md:mb-10 w-full max-w-[668px]">
+                                <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
+                                    {singleServiceData?.include_bottom_title?.title}
+                                </h2>
+                                <p className="text-white text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">
+                                    {singleServiceData?.include_bottom_title?.description}
+                                </p>
+                            </div>
+
+                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 2xl:gap-x-[125px] gap-y-5 md:gap-y-10 lg:gap-y-14">
+                                {singleServiceData?.include_bottom_items?.map((item: any, index: number) => (
+                                    <div className="flex flex-col gap-1 pr-4" key={item.id}>
+                                        <h2 className="text-5xl md:text-6xl lg:text-[88px] font-bold bg-linear-to-b from-white from-30% to-blue bg-clip-text text-transparent font-svatopluk py-1">
+                                            {index + 1}
+                                        </h2>
+                                        <div className="content">
+                                            <h4 className="text-white">{item?.title}</h4>
+                                            <div className="h-0.5 w-full bg-white/30 mt-4"></div>
+                                            <p className="text-white text-sm sm:text-base mt-4">{item?.description}</p>
                                         </div>
-                                    ))}
-                                </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </section>
                 )}
+            
             {/* WHY CHOOSE US SECTION */}
             {(singleServiceData?.why_choose_us_title ||
                 singleServiceData?.why_choose_us_item?.length > 0) && (
@@ -267,33 +269,33 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </div>
                 </div>
             </section>
-            {/* INCLUDE BOTTOM SECTION */}
-            {(singleServiceData?.include_bottom_title ||
-                singleServiceData?.include_bottom_items?.length > 0) && (
+            
+            {/* INCLUDE TOP SECTION */}
+            {(singleServiceData?.include_top_title ||
+                singleServiceData?.include_top_items?.length > 0) && (
                     <section className="bg-blue pt-6 md:pt-12 lg:pt-[100px] pb-6 md:pb-11 lg:pb-[90px]">
                         <div className="container">
-                            <div className="mb-5 md:mb-10 w-full max-w-[668px]">
-                                <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
-                                    {singleServiceData?.include_bottom_title?.title}
-                                </h2>
-                                <p className="text-white text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">
-                                    {singleServiceData?.include_bottom_title?.description}
-                                </p>
-                            </div>
-
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 2xl:gap-x-[125px] gap-y-5 md:gap-y-10 lg:gap-y-14">
-                                {singleServiceData?.include_bottom_items?.map((item: any, index: number) => (
-                                    <div className="flex flex-col gap-1 pr-4" key={item.id}>
-                                        <h2 className="text-5xl md:text-6xl lg:text-[88px] font-bold bg-linear-to-b from-white from-30% to-blue bg-clip-text text-transparent font-svatopluk py-1">
-                                            {index + 1}
-                                        </h2>
-                                        <div className="content">
-                                            <h4 className="text-white">{item?.title}</h4>
-                                            <div className="h-0.5 w-full bg-white/30 mt-4"></div>
-                                            <p className="text-white text-sm sm:text-base mt-4">{item?.description}</p>
+                            <div className="text-white">
+                                <div className="mb-10 md:mb-20 w-full max-w-[668px]">
+                                    <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
+                                        {singleServiceData?.include_top_title?.title}
+                                    </h2>
+                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">
+                                        {singleServiceData?.include_top_title?.description}
+                                    </p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-full gap-5">
+                                    {singleServiceData?.include_top_items?.map((item: any) => (
+                                        <div className="w-full md:max-w-[272px] flex flex-col items-start h-auto" key={item.id}>
+                                            <div className="w-full max-w-11 sm:max-w-[60px]">
+                                                <Image src={item?.image} alt={item.title} width={60} height={66} />
+                                            </div>
+                                            <h4 className="text-white mt-6 lg:min-h-[100px]">{item.title}</h4>
+                                            <div className="h-0.5 w-full lg:max-w-full bg-white/30 mt-4"></div>
+                                            <p className="text-sm sm:text-base mt-4">{item.description}</p>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -422,7 +424,6 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </div>
                 </section>
             )}
-
 
             <StayCompliant />
         </>
