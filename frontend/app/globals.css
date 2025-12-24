@@ -313,6 +313,10 @@ html {
     height: 150%;
     transform: translateX(292px);
 }
+.scroll-width-hidden::-webkit-scrollbar {
+  width: 10px;
+}
+
 @media(max-width:1279px) {
     .eic-home .pci-wrap::after {
         width: 180%;

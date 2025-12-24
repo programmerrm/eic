@@ -15,13 +15,9 @@ export default async function Features() {
     return (
         <section className="py-6 md:py-12 lg:py-25">
             <div className="container">
-
                 {featureTitle && (
                     <div className="flex flex-col sm:flex-row justify-between mb-10 gap-5">
                         <h2 className="w-full max-w-210.5 text-center sm:text-start">{featureTitle?.title_before_span} <span className="text-[#2E78AC]">{featureTitle?.title_span} </span>{featureTitle?.title_after_span}</h2>
-
-
-
                         <div className="flex items-center w-fit justify-center sm:justify-end">
                             <Link
                                 href={featureTitle?.features_btn_url || ""}
@@ -46,11 +42,9 @@ export default async function Features() {
                         </div>
                     </div>
                 )}
-
                 <div className="flex flex-col flex-wrap pb-10 md:pb-16">
                     <h3>More Than Compliance - Our <span className="text-[#2E78AC]">Unique</span> Commitments</h3>
                 </div>
-
                 <div className="grid md:grid-cols-2 gap-6">
                     {featureItems.map((item: any) => (
                         <div

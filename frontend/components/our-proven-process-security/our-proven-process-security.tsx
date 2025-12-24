@@ -13,7 +13,7 @@ export default async function OurProvenProcessSecurity() {
     );
 
     return (
-        <section className="bg-[#F4F8FB] pb-48 md:pb-60 lg:pb-[100px] pt-12 md:pt-[100px]">
+        <section className="bg-[#F4F8FB] pb-48 md:pb-60 lg:pb-25 pt-12 md:pt-25">
             <div className="container">
                 <OurProvenProcessSecurityClient
                     data={ourProvenProcessSecurity?.data}
