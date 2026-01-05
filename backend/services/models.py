@@ -645,32 +645,17 @@ class ComplianceTitle(models.Model):
     def __str__(self):
         return self.title_span[:50]
 
-# ========== Compliance Item List ===========
-class ComplianceItemList(models.Model):
+# =========== Compliance Item ==============
+class ComplianceItem(models.Model):
     service = models.ForeignKey(
-        Service,
+        'Service',
         on_delete=models.CASCADE,
         related_name='service_compliance_item',
         null=True,
         blank=True
     )
-    name = models.CharField(
-        max_length=280,
-        verbose_name=_('Name'),
-    )
-
-    class Meta:
-        verbose_name = _('Compliance Item List')
-        verbose_name_plural = _('Compliance List')
-    
-    def __str__(self):
-        return self.name[:50]
-
-# =========== Compliance Item ==============
-class ComplianceItem(models.Model):
     image = models.FileField(
         upload_to='compliance/',
-        validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Image'),
         null=True,
         blank=True,
@@ -680,17 +665,32 @@ class ComplianceItem(models.Model):
         verbose_name=_('Title'),
     )
 
-    item_list = models.ManyToManyField(
-        ComplianceItemList,
-        related_name='items',
-    )
-
     class Meta:
-        verbose_name = _('Compliance Items')
+        verbose_name = _('Compliance Item')
         verbose_name_plural = _('Compliance Items')
 
     def __str__(self):
         return self.title[:50]
+
+# ========== Compliance Item List ===========
+class ComplianceItemList(models.Model):
+    name = models.CharField(
+        max_length=280,
+        verbose_name=_('Description'),
+    )
+    items = models.ManyToManyField(
+        ComplianceItem,
+        blank=True,
+        related_name='lists',
+        verbose_name=_('Compliance Items')
+    )
+
+    class Meta:
+        verbose_name = _('Compliance Item List')
+        verbose_name_plural = _('Compliance Lists')
+
+    def __str__(self):
+        return self.name[:50]
 
 # ========= Service Paymnet ===========
 class ServicePaymnet(models.Model):
