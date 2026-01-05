@@ -17,8 +17,6 @@ type SingleServiceProps = {
 export default async function SingleService({ params }: SingleServiceProps) {
     const { slug } = await params;
     const singleService = await getFetchData(`/services/single/${slug}`);
-    const complianceTitleData = await getFetchData('/configuration/compliance-title/');
-    const complianceItemData = await getFetchData('/configuration/compliance-item/');
     const singleServiceData = singleService?.data || {};
 
     const topBar = {
@@ -146,7 +144,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </section>
                 )}
             {/* COMPLIANCE SECTION */}
-            {singleServiceData?.compliance_title (
+            {singleServiceData?.compliance_title && (
                     <section
                         className="pb-[270px] sm:pb-[300px] pt-6 md:pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat lg:mt-[-290px]"
                         style={{ backgroundImage: `url(${trustedForProven.src})` }}
