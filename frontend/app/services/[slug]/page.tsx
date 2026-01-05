@@ -146,9 +146,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </section>
                 )}
             {/* COMPLIANCE SECTION */}
-            {complianceTitleData?.[0] &&
-                Array.isArray(complianceItemData) &&
-                complianceItemData.length > 0 && (
+            {singleServiceData?.compliance_title (
                     <section
                         className="pb-[270px] sm:pb-[300px] pt-6 md:pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat lg:mt-[-290px]"
                         style={{ backgroundImage: `url(${trustedForProven.src})` }}
@@ -160,16 +158,16 @@ export default async function SingleService({ params }: SingleServiceProps) {
                             <div className="container">
                                 <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-14 gap-5">
                                     <h2 className="sm:max-w-[636px] w-full">
-                                        {complianceTitleData[0]?.title_before_span + " "}
+                                        {singleServiceData?.compliance_title?.title_before_span + " "}
                                         <span className="text-[#2E78AC]">
-                                            {complianceTitleData[0]?.title_span}
+                                            {singleServiceData?.compliance_title?.title_span}
                                         </span>
-                                        {" " + complianceTitleData[0]?.title_after_span}
+                                        {" " + singleServiceData?.compliance_title?.title_after_span}
                                     </h2>
-                                    {complianceTitleData[0]?.btn_url && (
+                                    {singleServiceData?.compliance_title?.btn_url && (
                                         <div className="flex items-center sm:max-w-[300px] w-full justify-start sm:justify-end">
-                                            <Link href={complianceTitleData[0]?.btn_url} className="btn-primary group">
-                                                {complianceTitleData[0]?.btn_name}
+                                            <Link href={singleServiceData?.compliance_title?.btn_url} className="btn-primary group">
+                                                {singleServiceData?.compliance_title?.btn_name}
                                                 <svg
                                                     className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -188,9 +186,9 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                         </div>
                                     )}
                                 </div>
-
-                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                    {complianceItemData?.map((item: any) => (
+                                {singleServiceData?.compliance_items && (
+                                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {singleServiceData?.compliance_items?.map((item: any) => (
                                         <div
                                             className="p-4 md:p-6 bg-white border border-[#E6E7EB] rounded-[10px] transition-all hover:shadow-[25px_36px_18px_rgba(0,0,0,0.01),14px_20px_15px_rgba(0,0,0,0.05),6px_9px_11px_rgba(0,0,0,0.09),2px_2px_6px_rgba(0,0,0,0.1)]"
                                             key={item.id}
@@ -209,13 +207,14 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                             </div>
                                             <h4 className="mt-4">{item?.title}</h4>
                                             <ul className="protection-list mt-4 space-y-2">
-                                                {item?.item_list?.map((i: any) => (
-                                                    <li key={i.id}>{i.name}</li>
+                                                {item?.lists?.map((i: any) => (
+                                                    <p key={i.id}>{i.name}</p>
                                                 ))}
                                             </ul>
                                         </div>
                                     ))}
                                 </div>
+                                )}
                             </div>
                         </div>
                     </section>
