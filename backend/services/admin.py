@@ -572,7 +572,7 @@ class ComplianceItemListAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ("Service Compliance List", {
-            "fields": ( "name",)
+            "fields": ( "name", "items")
         }),
     )
 
@@ -600,7 +600,7 @@ class ComplianceItemAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ("Service Compliance Item", {
-            "fields": ("title", 'image')
+            "fields": ("service", "title", 'image')
         }),
     )
 
