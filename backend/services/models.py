@@ -660,8 +660,8 @@ class ComplianceItemList(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Compliance Items')
-        verbose_name_plural = _('Compliance Items')
+        verbose_name = _('Compliance Item List')
+        verbose_name_plural = _('Compliance List')
     
     def __str__(self):
         return self.name[:50]

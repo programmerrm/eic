@@ -160,11 +160,11 @@ export default async function SingleService({ params }: SingleServiceProps) {
                             <div className="container">
                                 <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-14 gap-5">
                                     <h2 className="sm:max-w-[636px] w-full">
-                                        {complianceTitleData[0]?.title_before_span}
+                                        {complianceTitleData[0]?.title_before_span + " "}
                                         <span className="text-[#2E78AC]">
                                             {complianceTitleData[0]?.title_span}
                                         </span>
-                                        {complianceTitleData[0]?.title_after_span}
+                                        {" " + complianceTitleData[0]?.title_after_span}
                                     </h2>
                                     {complianceTitleData[0]?.btn_url && (
                                         <div className="flex items-center sm:max-w-[300px] w-full justify-start sm:justify-end">

@@ -105,7 +105,7 @@ class FaqSectionView(viewsets.ModelViewSet):
 
 # ========== FAQ ITEM VIEW SET (ALL ITEMS) ==============
 class FaqItemView(viewsets.ModelViewSet):
-    queryset = FaqItem.objects.all()
+    queryset = FaqItem.objects.all().order_by('-id')
     serializer_class = FaqItemSerializer
 
     CACHE_KEY = FAQ_ITEMS_CACHE_KEY

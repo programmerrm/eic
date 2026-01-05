@@ -101,14 +101,14 @@ class ServiceWhyChooseUsItemSerializer(serializers.ModelSerializer):
 class ComplianceItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ComplianceItem
-        fields = ['id', 'title', 'image']
+        fields = '__all__'
 
 class ComplianceItemListSerializer(serializers.ModelSerializer):
     items = ComplianceItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = ComplianceItemList
-        fields = ['id', 'name', 'items']
+        fields = '__all__'
 
 class ComplianceTitleSerializer(serializers.ModelSerializer):
     class Meta:
