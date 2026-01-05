@@ -146,6 +146,12 @@ class SingleServiceSerializer(serializers.ModelSerializer):
         source='service_compliance_item'
     )
 
+    compliance_item_list = ComplianceItemListSerializer(
+        many=True,
+        read_only=True,
+        source='lists'
+    )
+
     class Meta:
         model = Service
         fields = '__all__'
