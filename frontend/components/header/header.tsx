@@ -91,7 +91,7 @@ export default function Header() {
                             </li>
                         </ul>
                         <div className="lg:hidden flex items-center justify-center mt-20">
-                            <a className="btn-primary group" href={`mailto:${number?.number}`}>
+                            <a className="btn-primary group" href={`tel:${number?.number}`}>
                                 Schedule a Call
                                 <svg
                                     className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
@@ -125,7 +125,7 @@ export default function Header() {
                         </div>
                     </nav>
                     <div className="hidden lg:block min-w-[212px]">
-                        <a className="btn-primary group" href={`mailto:${number?.number}`}>
+                        <a className="btn-primary group" href={`tel:${number?.number}`}>
                             Schedule a Call
                             <svg
                                 className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
