@@ -103,10 +103,13 @@ class ComplianceItemListSerializer(serializers.ModelSerializer):
         model = ComplianceItemList
         fields = '__all__'
 
+
 class ComplianceItemSerializer(serializers.ModelSerializer):
+    lists = ComplianceItemListSerializer(many=True, read_only=True)
+
     class Meta:
         model = ComplianceItem
-        fields = '__all__'
+        fields = ['id', 'title', 'image', 'service', 'lists']
 
 class ComplianceTitleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -144,12 +147,6 @@ class SingleServiceSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True,
         source='service_compliance_item'
-    )
-
-    compliance_item_list = ComplianceItemListSerializer(
-        many=True,
-        read_only=True,
-        source='lists'
     )
 
     class Meta:
