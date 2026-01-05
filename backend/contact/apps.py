@@ -4,3 +4,6 @@ class ContactConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'contact'
     verbose_name = 'Contact Page'
+
+    def ready(self):
+        import contact.signals

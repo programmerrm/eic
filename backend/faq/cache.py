@@ -1,0 +1,5 @@
+FAQ_SEO_CACHE_KEY="faq_seo_cache_key"
+FAQ_SCHEMA_CACHE_KEY="faq_schema_cache_key"
+FAQ_TOP_BAR_CACHE_KEY="faq_top_bar_cache_key"
+FAQ_SECTION_CACHE_KEY="faq_section_cache_key"
+FAQ_ITEMS_CACHE_KEY="faq_items_cache_key"

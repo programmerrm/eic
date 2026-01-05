@@ -1,0 +1,5 @@
+CONTACT_SEO_CACHE_KEY="contact_seo_cache_key"
+CONTACT_SCHEMA_CACHE_KEY="contact_schema_cache_key"
+CONTACT_TOP_BAR_CACHE_KEY="contact_top_bar_cache_key"
+CONTACT_INFOMATION_CACHE_KEY="contact_infomation_cache_key"
+CONTACT_GOOGLE_MAP_CACHE_KEY="contact_google_map_cache_key"

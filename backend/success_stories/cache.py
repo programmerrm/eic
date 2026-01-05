@@ -1,0 +1,4 @@
+SUCCESS_STORIES_SEO_TAG_CACHE_KEY="success_stories_seo_tag_cache_key"
+SUCCESS_STORIES_SCHEMA_CACHE_KEY="success_stories_schema_cache_key"
+SUCCESS_STORIES_TOP_BAR_CACHE_KEY="success_stories_top_bar_cache_key"
+ALL_SUCCESS_STORIES_CACHE_KEY="all_success_stories_cache_key"

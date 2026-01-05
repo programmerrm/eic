@@ -19,6 +19,13 @@ class FeatureViewSet(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
 
+
+    # cached data 
+    # database not found data
+    # defind cache
+    # database
+
+
     def list(self, request, *args, **kwargs):
         cached_data = cache.get(self.CACHE_KEY)
         if cached_data is not None:
@@ -39,7 +46,8 @@ class FeatureViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(obj)
         data = serializer.data
 
-        cache.set(self.CACHE_KEY, data, timeout=60*60)  # 1 hour
+        cache.set(self.CACHE_KEY, data, timeout=60*60)
+        
         return Response({
             "success": True,
             "message": "Feature data fetched from DB",

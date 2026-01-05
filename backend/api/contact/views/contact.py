@@ -29,12 +29,20 @@ from api.contact.serializers.contact import (
     SchemaSerializer,
 )
 
+from contact.cache import (
+    CONTACT_SEO_CACHE_KEY,
+    CONTACT_SCHEMA_CACHE_KEY,
+    CONTACT_TOP_BAR_CACHE_KEY,
+    CONTACT_INFOMATION_CACHE_KEY,
+    CONTACT_GOOGLE_MAP_CACHE_KEY,
+)
+
 # ============= Contact SEO TAGS View =================
 class SeoTagView(viewsets.ModelViewSet):
     queryset = SeoTag.objects.all()
     serializer_class = SeoTagSerializer
 
-    CACHE_KEY = "contact_seotag_first"
+    CACHE_KEY = CONTACT_SEO_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -72,26 +80,12 @@ class SeoTagView(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ============= Contact SCHEMA View =================
 class SchemaView(viewsets.ModelViewSet):
     queryset = Schema.objects.all()
     serializer_class = SchemaSerializer
 
-    CACHE_KEY = "contact_schema_first"
+    CACHE_KEY = CONTACT_SCHEMA_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -131,26 +125,12 @@ class SchemaView(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ============= Contact Top Bar View =================
 class ContactTopBarView(viewsets.ModelViewSet):
     queryset = ContactTopBar.objects.all()
     serializer_class = ContactTopBarSerializer
 
-    CACHE_KEY = "contact_topbar_first"
+    CACHE_KEY = CONTACT_TOP_BAR_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -190,20 +170,6 @@ class ContactTopBarView(viewsets.ModelViewSet):
                 'message': 'Something went wrong.',
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
 
 # ============ Contact Form View ================
 class ContactFormView(viewsets.ModelViewSet):
@@ -270,7 +236,7 @@ class ConatctInfomationView(viewsets.ModelViewSet):
     queryset = ConatctInfomation.objects.all()
     serializer_class = ConatctInfomationSerializer
 
-    CACHE_KEY = "contact_infomation_first"
+    CACHE_KEY = CONTACT_INFOMATION_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -310,26 +276,12 @@ class ConatctInfomationView(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ============== Google Map View ============
 class GoogleMapView(viewsets.ModelViewSet):
     queryset = GoogleMap.objects.all()
     serializer_class = GoogleMapSerializer
 
-    CACHE_KEY = "contact_googlemap_first"
+    CACHE_KEY = CONTACT_GOOGLE_MAP_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -368,17 +320,3 @@ class GoogleMapView(viewsets.ModelViewSet):
                 'message': 'Something went wrong.',
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)

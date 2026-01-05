@@ -5,13 +5,14 @@ from rest_framework import status
 from django.core.cache import cache
 from faq.models import FaqTopBar, FaqSection, FaqItem, Schema, SeoTag
 from api.faq.serializers.faq import FaqItemSerializer, FaqSectionSerializer, FaqTopBarSerializer, SchemaSerializer, SeoTagSerializer
+from faq.cache import FAQ_SEO_CACHE_KEY, FAQ_SCHEMA_CACHE_KEY, FAQ_TOP_BAR_CACHE_KEY, FAQ_SECTION_CACHE_KEY, FAQ_ITEMS_CACHE_KEY
 
 # ========== FAQ TOP BAR VIEW SET ==============
 class FaqTopBarView(viewsets.ModelViewSet):
     queryset = FaqTopBar.objects.all()
     serializer_class = FaqTopBarSerializer
 
-    CACHE_KEY = "faq_topbar_first"
+    CACHE_KEY = FAQ_TOP_BAR_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -54,26 +55,12 @@ class FaqTopBarView(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ========== FAQ SECTION VIEW SET ==============
 class FaqSectionView(viewsets.ModelViewSet):
     queryset = FaqSection.objects.all().order_by('-id')
     serializer_class = FaqSectionSerializer
 
-    CACHE_KEY = "faq_section_first"
+    CACHE_KEY = FAQ_SECTION_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -116,26 +103,12 @@ class FaqSectionView(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ========== FAQ ITEM VIEW SET (ALL ITEMS) ==============
 class FaqItemView(viewsets.ModelViewSet):
     queryset = FaqItem.objects.all()
     serializer_class = FaqItemSerializer
 
-    CACHE_KEY = "faq_items_all"
+    CACHE_KEY = FAQ_ITEMS_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -171,26 +144,12 @@ class FaqItemView(viewsets.ModelViewSet):
                 "message": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ========== SCHEMA VIEW SET ==============
 class SchemaViewSet(viewsets.ModelViewSet):
     queryset = Schema.objects.all()
     serializer_class = SchemaSerializer
 
-    CACHE_KEY = "faq_schema_first"
+    CACHE_KEY = FAQ_SCHEMA_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -233,26 +192,12 @@ class SchemaViewSet(viewsets.ModelViewSet):
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
 # ======== SEO VIEW SET ==================
 class SeoTagViewSet(viewsets.ModelViewSet):
     queryset = SeoTag.objects.all()
     serializer_class = SeoTagSerializer
 
-    CACHE_KEY = "faq_seotag_first"
+    CACHE_KEY = FAQ_SEO_CACHE_KEY
 
     def get_permissions(self):
         if self.action == 'list':
@@ -294,17 +239,3 @@ class SeoTagViewSet(viewsets.ModelViewSet):
                 'message': 'Something went wrong.',
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)

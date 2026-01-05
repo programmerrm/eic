@@ -1,0 +1,4 @@
+SERVICE_SEO_TAGS_CACHE_KEY = "service_seo_tags_cache_key"
+SERVICE_SCHEMA_CACHE_KEY = "service_schema_cache_key"
+SERVICE_PAGE_TOP_BAR_CACHE_KEY = "service_page_top_bar_cache_key"
+ALL_SERVICES_CACHE_KEY="all_services_cache_key"

@@ -1,9 +1,9 @@
 from django.core.cache import cache
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save, post_delete
-from features.models import Feature, FeatureItem
 from utils.slug import GENERATE_SLUG
 from features.cache import FEATURE_CACHE_KEY, FEATURE_ITEM_CACHE_KEY
+from features.models import Feature, FeatureItem
 
 @receiver(pre_save, sender=FeatureItem)
 def set_slug(sender, instance, **kwargs):

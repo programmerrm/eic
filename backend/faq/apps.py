@@ -4,3 +4,6 @@ class FaqConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'faq'
     verbose_name = 'FAQ Page'
+
+    def ready(self):
+        import faq.signals
