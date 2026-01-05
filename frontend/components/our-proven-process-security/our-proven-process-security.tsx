@@ -13,9 +13,15 @@ export default async function OurProvenProcessSecurity() {
     );
 
     return (
-        <OurProvenProcessSecurityClient
-            data={ourProvenProcessSecurity?.data}
-            items={ourProvenProcessSecurityItems || []}
-        />
+        <section>
+            <div className="container">
+                <div>
+                    <OurProvenProcessSecurityClient
+                        data={ourProvenProcessSecurity?.data}
+                        items={ourProvenProcessSecurityItems || []}
+                    />
+                </div>
+            </div>
+        </section>
     );
 }
