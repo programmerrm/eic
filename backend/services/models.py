@@ -643,7 +643,7 @@ class ComplianceTitle(models.Model):
         verbose_name_plural = _('Compliance Title')
 
     def __str__(self):
-        return self.title_span[:50]
+        return "Compliance Title"
 
 # =========== Compliance Item ==============
 class ComplianceItem(models.Model):
