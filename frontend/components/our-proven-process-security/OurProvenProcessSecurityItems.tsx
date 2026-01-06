@@ -63,7 +63,7 @@ export default function OurProvenProcessSecurityClient({
   }, [items]);
 
   return (
-    <section ref={parentSectionRef} className="relative lg:h-[130vh]">
+    <section ref={parentSectionRef} className="relative desktop:h-[130vh]">
       <div className="flex flex-col lg:flex-row justify-between gap-10">
 
         {/* LEFT SIDE — STICKY */}

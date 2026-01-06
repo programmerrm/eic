@@ -46,6 +46,7 @@
     --font-lexend: "Lexend", sans-serif;
     /* ============= breakpoint =============== */
     --breakpoint-1xl: 87rem;
+    --breakpoint-desktop: 120.063rem;
     /* 1392px */
     /* =============== color =============== */
     --color-body: #15374F;
@@ -534,10 +535,4 @@ html {
   }
 }
 
-/* 1367px - 1440px */
-/* @media screen and (min-width: 1367px) and (max-width: 1440px) {
-  body {
-    zoom: 0.85;
-  }
-} */
 
