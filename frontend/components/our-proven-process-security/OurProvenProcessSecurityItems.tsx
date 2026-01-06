@@ -111,7 +111,11 @@ export default function OurProvenProcessSecurityClient({
         <div className="w-full max-w-111 mx-auto lg:mx-0">
           {items.map((item, index) => (
             <div
-              key={item.id} ref={(el) => (itemRefs.current[index] = el)}
+              key={item.id}
+    ref={(el) => {
+      itemRefs.current[index] = el;
+    }}
+
               data-image={item.image}
               className="text-center lg:text-start flex flex-col items-center lg:items-start mb-8 lg:mb-14 last:mb-0"
             >

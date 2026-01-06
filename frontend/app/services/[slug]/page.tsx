@@ -24,6 +24,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
         description: singleServiceData?.description || "",
     };
 
+    console.log('singleServiceData', singleServiceData);
+
     return (
         <>
             <SectionBanner topBarData={topBar} />
