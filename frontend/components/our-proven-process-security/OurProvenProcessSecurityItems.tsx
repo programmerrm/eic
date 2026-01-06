@@ -39,18 +39,15 @@ export default function OurProvenProcessSecurityClient({
       const sectionBottom = parentSectionRef.current.getBoundingClientRect().bottom;
       const viewportHeight = window.innerHeight;
 
-      // Parent section viewport-এ visible হলে
       if (sectionTop < viewportHeight && sectionBottom > 0) {
         const viewportCenter = viewportHeight / 2;
 
-        // Right items-এ loop
         for (let i = 0; i < itemRefs.current.length; i++) {
           const el = itemRefs.current[i];
           if (!el) continue;
 
           const rect = el.getBoundingClientRect();
 
-          // Item viewport center এ এলে active
           if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
             setActiveImage(items[i].image);
             break;
@@ -60,7 +57,7 @@ export default function OurProvenProcessSecurityClient({
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [items]);
@@ -112,9 +109,9 @@ export default function OurProvenProcessSecurityClient({
           {items.map((item, index) => (
             <div
               key={item.id}
-    ref={(el) => {
-      itemRefs.current[index] = el;
-    }}
+              ref={(el) => {
+                itemRefs.current[index] = el;
+              }}
 
               data-image={item.image}
               className="text-center lg:text-start flex flex-col items-center lg:items-start mb-8 lg:mb-14 last:mb-0"
