@@ -11,13 +11,13 @@ export default async function HomePageRelated() {
 
     return (
         <section
-            className="pt-5 md:pt-10 lg:pt-[52px] mt-5 md:mt-10 lg:mt-12 pb-3 md:pb-6 mb-12 lg:mb-24 bg-contain bg-top-right bg-no-repeat"
+            className="pt-5 md:pt-10 lg:pt-13 mt-5 md:mt-10 lg:mt-12 pb-3 md:pb-6 mb-12 lg:mb-24 bg-contain bg-top-right bg-no-repeat"
             style={{
                 backgroundImage: `url(${BannerImg.src})`,
             }}
         >
             <div className="container">
-                <div className="w-full max-w-[588px] mx-auto">
+                <div className="w-full max-w-147 mx-auto">
                     <h2 className="text-center">Comprehensive Cybersecurity Solutions</h2>
                 </div>
 
