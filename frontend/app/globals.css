@@ -529,8 +529,8 @@ html {
 }
 
 /* 1281px - 1366px */
-@media screen and (min-width: 1281px) and (max-width: 1366px) {
-  body {
+@media screen and (min-width: 1281px) and (max-width: 1440px) {
+  html {
     zoom: 0.85;
   }
 }
