@@ -102,7 +102,7 @@ export default function ReviewSlider({ items }: Props) {
             </div>
 
 
-            <div className="swiper-btn-wrap -mt-8 md:mt-0">
+            <div className="swiper-btn-wrap -mt-10 md:mt-0">
                 <div className="swiper-button-next custom-next">
 
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="none" viewBox="0 0 19 16">
