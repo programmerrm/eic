@@ -145,16 +145,15 @@ export default async function Page() {
             )}
             {googleMap?.data && (
                 <section>
-                    <div className="map">
+                    <div className="map w-full overflow-hidden">
                         {googleMap?.data?.url && (
-                            <iframe className="h-[300px] sm:h-[400px] lg:h-[500px] xl:h-[815px]"
-                                src={googleMap?.data?.url}
-                                width="100%"
-                                style={{ border: 0 }}
-                                loading="lazy"
-                                allowFullScreen
-                                referrerPolicy="no-referrer-when-downgrade"
-                            ></iframe>
+                            <iframe
+                            className="block w-full min-h-75 sm:min-h-100 lg:min-h-125 xl:min-h-203.75"
+                            src={googleMap.data.url}
+                            style={{ border: 0 }}
+                            allowFullScreen
+                            referrerPolicy="no-referrer-when-downgrade"
+                            />
                         )}
                     </div>
                 </section>
