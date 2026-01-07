@@ -143,20 +143,18 @@ export default async function Page() {
                     </div>
                 </section>
             )}
-            {googleMap?.data && (
-                <section>
-                    <div className="map w-full overflow-hidden">
-                        {googleMap?.data?.url && (
-                            <iframe
-                            className="block w-full min-h-75 sm:min-h-100 lg:min-h-125 xl:min-h-203.75"
-                            src={googleMap.data.url}
-                            style={{ border: 0 }}
-                            allowFullScreen
-                            referrerPolicy="no-referrer-when-downgrade"
-                            />
-                        )}
-                    </div>
-                </section>
+            {googleMap?.data?.url && (
+            <section>
+                <div className="map w-full overflow-hidden">
+                <iframe
+                    className="block w-full min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] xl:min-h-[815px]"
+                    src={googleMap.data.url}
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+                </div>
+            </section>
             )}
         </>
     );
