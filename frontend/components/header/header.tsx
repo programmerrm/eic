@@ -124,7 +124,7 @@ export default function Header() {
                             </button>
                         </div>
                     </nav>
-                    <div className="hidden lg:block min-w-[212px]">
+                    <div className="hidden lg:block ">
                         <a className="btn-primary group" href={`tel:${number?.number}`}>
                             Schedule a Call
                             <svg

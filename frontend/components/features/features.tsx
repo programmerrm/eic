@@ -17,8 +17,8 @@ export default async function Features() {
             <div className="container">
                 {featureTitle && (
                     <div className="flex flex-col sm:flex-row justify-between mb-10 gap-5">
-                        <h2 className="w-full max-w-210.5 text-center sm:text-start">{featureTitle?.title_before_span} <span className="text-[#2E78AC]">{featureTitle?.title_span} </span>{featureTitle?.title_after_span}</h2>
-                        <div className="flex items-center w-fit justify-center sm:justify-end">
+                        <h2 className="w-full max-w-210.5">{featureTitle?.title_before_span} <span className="text-[#2E78AC]">{featureTitle?.title_span} </span>{featureTitle?.title_after_span}</h2>
+                        <div className="flex items-center w-fit justify-center sm:justify-end min-w-[212px]">
                             <Link
                                 href={featureTitle?.features_btn_url || ""}
                                 className="btn-primary group"
