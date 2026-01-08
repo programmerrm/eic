@@ -4,7 +4,11 @@ import { DOMAIN_NAME } from "@/utils/api";
 import Logo from "@/public/images/eic-logo.svg";
 
 const fetchSeoTag = async () => {
-    const res = await getFetchData('/faq/seo-tag/');
+    const res = await getFetchData('/faq/seo-tag/', {
+        next: {
+            tags: ['faq-seo'],
+        },
+    });
     return res?.data || null;
 };
 
@@ -13,8 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
     if (!seo) {
         return {
-            title: "Faq",
-            description: "Faq page",
+            title: "Eic - Faq",
+            description: "Eic Faq page",
         };
     }
 
