@@ -13,9 +13,15 @@ def trigger_nextjs_revalidate(path: str, tag: str) -> bool:
             "tag": tag,
         }
 
+        print(f"[Next.js Revalidate] Sending request to: {url} with params: {params}")  # ✅ print request
+
         resp = requests.get(url, params=params, timeout=5)
+
+        print(f"[Next.js Revalidate] Response status: {resp.status_code}")  # ✅ print response status
+        print(f"[Next.js Revalidate] Response body: {resp.text}")  # ✅ print response body
+
         return resp.status_code == 200
 
     except Exception as exc:
-        print("Revalidate error:", exc)
+        print("[Next.js Revalidate] Error:", exc)
         return False
