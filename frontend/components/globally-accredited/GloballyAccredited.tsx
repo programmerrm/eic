@@ -3,9 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function GloballyAccredited() {
-    const globallyAccredited = await getFetchData('/homepage/globally-accredited/', {
-        tag: "globally-accredited-data",
-    })
+    const globallyAccredited = await getFetchData('/homepage/globally-accredited/')
 
     if (!globallyAccredited?.data) {
         return null;

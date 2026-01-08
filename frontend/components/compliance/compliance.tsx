@@ -5,12 +5,8 @@ import Link from "next/link";
 // import ComplianceBg from "../../public/images/compliance-bg.svg";
 
 export default async function Compliance() {
-    const complianceTitleData = await getFetchData('/configuration/compliance-title/', {
-        tag: "compliance-title-data",
-    });
-    const complianceItemData = await getFetchData('/configuration/compliance-item/', {
-        tag: "compliance-item-data",
-    });
+    const complianceTitleData = await getFetchData('/configuration/compliance-title/');
+    const complianceItemData = await getFetchData('/configuration/compliance-item/');
     return (
         <section className=" pb-12 md:pb-[100px] relative compliance-bg">
             <div className="container">

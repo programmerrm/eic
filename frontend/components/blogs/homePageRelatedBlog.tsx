@@ -5,9 +5,7 @@ import Image from "next/image";
 import { getFetchData } from "@/utils/getFetchData";
 
 export default async function HomePageRelatedBlog() {
-    const blogsItem = await getFetchData("/blogs/list/", {
-        tag: "blogs-list-data",
-    });
+    const blogsItem = await getFetchData("/blogs/list/");
 
     if (!blogsItem?.results?.data) {
         return null;

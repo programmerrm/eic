@@ -6,18 +6,10 @@ import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 
 export default async function Faq() {
-    const topBarData = await getFetchData("/faq/top-bar/", {
-        tag: "faq-top-bar-data",
-    });
-    const faqSection = await getFetchData('/faq/section/', {
-        tag: 'faq-section-data',
-    });
-    const faqItems = await getFetchData('/faq/item-list/', {
-        tag: 'faq-items-data',
-    });
-    const schemaData = await getFetchData('/faq/schema/', {
-        tag: 'faq-schema-data',
-    });
+    const topBarData = await getFetchData("/faq/top-bar/");
+    const faqSection = await getFetchData('/faq/section/');
+    const faqItems = await getFetchData('/faq/item-list/');
+    const schemaData = await getFetchData('/faq/schema/');
     const jsonLd = schemaData?.data?.json_ld ? JSON.parse(schemaData.data.json_ld) : null;
 
     return (

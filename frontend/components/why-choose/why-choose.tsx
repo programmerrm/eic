@@ -4,12 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function WhyChoose() {
-    const experienceEic = await getFetchData('/homepage/experience-eic/', {
-        tag: 'experience-eic-data',
-    })
-    const experienceEicItem = await getFetchData('/homepage/experience-eic-item/', {
-        tag: 'experience-eic-item-data',
-    });
+    const experienceEic = await getFetchData('/homepage/experience-eic/')
+    const experienceEicItem = await getFetchData('/homepage/experience-eic-item/');
 
     return (
         <section className="why-choose eic-home relative z-10 overflow-hidden">

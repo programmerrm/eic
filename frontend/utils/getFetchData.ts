@@ -1,33 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SERVER_URL } from "./api";
 
-type FetchOptions = RequestInit & {
-  tag?: string;
+type NextFetchOptions = {
+    cache?: 'force-cache' | 'no-store' | 'default';
 };
 
 export const getFetchData = async (
-  url: string,
-  options: FetchOptions = {}
+    url: string,
+    options: RequestInit & { next?: NextFetchOptions } = {}
 ) => {
-  const { tag, ...rest } = options;
-
-  const fetchOptions: RequestInit & { next?: { tags?: string[] } } = {
-    ...rest,
-  };
-  if (tag) {
-    fetchOptions.next = {
-      ...(rest as any).next,
-      tags: [
-        ...(((rest as any).next?.tags as string[] | undefined) || []),
-        tag,
-      ],
-    };
-  }
-  try {
-    const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
-    return await response.json();
-  } catch (error) {
-    console.error("Fetch error:", error);
-    return null;
-  }
+    try {
+        const fetchOptions: RequestInit & { next?: NextFetchOptions } = {
+            ...options,
+            next: {
+                cache: 'force-cache',
+            },
+        };
+        const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
+        return await response.json();
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return null;
+    }
 };

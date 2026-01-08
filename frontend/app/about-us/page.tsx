@@ -9,21 +9,11 @@ import HappyJourney from "@/components/about-page/happyJourney";
 import Core from "./core";
 
 export default async function Page() {
-    const topBarFetchData = await getFetchData('/about/top-bar/', {
-        tag: "about-to-bar-data",
-    });
-    const digitalSecuritySolutionTopBarData = await getFetchData('/about/digital-security-solution-top-bar/', {
-        tag: 'digital-security-solution-top-bar-data',
-    })
-    const digitalSecuritySolutionItemData = await getFetchData('/about/digital-security-solution-item/', {
-        tag: 'digital-security-solution-item-data',
-    });
-    const secureFutureTopBarData = await getFetchData('/about/secure-future-top-bar/', {
-        tag: 'secure-future-top-bar-data'
-    })
-    const secureFutureItemData = await getFetchData('/about/secure-future-item/', {
-        tag: 'secure-future-item-data'
-    })
+    const topBarFetchData = await getFetchData('/about/top-bar/');
+    const digitalSecuritySolutionTopBarData = await getFetchData('/about/digital-security-solution-top-bar/')
+    const digitalSecuritySolutionItemData = await getFetchData('/about/digital-security-solution-item/');
+    const secureFutureTopBarData = await getFetchData('/about/secure-future-top-bar/')
+    const secureFutureItemData = await getFetchData('/about/secure-future-item/')
 
     return (
         <main>

@@ -4,9 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function HomePageSuccessStoriesRelated() {
-    const successStoriesItem = await getFetchData('/success-stories/list/', {
-        tag: 'success-stories/list-data',
-    });
+    const successStoriesItem = await getFetchData('/success-stories/list/');
     if (!successStoriesItem?.results?.data) {
         return null;
     }

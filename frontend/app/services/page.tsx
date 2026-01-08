@@ -6,9 +6,7 @@ import StayCompliant from "../../components/stay-compliant/stay-compliant";
 import { getFetchData } from "@/utils/getFetchData";
 
 export default async function Page() {
-    const topBarFetchData = await getFetchData('/services/top-bar/', {
-        tag: "services-to-bar-data",
-    });
+    const topBarFetchData = await getFetchData('/services/top-bar/');
     return (
         <>
             <SectionBanner topBarData={topBarFetchData?.data} />

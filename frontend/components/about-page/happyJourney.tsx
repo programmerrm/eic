@@ -19,13 +19,9 @@ export default function HappyJourney() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const happyJourneyRes = await getFetchData("/about/happy-journey/", {
-                    tag: "happy-journey-data",
-                });
+                const happyJourneyRes = await getFetchData("/about/happy-journey/");
                 const happyJourneyItemRes = await getFetchData(
-                    "/about/happy-journey-item/",
-                    { tag: "happy-journey-item-data" }
-                );
+                    "/about/happy-journey-item/");
 
                 setHappyJourneyData(happyJourneyRes?.data || null);
                 setHappyJourneyItemData(happyJourneyItemRes?.data || []);
@@ -49,14 +45,13 @@ export default function HappyJourney() {
             const totalScrollable = rect.height + windowHeight;
             const scrolled = windowHeight - rect.top;
 
-            let progress = scrolled / totalScrollable; // 0–1
+            let progress = scrolled / totalScrollable;
             progress = Math.min(Math.max(progress, 0), 1);
 
-            let fill = 100 - progress * 100; // নিচ থেকে সাদা অংশের %
+            let fill = 100 - progress * 100;
             fill = Math.max(0, Math.min(100, fill));
             setFillPercent(fill);
 
-            // bullet position অনুযায়ী color ঠিক করা
             const containerHeight = rect.height;
             const whiteHeightPx = (fill / 100) * containerHeight;
 

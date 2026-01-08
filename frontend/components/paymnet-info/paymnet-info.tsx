@@ -5,9 +5,7 @@ import Link from "next/link";
 import Description from "./description";
 
 export default async function PaymentInfo() {
-    const paymnetInfo = await getFetchData('/homepage/paymnet-info/', {
-        tag: "payment-info-data",
-    });
+    const paymnetInfo = await getFetchData('/homepage/paymnet-info/');
     return (
         <>
             {paymnetInfo?.data && (

@@ -5,9 +5,7 @@ import Link from "next/link";
 import PaymentInfo from "../about-page/paymnet-info";
 
 export default async function AboutSecurity() {
-    const security_firm_data = await getFetchData('/about/security-firm/', {
-        tag: "security-firm-data",
-    });
+    const security_firm_data = await getFetchData('/about/security-firm/');
     const bgImage = security_firm_data?.data?.bg ? `${MEDIA_URL}${security_firm_data.data.bg}` : null;
     return (
         <section className="bg-white py-12 md:py-[100px]">

@@ -3,13 +3,10 @@ import OurProvenProcessSecurityClient from "./OurProvenProcessSecurityItems";
 
 export default async function OurProvenProcessSecurity() {
     const ourProvenProcessSecurity = await getFetchData(
-        "/homepage/our-proven-process-security/",
-        { tag: "our-proven-process-security-data" }
+        "/homepage/our-proven-process-security/"
     );
-
     const ourProvenProcessSecurityItems = await getFetchData(
-        "/homepage/our-proven-process-security-items/",
-        { tag: "our-proven-process-security-items-data" }
+        "/homepage/our-proven-process-security-items/"
     );
 
     return (

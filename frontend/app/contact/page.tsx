@@ -10,17 +10,9 @@ import { MEDIA_URL } from "../../utils/api";
 import { getFetchData } from "../../utils/getFetchData";
 
 export default async function Page() {
-    const topBarData = await getFetchData("/contact/top-bar/", {
-        tag: "contact-data",
-    });
-
-    const infomation = await getFetchData("/contact/infomation/", {
-        tag: "contact-data",
-    });
-
-    const googleMap = await getFetchData("/contact/google-map/", {
-        tag: "contact-data",
-    });
+    const topBarData = await getFetchData("/contact/top-bar/");
+    const infomation = await getFetchData("/contact/infomation/");
+    const googleMap = await getFetchData("/contact/google-map/");
 
     return (
         <>

@@ -3,9 +3,7 @@ import { getFetchData } from "@/utils/getFetchData";
 import ServicesGrid from "./ServicesGrid";
 
 export default async function HomePageRelated() {
-    const data = await getFetchData("/services/list-items/", {
-        tag: "services-item",
-    });
+    const data = await getFetchData("/services/list-items/");
 
     const items = data?.results?.data.reverse() ?? [];
 

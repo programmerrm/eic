@@ -5,9 +5,7 @@ import Link from "next/link";
 import PaymentInfo from "../paymnet-info/paymnet-info";
 
 export default async function Banner() {
-    const banner = await getFetchData('/homepage/banner/', {
-        tag: "banner-data",
-    });
+    const banner = await getFetchData('/homepage/banner/');
     return (
         <>
             <section className="mobile-bg-hide relative w-full mx-auto overflow-hidden hero-bg pb-5">

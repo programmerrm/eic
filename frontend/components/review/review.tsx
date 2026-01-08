@@ -3,13 +3,9 @@ import { getFetchData } from "@/utils/getFetchData";
 import ReviewSlider from "./ReviewSlider"; // ⬅ client component
 
 export default async function Review() {
-    const reviewTopBarData = await getFetchData("/homepage/review-top-bar/", {
-        tag: "review-top-bar-data",
-    });
+    const reviewTopBarData = await getFetchData("/homepage/review-top-bar/");
 
-    const reviews = await getFetchData("/homepage/review-items/", {
-        tag: "review-items-data",
-    });
+    const reviews = await getFetchData("/homepage/review-items/");
 
     const items = reviews?.data || [];
 

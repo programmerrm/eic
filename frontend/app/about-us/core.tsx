@@ -30,7 +30,7 @@ export default function Core() {
   }, []);
 
   return (
-    <section className="bg-white py-12 md:py-[100px] relative" ref={sectionRef}>
+    <section className="bg-white py-12 md:py-25 relative" ref={sectionRef}>
       <div className="container">
         <h2 className="text-center sm:-mb-20">
           The <span className="text-blue">Core Principles</span> We Uphold

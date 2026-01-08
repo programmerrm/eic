@@ -4,12 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Features() {
-    const featureTitleRes = await getFetchData('/feature/title/', {
-        tag: "feature-title-data",
-    });
-    const featureItemsRes = await getFetchData('/feature/items/', {
-        tag: "feature/items-data",
-    });
+    const featureTitleRes = await getFetchData('/feature/title/');
+    const featureItemsRes = await getFetchData('/feature/items/');
     const featureTitle = featureTitleRes?.data || null;
     const featureItems = Array.isArray(featureItemsRes?.data) ? featureItemsRes.data : [];
     return (

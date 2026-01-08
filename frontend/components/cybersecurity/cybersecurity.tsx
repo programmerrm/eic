@@ -4,12 +4,8 @@ import Image from "next/image";
 import CybersecurityCounters from "../progressbar/CybersecurityCounters";
 
 export default async function Cybersecurity() {
-    const cybersecuritySolutionTitle = await getFetchData('/homepage/cyber-security-solution-title/', {
-        tag: "cyber-security-solution-title-data",
-    });
-    const cybersecuritySolutionItems = await getFetchData('/homepage/cyber-security-solution-items/', {
-        tag: "cyber-security-solution-items-data",
-    });
+    const cybersecuritySolutionTitle = await getFetchData('/homepage/cyber-security-solution-title/');
+    const cybersecuritySolutionItems = await getFetchData('/homepage/cyber-security-solution-items/');
     return (
         <section className="bg-blue pt-12 md:pt-[100px] pb-11 md:pb-[90px]">
             <div className="container">

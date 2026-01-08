@@ -4,9 +4,7 @@ import { DOMAIN_NAME } from "@/utils/api";
 import Logo from "@/public/images/eic-logo.svg";
 
 const fetchSeoTag = async () => {
-    const res = await getFetchData('/faq/seo-tag/', {
-        tag: 'faq-seo-tag-data',
-    });
+    const res = await getFetchData('/faq/seo-tag/');
     return res?.data || null;
 };
 
