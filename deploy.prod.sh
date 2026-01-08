@@ -26,8 +26,7 @@ done
 echo "Backend is ready ✅"
 
 echo "STEP 4 ::: DATABASE MIGRATION"
-docker-compose -f docker-compose.prod.yml exec backend python manage.py makemigrations --noinput
-docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
+
 
 echo "STEP 5 ::: COLLECT STATIC FILES"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput

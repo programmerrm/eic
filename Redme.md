@@ -151,3 +151,5 @@ server {
         send_timeout 300;
     }
 }
+docker-compose -f docker-compose.prod.yml exec backend python manage.py makemigrations --noinput
+docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
