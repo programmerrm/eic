@@ -12,8 +12,7 @@ export const getFetchData = async (
         const fetchOptions: RequestInit & { next?: NextFetchOptions } = {
             ...options,
             next: {
-                // cache: 'force-cache',
-                revalidate: 3600
+                cache: 'no-store',
             },
         };
         const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
