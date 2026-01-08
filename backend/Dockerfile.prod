@@ -1,52 +1,31 @@
-#############################################################################
-######### DJANGO REST FRAMEWORK PRODUCTION DOCKERFILE CONFIGURATION #########
-#############################################################################
-
-# PYTHON 3.12 SLIM IMAGE
+# PYTHON 3.12 SLIM
 FROM python:3.12-slim
 
-# PYTHON ENVIRONMENT VARIABLES
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# SET WORKING DIRECTORY INSIDE THE CONTAINER
 WORKDIR /app
 
-# UPGRADE SYSTEM && NEED PACKENGS
+# SYSTEM PACKAGES
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        gcc \
-        python3-dev \
-        libjpeg-dev \
-        zlib1g-dev \
-        default-libmysqlclient-dev \
-        pkg-config \
-        netcat-openbsd \
-        curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        gcc python3-dev libjpeg-dev zlib1g-dev default-libmysqlclient-dev pkg-config netcat-openbsd curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# COPY REQUIREMENTS.TXT
-COPY requirements/prod.txt /app/backend/requirements/prod.txt
+# COPY requirements
+COPY requirements/prod.txt ./requirements/prod.txt
 
-# REQUIREMENTS.TXT ALL PACKENGS INSTALL
-RUN pip install --upgrade pip && \
-    pip install -r /app/backend/requirements/prod.txt \
-    && pip install python-dotenv
+# PIP INSTALL
+RUN pip install --upgrade pip && pip install -r ./requirements/prod.txt && pip install python-dotenv daphne redis
 
-# ADDITIONAL PYTHON PACKAGES
-RUN pip install \
-    daphne \
-    redis
-
-# COPY APPLICATION CODE
+# COPY backend code
 COPY . .
 
-# RUN COLLECTSTATIC
+# COLLECT STATIC
 RUN python manage.py collectstatic --noinput
 
 # EXPOSE PORT
 EXPOSE 8000
 
-# START ASGI APP WITH DAPHNE SERVER
+# START ASGI SERVER
 CMD ["daphne", "-p", "8000", "-b", "0.0.0.0", "app.asgi:application"]
