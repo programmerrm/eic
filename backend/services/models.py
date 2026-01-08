@@ -673,6 +673,8 @@ class ComplianceItem(models.Model):
         blank=True,
     )
     title = models.CharField(
+        null=True,
+        blank=True,
         max_length=280,
         verbose_name=_('Title'),
     )
