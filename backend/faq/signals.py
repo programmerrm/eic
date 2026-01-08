@@ -23,11 +23,17 @@ def clear_faq_schema_cache(sender, **kwargs):
 
 @receiver([pre_save, post_delete], sender=FaqTopBar)
 def clear_faq_top_bar_cache(sender, **kwargs):
+    print("[Signal] FaqTopBar changed! Clearing cache and triggering Next.js revalidate...")  # ✅ print
+
     cache.delete(FAQ_TOP_BAR_CACHE_KEY)
-    trigger_nextjs_revalidate(
+
+    success = trigger_nextjs_revalidate(
         path="/faq/top-bar/",
         tag="faq-top-bar"
     )
+
+    print(f"[Signal] Next.js revalidate success: {success}")  # ✅ print response
+
 
 @receiver([pre_save, post_delete], sender=FaqSection)
 def clear_faq_section_cache(sender, **kwargs):
