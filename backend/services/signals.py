@@ -17,12 +17,18 @@ def clear_schema_cache(sender, **kwargs):
 @receiver([post_save, post_delete], sender=ServicePageTopBar)
 def clear_service_page_top_bar_cache(sender, **kwargs):
     cache.delete(SERVICE_PAGE_TOP_BAR_CACHE_KEY)
-    trigger_nextjs_revalidate("/services/top-bar/");
+    trigger_nextjs_revalidate(
+        path="/services/top-bar/",
+        tag="service-top-bar"
+    )
 
 @receiver([post_save, post_delete], sender=Service)
 def clear_service_cache(sender, **kwargs):
     cache.delete(ALL_SERVICES_CACHE_KEY)
-    trigger_nextjs_revalidate("/services/list-items/");
+    trigger_nextjs_revalidate(
+        path="/services/list-items/",
+        tag="services-list-items"
+    );
 
 @receiver(pre_save, sender=Service)
 def set_slug(sender, instance, **kwargs):

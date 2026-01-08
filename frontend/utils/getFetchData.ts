@@ -1,7 +1,8 @@
 import { SERVER_URL } from "./api";
 
 type NextFetchOptions = {
-    cache?: 'force-cache' | 'no-store' | 'default';
+    cache?: "force-cache" | "no-store" | "default";
+    tags?: string[];
 };
 
 export const getFetchData = async (
@@ -12,10 +13,17 @@ export const getFetchData = async (
         const fetchOptions: RequestInit & { next?: NextFetchOptions } = {
             ...options,
             next: {
-                cache: 'no-store',
+                cache: options.next?.cache ?? "force-cache",
+                tags: options.next?.tags,
             },
         };
+
         const response = await fetch(`${SERVER_URL}${url}`, fetchOptions);
+
+        if (!response.ok) {
+            throw new Error(`Fetch failed: ${response.status}`);
+        }
+
         return await response.json();
     } catch (error) {
         console.error("Fetch error:", error);
