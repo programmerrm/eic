@@ -5,6 +5,8 @@ from faq.cache import FAQ_SEO_CACHE_KEY, FAQ_SCHEMA_CACHE_KEY, FAQ_TOP_BAR_CACHE
 from faq.models import SeoTag, Schema, FaqTopBar, FaqSection, FaqItem
 from utils.trigger_nextjs_revalidate import trigger_nextjs_revalidate
 
+print("[Signals] faq.signals loaded!") 
+
 @receiver([pre_save, post_delete], sender=SeoTag)
 def clear_faq_seo_cache(sender, **kwargs):
     cache.delete(FAQ_SEO_CACHE_KEY)
