@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export const dynamic = "force-dynamic"; 
 import SectionBanner from "@/components/banner/section-banner";
 import StayCompliant from "@/components/stay-compliant/stay-compliant";
 import { getFetchData } from "@/utils/getFetchData";
