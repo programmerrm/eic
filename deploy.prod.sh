@@ -20,14 +20,13 @@ echo "Redis is healthy ✅"
 # ---------------- BACKEND ----------------
 echo "STEP 3 ::: START BACKEND"
 docker-compose -f docker-compose.prod.yml up -d backend
-
 echo "Waiting for Backend to be ready..."
 until docker-compose -f docker-compose.prod.yml exec -T backend nc -z localhost 8000; do
     sleep 2
 done
 echo "Backend is ready ✅"
 
-# ---------------- NGINX RESTART (after backend) ----------------
+# ---------------- NGINX RESTART AFTER BACKEND 
 echo "STEP 4 ::: RESTART NGINX after Backend is ready"
 docker-compose -f docker-compose.prod.yml up -d nginx
 docker-compose -f docker-compose.prod.yml exec nginx nginx -t
@@ -45,11 +44,10 @@ docker-compose -f docker-compose.prod.yml exec backend python manage.py collects
 # ---------------- FRONTEND ----------------
 echo "STEP 7 ::: BUILD FRONTEND"
 docker-compose -f docker-compose.prod.yml build frontend
-
 echo "STEP 8 ::: START FRONTEND"
 docker-compose -f docker-compose.prod.yml up -d frontend
 
-# ---------------- NGINX RELOAD (after frontend) ----------------
+# ---------------- NGINX RELOAD AFTER FRONTEND
 echo "STEP 9 ::: RELOAD NGINX after Frontend is ready"
 docker-compose -f docker-compose.prod.yml exec nginx nginx -t
 docker-compose -f docker-compose.prod.yml exec nginx nginx -s reload
