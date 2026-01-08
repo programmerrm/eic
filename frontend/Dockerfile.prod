@@ -20,8 +20,6 @@ RUN npm install
 # COPY FULL PROJECT
 COPY . .
 
-ENV NEXT_PHASE=phase-production-build
-
 # BUILD PROJECT FOR PRODUCTION
 RUN npm run build
 

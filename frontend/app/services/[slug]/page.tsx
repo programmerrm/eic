@@ -14,14 +14,14 @@ type SingleServiceProps = {
   params: { slug: string };
 };
 
-export async function generateStaticParams() {
-  const data = await getFetchData('/services/list-items/');
-  const services = data?.results?.data || [];
+// export async function generateStaticParams() {
+//   const data = await getFetchData('/services/list-items/');
+//   const services = data?.results?.data || [];
 
-  return services.map((service: { slug: string }) => ({
-    slug: service.slug,
-  }));
-}
+//   return services.map((service: { slug: string }) => ({
+//     slug: service.slug,
+//   }));
+// }
 
 export default async function SingleService({ params }: SingleServiceProps) {
   const { slug } = await params;
