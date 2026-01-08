@@ -1,7 +1,4 @@
-version: "3.9"
-
 services:
-
   redis:
     image: redis:7-alpine
     container_name: redis_server
@@ -13,6 +10,12 @@ services:
       - redis_data:/data
     networks:
       - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   backend:
     build:
       context: ./backend
@@ -25,12 +28,18 @@ services:
     expose:
       - "8000"
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     networks:
       - web
       - backend
     restart: unless-stopped
-    
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 8000"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   frontend:
     build:
       context: ./frontend
@@ -40,17 +49,19 @@ services:
     expose:
       - "3000"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     networks:
-    - web
+      - web
+      - backend
     restart: unless-stopped
 
   nginx:
     image: nginx:1.27-alpine
     restart: unless-stopped
     depends_on:
-      - frontend
-      - backend
+      frontend:
+        condition: service_started
     ports:
       - "80:80"
       - "443:443"

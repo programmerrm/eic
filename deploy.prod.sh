@@ -4,26 +4,46 @@ set -a
 source ./backend/.env.prod
 set +a
 
-echo "STEP ONE ::: CLEAN UP UNUSED DOCKER RESOURCES"
+echo "STEP 1 ::: CLEAN UP UNUSED DOCKER RESOURCES"
 docker system prune -f
 
-echo "STEP TWO ::: BUILD DOCKER IMAGES"
-docker-compose -f docker-compose.prod.yml build
+echo "STEP 2 ::: START REDIS"
+docker-compose -f docker-compose.prod.yml up -d redis
 
-echo "STEP THREE ::: START CONTAINERS"
-docker-compose -f docker-compose.prod.yml up -d
+# wait for redis to be healthy
+echo "Waiting for Redis to be healthy..."
+until [ "$(docker inspect --format='{{.State.Health.Status}}' redis_server)" = "healthy" ]; do
+    sleep 2
+done
+echo "Redis is healthy ✅"
 
-echo "STEP FOUR ::: DATABASE MIGRATION"
+echo "STEP 3 ::: START BACKEND"
+docker-compose -f docker-compose.prod.yml up -d backend
+
+# wait for backend port 8000 open
+echo "Waiting for Backend to be ready..."
+until docker exec backend nc -z localhost 8000; do
+    sleep 2
+done
+echo "Backend is ready ✅"
+
+echo "STEP 4 ::: DATABASE MIGRATION"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py makemigrations --noinput
 docker-compose -f docker-compose.prod.yml exec backend python manage.py migrate --noinput
 
-echo "STEP FIVE ::: COLLECT STATIC FILES"
+echo "STEP 5 ::: COLLECT STATIC FILES"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput
 
-echo "STEP SIX ::: VALIDATE NGINX CONFIGRATION"
+echo "STEP 6 ::: BUILD FRONTEND"
+docker-compose -f docker-compose.prod.yml build frontend
+
+echo "STEP 7 ::: START FRONTEND"
+docker-compose -f docker-compose.prod.yml up -d frontend
+
+echo "STEP 8 ::: VALIDATE NGINX CONFIGURATION"
 docker-compose -f docker-compose.prod.yml exec nginx nginx -t
 
-echo "STEP EIGHT ::: RELOAD NGINX"
+echo "STEP 9 ::: RELOAD NGINX"
 docker-compose -f docker-compose.prod.yml exec nginx nginx -s reload
 
-echo "PRODUCTION PROJECT RUN SUCCESSFULLY"
+echo "PRODUCTION PROJECT RUN SUCCESSFULLY ✅"
