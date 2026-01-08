@@ -10,7 +10,6 @@ docker system prune -f
 echo "STEP 2 ::: START REDIS"
 docker-compose -f docker-compose.prod.yml up -d redis
 
-# wait for redis to be healthy
 echo "Waiting for Redis to be healthy..."
 until [ "$(docker inspect --format='{{.State.Health.Status}}' redis_server)" = "healthy" ]; do
     sleep 2
@@ -20,9 +19,8 @@ echo "Redis is healthy ✅"
 echo "STEP 3 ::: START BACKEND"
 docker-compose -f docker-compose.prod.yml up -d backend
 
-# wait for backend port 8000 open
 echo "Waiting for Backend to be ready..."
-until docker exec backend nc -z localhost 8000; do
+until docker-compose -f docker-compose.prod.yml exec backend nc -z localhost 8000; do
     sleep 2
 done
 echo "Backend is ready ✅"

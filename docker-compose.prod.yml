@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   redis:
     image: redis:7-alpine
@@ -34,6 +36,7 @@ services:
       - web
       - backend
     restart: unless-stopped
+    container_name: backend
     healthcheck:
       test: ["CMD-SHELL", "nc -z localhost 8000"]
       interval: 5s

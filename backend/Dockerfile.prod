@@ -16,7 +16,9 @@ RUN apt-get update -y && \
 COPY requirements/prod.txt ./requirements/prod.txt
 
 # PIP INSTALL
-RUN pip install --upgrade pip && pip install -r ./requirements/prod.txt && pip install python-dotenv daphne redis
+RUN pip install --upgrade pip && \
+    pip install -r ./requirements/prod.txt && \
+    pip install python-dotenv daphne redis
 
 # COPY backend code
 COPY . .
