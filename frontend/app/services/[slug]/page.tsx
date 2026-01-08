@@ -11,20 +11,11 @@ import FAQ from "@/components/FAQ/FAQ";
 import Description from "@/components/paymnet-info/description";
 
 type SingleServiceProps = {
-  params: { slug: string };
+    params: { slug: string };
 };
 
-// export async function generateStaticParams() {
-//   const data = await getFetchData('/services/list-items/');
-//   const services = data?.results?.data || [];
-
-//   return services.map((service: { slug: string }) => ({
-//     slug: service.slug,
-//   }));
-// }
-
 export default async function SingleService({ params }: SingleServiceProps) {
-  const { slug } = await params;
+    const { slug } = await params;
 
     const singleService = await getFetchData(`/services/single/${slug}`);
     const singleServiceData = singleService?.data || {};
@@ -95,7 +86,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                         </div>
                     </section>
                 )}
-            
+
             {/* WHY CHOOSE US SECTION */}
             {(singleServiceData?.why_choose_us_title ||
                 singleServiceData?.why_choose_us_item?.length > 0) && (
@@ -155,47 +146,47 @@ export default async function SingleService({ params }: SingleServiceProps) {
                 )}
             {/* COMPLIANCE SECTION */}
             {singleServiceData?.compliance_title && (
-                    <section
-                        className="pb-[270px] sm:pb-[300px] pt-6 md:pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat lg:mt-[-290px]"
-                        style={{ backgroundImage: `url(${trustedForProven.src})` }}
+                <section
+                    className="pb-[270px] sm:pb-[300px] pt-6 md:pt-12 lg:pt-[210px] bg-contain bg-top-left bg-no-repeat lg:mt-[-290px]"
+                    style={{ backgroundImage: `url(${trustedForProven.src})` }}
+                >
+                    <div
+                        className="my-12 md:my-[100px] bg-contain bg-bottom-right bg-no-repeat"
+                        style={{ backgroundImage: `url(${complianceBG.src})` }}
                     >
-                        <div
-                            className="my-12 md:my-[100px] bg-contain bg-bottom-right bg-no-repeat"
-                            style={{ backgroundImage: `url(${complianceBG.src})` }}
-                        >
-                            <div className="container">
-                                <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-14 gap-5">
-                                    <h2 className="sm:max-w-[636px] w-full">
-                                        {singleServiceData?.compliance_title?.title_before_span + " "}
-                                        <span className="text-[#2E78AC]">
-                                            {singleServiceData?.compliance_title?.title_span}
-                                        </span>
-                                        {" " + singleServiceData?.compliance_title?.title_after_span}
-                                    </h2>
-                                    {singleServiceData?.compliance_title?.btn_url && (
-                                        <div className="flex items-center sm:max-w-[300px] w-full justify-start sm:justify-end">
-                                            <Link href={singleServiceData?.compliance_title?.btn_url} className="btn-primary group">
-                                                {singleServiceData?.compliance_title?.btn_name}
-                                                <svg
-                                                    className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        stroke="currentColor"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={1.5}
-                                                        d="M6 18 18 6m0 0H9m9 0v9"
-                                                    />
-                                                </svg>
-                                            </Link>
-                                        </div>
-                                    )}
-                                </div>
-                                {singleServiceData?.compliance_items && (
-                                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="container">
+                            <div className="flex flex-col sm:flex-row justify-between mb-10 md:mb-14 gap-5">
+                                <h2 className="sm:max-w-[636px] w-full">
+                                    {singleServiceData?.compliance_title?.title_before_span + " "}
+                                    <span className="text-[#2E78AC]">
+                                        {singleServiceData?.compliance_title?.title_span}
+                                    </span>
+                                    {" " + singleServiceData?.compliance_title?.title_after_span}
+                                </h2>
+                                {singleServiceData?.compliance_title?.btn_url && (
+                                    <div className="flex items-center sm:max-w-[300px] w-full justify-start sm:justify-end">
+                                        <Link href={singleServiceData?.compliance_title?.btn_url} className="btn-primary group">
+                                            {singleServiceData?.compliance_title?.btn_name}
+                                            <svg
+                                                className="transition-all duration-500 group-hover:rotate-45 w-5 md:w-6 h-5 md:h-6"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke="currentColor"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={1.5}
+                                                    d="M6 18 18 6m0 0H9m9 0v9"
+                                                />
+                                            </svg>
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                            {singleServiceData?.compliance_items && (
+                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                     {singleServiceData?.compliance_items?.map((item: any) => (
                                         <div
                                             className="p-4 md:p-6 bg-white border border-[#E6E7EB] rounded-[10px] transition-all hover:shadow-[25px_36px_18px_rgba(0,0,0,0.01),14px_20px_15px_rgba(0,0,0,0.05),6px_9px_11px_rgba(0,0,0,0.09),2px_2px_6px_rgba(0,0,0,0.1)]"
@@ -222,11 +213,11 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                         </div>
                                     ))}
                                 </div>
-                                )}
-                            </div>
+                            )}
                         </div>
-                    </section>
-                )}
+                    </div>
+                </section>
+            )}
             {/* PAYMENT INFO */}
             <section className="relative z-10 pb-5 md:pb-10 -mt-[280px]">
                 <div className="container">
@@ -276,7 +267,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                     </div>
                 </div>
             </section>
-            
+
             {/* INCLUDE TOP SECTION */}
             {(singleServiceData?.include_top_title ||
                 singleServiceData?.include_top_items?.length > 0) && (
@@ -322,8 +313,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                             {singleServiceData?.related_services?.slice(0, 3)?.map((item: any) => (
                                 <div key={item.id} className="hover:filter hover:drop-shadow-[6px_6px_8px_rgba(50,50,0,0.1)]">
                                     <div className="group h-full bg-[#E6E7EB] hover:bg-blue p-0.5 rounded-2xl [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-50px)_100%,0_100%)] relative transition-all ">
-                                        <Link 
-                                            
+                                        <Link
+
                                             href={`/services/${item?.slug}`}
                                             className=" absolute inset-0 z-10"
                                         > </Link>
@@ -336,7 +327,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                                             alt={item?.title}
                                                             width={235}
                                                             height={224}
-                                                            priority 
+                                                            priority
                                                             fetchPriority="high"
                                                         />
                                                     </div>
