@@ -52,7 +52,7 @@ export default async function Page() {
                     </div>
                 </div>
             </section>
-
+            
             <section className="pt-12 md:pt-[100px] bg-blue text-white">
                 <div className="container">
                     <div className="pb-12 md:pb-[100px] bg-center md:bg-bottom bg-contain bg-no-repeat"
