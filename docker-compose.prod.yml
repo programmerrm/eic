@@ -1,6 +1,18 @@
 version: "3.9"
 
 services:
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_server
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - backend
   backend:
     build:
       context: ./backend
@@ -27,21 +39,11 @@ services:
       - ./frontend/.env.production
     expose:
       - "3000"
+    depends_on:
+      - backend
     networks:
     - web
     restart: unless-stopped
-
-  redis:
-    image: redis:7-alpine
-    container_name: redis_server
-    restart: unless-stopped
-    command: ["redis-server", "--appendonly", "yes"]
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - backend
 
   nginx:
     image: nginx:1.27-alpine
