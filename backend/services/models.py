@@ -502,17 +502,23 @@ class ServicesIncludeTopTitle(models.Model):
         blank=True,
     )
     title = models.CharField(
+        null=True,
+        blank=True,
         max_length=280,
         verbose_name=_('Title'),
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
         null=True,
         blank=True,
         verbose_name=_('Description'),
     )
 
+    class Meta:
+        verbose_name = _('Services Include Bottom Title')
+        verbose_name_plural = _('Services Include Bottom Title')
+
     def __str__(self):
-        return self.title[:50]
+        return f"ServicesIncludeTopTitle"
 
 # =========== Services Include Top Item ============
 class ServicesIncludeTopItem(models.Model):
@@ -532,17 +538,23 @@ class ServicesIncludeTopItem(models.Model):
         verbose_name=_('Image'),
     )
     title = models.CharField(
+        null=True,
+        blank=True,
         max_length=280,
         verbose_name=_('Title'),
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
         null=True,
         blank=True,
         verbose_name=_('Description'),
     )
 
+    class Meta:
+        verbose_name = _('Services Include Bottom Item')
+        verbose_name_plural = _('Services Include Bottom Item')
+
     def __str__(self):
-        return self.title[:50]
+        return f"ServicesIncludeTopItem"
 
 # ============ Service Why Choose Us Title =============
 class ServiceWhyChooseUsTitle(models.Model):
@@ -757,17 +769,23 @@ class ServicesIncludeBottomTitle(models.Model):
         blank=True,
     )
     title = models.CharField(
+        blank=True, 
+        null=True,
         max_length=280,
         verbose_name=_('Title'),
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
         blank=True, 
         null=True,
         verbose_name=_('Description'),
     )
 
+    class Meta:
+        verbose_name = _('Services Include Top Title')
+        verbose_name_plural = _('Services Include Top Title')
+
     def __str__(self):
-        return self.title[:50]
+        return f"ServicesIncludeBottomTitle"
 
 # =========== Services Include Bottom Item ============
 class ServicesIncludeBottomItem(models.Model):
@@ -780,17 +798,23 @@ class ServicesIncludeBottomItem(models.Model):
         blank=True,
     )
     title = models.CharField(
+        blank=True, 
+        null=True,
         max_length=280,
         verbose_name=_('Title'),
     )
-    description = models.TextField(
+    description = RichTextUploadingField(
         blank=True, 
         null=True,
         verbose_name=_('Description'),
     )
 
+    class Meta:
+        verbose_name = _('Services Include Top Item')
+        verbose_name_plural = _('Services Include Top Item')
+
     def __str__(self):
-        return self.title[:50]
+        return f"ServicesIncludeBottomItem"
 
 # ========== FAQ ==========
 class Faq(models.Model):
@@ -804,6 +828,8 @@ class Faq(models.Model):
         blank=True,
     )
     title = models.CharField(
+        blank=True, 
+        null=True,
         max_length=280,
         validators=[MinLengthValidator(1)],
         verbose_name=_('FAQ Title'),
@@ -836,7 +862,7 @@ class FaqItem(models.Model):
         verbose_name=_('Question'),
         help_text=_('Enter your FAQ question...')
     )
-    answer = models.TextField(
+    answer = RichTextUploadingField(
         verbose_name=_('Answer'),
         help_text=_('Enter your FAQ answer...')
     )
