@@ -237,7 +237,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                     className="text-blue"> {singleServiceData?.payment_info?.title_span}</span> {singleServiceData?.payment_info?.title_after_span}
                             </h2>
                             <Description content={singleServiceData?.payment_info?.description} />
-                            <div className="btn-wrap">
+                            {singleServiceData?.payment_info?.btn_url && (
+                                <div className="btn-wrap">
                                 <Link href={singleServiceData?.payment_info?.btn_url || ""}
                                     className="btn-primary group inline-flex">{singleServiceData?.payment_info?.btn_name}
                                     <svg
@@ -256,6 +257,8 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                     </svg>
                                 </Link>
                             </div>
+                            )}
+                            
                         </div>
                         <div className="w-full lg:max-w-[calc(100%-37.720%)] flex flex-col items-end">
                             <div className="max-w-fit rounded-xl sm:rounded-3xl p-2 sm:p-[17px]">
