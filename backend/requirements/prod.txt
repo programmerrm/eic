@@ -6,7 +6,9 @@ autobahn==25.10.2
 Automat==25.4.16
 billiard==4.2.2
 celery==5.5.3
+certifi==2026.1.4
 cffi==2.0.0
+charset-normalizer==3.4.4
 click==8.3.0
 click-didyoumean==0.3.1
 click-plugins==1.1.1.2
@@ -43,6 +45,7 @@ python-crontab==3.3.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
 redis==7.0.1
+requests==2.32.5
 service-identity==24.2.0
 setuptools==80.9.0
 six==1.17.0
@@ -52,6 +55,7 @@ Twisted==25.5.0
 txaio==25.9.2
 typing_extensions==4.15.0
 tzdata==2025.2
+urllib3==2.6.3
 vine==5.1.0
 watchfiles==1.1.1
 wcwidth==0.2.14
