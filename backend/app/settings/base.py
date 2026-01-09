@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'features',
     'contact',
     'blogs',
-    'faq.apps.FaqConfig',
+    'faq',
     'success_stories',
     'privacy_policy',
     'terms_conditions',
@@ -205,3 +205,5 @@ SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
+
+print("Rasel Mahmud")
