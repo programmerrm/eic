@@ -31,4 +31,4 @@ EXPOSE 8000
 
 # START ASGI SERVER
 # CMD ["daphne", "-p", "8000", "-b", "0.0.0.0", "app.asgi:application"]
-CMD ["python", "-u", "-m", "daphne", "-p", "8000", "-b", "0.0.0.0", "app.asgi:application"]
+CMD ["python", "-u", "manage.py", "runserver", "0.0.0.0:8000"]
