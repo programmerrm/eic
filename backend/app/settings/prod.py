@@ -6,7 +6,7 @@ Production settings configuration
 from app.settings.base import *
 
 # BASE CONFIGRATION
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
     'eic.com.bd',
     'www.eic.com.bd',
