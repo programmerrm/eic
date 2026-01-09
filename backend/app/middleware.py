@@ -6,7 +6,11 @@ class PrintRequestMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # print URL and method
-        print(f"🔥 Request: {request.method} {request.path}")
+        # আগের print
+        # print(f"🔥 Request: {request.method} {request.path}")
+        
+        # নতুন করে flush=True ব্যবহার
+        print(f"🔥 Request: {request.method} {request.path}", flush=True)
+        
         response = self.get_response(request)
         return response
