@@ -3,7 +3,6 @@
 CONFIGURATION ALL VIEWS
 """
 ######################################################
-import logging
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
@@ -33,8 +32,6 @@ from api.configuration.serializers.configuration import (
     ScheduleACallSeriliazer,
 )
 
-logger = logging.getLogger(__name__)
-
 # ======== FAVICON VIEW =========== 
 class FaviconViewSet(viewsets.ModelViewSet):
     serializer_class = FaviconSerializer
@@ -59,7 +56,6 @@ class LogoViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         print("🔥 get_permissions called")
-        logger.info("LogoViewSet: get_permissions called")
 
         if self.action == 'list':
             return [AllowAny()]
@@ -67,7 +63,6 @@ class LogoViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         print("🔥 Logo API called")
-        logger.info("Logo API called")
         try:
             queryset = Logo.objects.first()
             if queryset is None:

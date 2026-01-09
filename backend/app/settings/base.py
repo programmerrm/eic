@@ -205,28 +205,3 @@ SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-
-    "formatters": {
-        "default": {
-            "format": "[{asctime}] [{levelname}] {name}: {message}",
-            "style": "{",
-        },
-    },
-
-    "handlers": {
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": "/backend/logs/django.log",
-            "formatter": "default",
-        },
-    },
-
-    "root": {
-        "handlers": ["file"],
-        "level": "INFO",
-    },
-}
