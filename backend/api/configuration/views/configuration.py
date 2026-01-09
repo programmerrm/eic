@@ -70,6 +70,7 @@ class LogoViewSet(viewsets.ModelViewSet):
         return [IsAdminUser()]
 
     def list(self, request, *args, **kwargs):
+        logger.info("Logo API called")
         try:
             queryset = Logo.objects.first()
             if queryset is None:
