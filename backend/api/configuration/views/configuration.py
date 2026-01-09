@@ -54,6 +54,8 @@ class FaviconViewSet(viewsets.ModelViewSet):
 class LogoViewSet(viewsets.ModelViewSet):
     serializer_class = LogoSerializer
 
+    print("Logo data processing...")
+
     def get_permissions(self):
         if self.action == 'list':
             return [AllowAny()]
