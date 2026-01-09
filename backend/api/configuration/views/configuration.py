@@ -60,8 +60,13 @@ class LogoViewSet(viewsets.ModelViewSet):
     logger.debug("LogoViewSet: list API called")
 
     def get_permissions(self):
+        logger.info("LogoViewSet: get_permissions called")
+
         if self.action == 'list':
+            logger.info("LogoViewSet: AllowAny permission applied")
             return [AllowAny()]
+
+        logger.warning("LogoViewSet: Admin permission required")
         return [IsAdminUser()]
 
     def list(self, request, *args, **kwargs):
