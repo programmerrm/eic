@@ -209,36 +209,24 @@ X_FRAME_OPTIONS = 'DENY'
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+
     "formatters": {
-        "verbose": {
+        "default": {
             "format": "[{asctime}] [{levelname}] {name}: {message}",
             "style": "{",
         },
-        "simple": {
-            "format": "[{levelname}] {message}",
-            "style": "{",
-        },
     },
+
     "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "/backend/logs/django.log",
+            "formatter": "default",
         },
     },
+
     "root": {
-        "handlers": ["console"],
+        "handlers": ["file"],
         "level": "INFO",
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "django.request": {
-            "handlers": ["console"],
-            "level": "ERROR",
-            "propagate": False,
-        },
     },
 }

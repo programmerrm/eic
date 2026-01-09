@@ -27,6 +27,7 @@ services:
     volumes:
       - ./backend/staticfiles:/backend/staticfiles
       - ./backend/media:/backend/media
+      - ./logs:/backend/logs
     expose:
       - "8000"
     depends_on:

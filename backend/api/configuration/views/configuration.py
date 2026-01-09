@@ -57,19 +57,16 @@ class FaviconViewSet(viewsets.ModelViewSet):
 class LogoViewSet(viewsets.ModelViewSet):
     serializer_class = LogoSerializer
 
-    logger.debug("LogoViewSet: list API called")
-
     def get_permissions(self):
+        print("🔥 get_permissions called")
         logger.info("LogoViewSet: get_permissions called")
 
         if self.action == 'list':
-            logger.info("LogoViewSet: AllowAny permission applied")
             return [AllowAny()]
-
-        logger.warning("LogoViewSet: Admin permission required")
         return [IsAdminUser()]
 
     def list(self, request, *args, **kwargs):
+        print("🔥 Logo API called")
         logger.info("Logo API called")
         try:
             queryset = Logo.objects.first()
