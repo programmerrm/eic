@@ -6,5 +6,4 @@ class FaqConfig(AppConfig):
     verbose_name = 'FAQ Page'
 
     def ready(self):
-        print("[DEBUG] FaqConfig.ready called")
         import faq.signals

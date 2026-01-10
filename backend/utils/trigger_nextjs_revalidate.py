@@ -1,9 +1,12 @@
 import os
 import requests
+import logging
+
+logger = logging.getLogger(__name__)
 
 def trigger_nextjs_revalidate(path: str, tag: str) -> bool:
     try:
-        base_url = os.getenv("FRONTEND_DOMAIN")
+        base_url = "http://localhost:3000"
         secret = os.getenv("REVALIDATE_SECRET")
 
         url = f"{base_url}/api/revalidate"
@@ -13,12 +16,12 @@ def trigger_nextjs_revalidate(path: str, tag: str) -> bool:
             "tag": tag,
         }
 
-        print(f"[Next.js Revalidate] Sending request to: {url} with params: {params}")  # ✅ print request
+        logging.info(f"[Next.js Revalidate] Sending request to: {url} with params: {params}")
 
         resp = requests.get(url, params=params, timeout=5)
 
-        print(f"[Next.js Revalidate] Response status: {resp.status_code}")  # ✅ print response status
-        print(f"[Next.js Revalidate] Response body: {resp.text}")  # ✅ print response body
+        logging.info(f"[Next.js Revalidate] Response status: {resp.status_code}")
+        logging.info(f"[Next.js Revalidate] Response body: {resp.text}")
 
         return resp.status_code == 200
 

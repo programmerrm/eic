@@ -95,7 +95,7 @@ class SeoTag(models.Model):
         verbose_name_plural = _('SEO Tag')
 
     def __str__(self):
-        return self.title or "SEO Infomation added"
+        return self.title or "SEO Infomation added;"
 
 # =========== SCHEMA ================
 class Schema(models.Model):

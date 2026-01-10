@@ -111,7 +111,6 @@ class CopyRightViewSet(viewsets.ModelViewSet):
                 "message": str(e),
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# ======== SOCIAL LINK VIEW =========== 
 class SocialLinkViewSet(viewsets.ModelViewSet):
     queryset = SocialLink.objects.all()
     serializer_class = SocialLinkSerializer
@@ -122,9 +121,28 @@ class SocialLinkViewSet(viewsets.ModelViewSet):
         return [IsAdminUser()]
 
     def list(self, request, *args, **kwargs):
-        if not self.queryset.exists():
-            return Response({"message": "No social link records found."}, status=status.HTTP_404_NOT_FOUND)
-        return super().list(request, *args, **kwargs)
+        try:
+            qs = self.queryset
+            serializer = self.get_serializer(qs, many=True)
+
+            if not qs.exists():
+                return Response({
+                    "success": False,
+                    "message": "No social link records found.",
+                    "data": [],
+                }, status=status.HTTP_200_OK)
+            return Response({
+                "success": True,
+                "message": "social link data fetching successfully",
+                "data": serializer.data,
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({
+                "success": False,
+                "message": "Internal server error",
+                "errors": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # ======== NOT FOUND CONTENT VIEW =========== 
 class NotFoundContentViewSet(viewsets.ModelViewSet):

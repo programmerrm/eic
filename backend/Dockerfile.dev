@@ -5,33 +5,22 @@
 # PYTHON 3.12 SLIM IMAGE
 FROM python:3.12-slim
 
-# PYTHON ENVIRONMENT VARIABLES
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
 # WORKING DIR
 WORKDIR /app
 
 # UPGRADE SYSTEM && NEED PACKENGS
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
-        gcc \
-        python3-dev \
-        libjpeg-dev \
-        zlib1g-dev \
-        default-libmysqlclient-dev \
-        pkg-config \
-        netcat-openbsd \
-        curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        gcc python3-dev libjpeg-dev zlib1g-dev default-libmysqlclient-dev pkg-config netcat-openbsd curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # COPY REQUIREMENTS.TXT
-COPY requirements/dev.txt /app/backend/requirements/dev.txt
+COPY requirements/dev.txt ./requirements/dev.txt
 
 # REQUIREMENTS.TXT ALL PACKENGS INSTALL
 RUN pip install --upgrade pip && \
-    pip install -r /app/backend/requirements/dev.txt
+    pip install -r ./requirements/dev.txt && \
+    pip install python-dotenv daphne redis
 
 # COPY APPLICATION CODE
 COPY . .
@@ -40,4 +29,4 @@ COPY . .
 EXPOSE 8000
 
 # START 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "./entrypoint.sh"]

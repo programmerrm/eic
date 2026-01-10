@@ -17,6 +17,7 @@ class FaqTopBarView(viewsets.ModelViewSet):
     CACHE_KEY = FAQ_TOP_BAR_CACHE_KEY
 
     def list(self, request, *args, **kwargs):
+        print('FAQ API CALL')
         try:
             cached_data = cache.get(self.CACHE_KEY)
             if cached_data:

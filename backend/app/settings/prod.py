@@ -6,7 +6,7 @@ Production settings configuration
 from app.settings.base import *
 
 # BASE CONFIGRATION
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = [
     'eic.com.bd',
     'www.eic.com.bd',
@@ -31,7 +31,6 @@ DATABASES = {
 }
 
 # CSRF TRUSTED ORIGINS
-# CSRF TRUSTED ORIGINS
 CSRF_TRUSTED_ORIGINS = [
     'https://eic.com.bd',
     'https://www.eic.com.bd',
@@ -48,3 +47,18 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.eicsec.com",
     "http://localhost:3000",
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'

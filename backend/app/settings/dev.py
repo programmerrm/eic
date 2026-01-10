@@ -33,3 +33,18 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3001',
     'http://127.0.0.1:8000',
 ]
+
+# LOGGER CONFIGURATION
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}

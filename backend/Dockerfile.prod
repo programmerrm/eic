@@ -30,6 +30,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # START ASGI SERVER
-# CMD ["daphne", "-p", "8000", "-b", "0.0.0.0", "app.asgi:application"]
-CMD ["python", "-u", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
-
+CMD ["daphne", "-p", "8000", "-b", "0.0.0.0", "app.asgi:application"]
