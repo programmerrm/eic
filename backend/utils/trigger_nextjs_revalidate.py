@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 def trigger_nextjs_revalidate(path: str, tag: str) -> bool:
     try:
-        base_url = "http://localhost:3000"
+        base_url = os.getenv("FRONTEND_DOMAIN")
         secret = os.getenv("REVALIDATE_SECRET")
 
         url = f"{base_url}/api/revalidate"

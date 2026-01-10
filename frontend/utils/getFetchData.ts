@@ -30,4 +30,3 @@ export const getFetchData = async (
         return null;
     }
 };
-
