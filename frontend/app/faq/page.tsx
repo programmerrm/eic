@@ -5,6 +5,8 @@ import { MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 
+export const revalidate = 10;
+
 export default async function Faq() {
     const topBarData = await getFetchData("/faq/top-bar/",{
         next: {
