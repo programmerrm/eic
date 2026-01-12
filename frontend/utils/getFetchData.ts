@@ -13,8 +13,8 @@ export const getFetchData = async (
         const fetchOptions: RequestInit & { next?: NextFetchOptions } = {
             ...options,
             next: {
-                cache: options.next?.cache ?? "force-cache",
-                tags: options.next?.tags,
+                cache: options.next?.cache ?? "no-store",
+                // tags: options.next?.tags,
             },
         };
 
