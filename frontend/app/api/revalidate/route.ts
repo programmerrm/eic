@@ -5,17 +5,12 @@ import { REVALIDATE_SECRET } from "@/utils/api";
 
 export async function GET(request: Request) {
     const url = new URL(request.url);
-    console.log('URL : ', url);
 
     const secret = url.searchParams.get("secret");
-    console.log('SECRET : ', secret);
     const path = url.searchParams.get("path");
-    console.log('PATH : ', path);
     const tag = url.searchParams.get("tag");
-    console.log('TAG : ', tag);
 
     if (secret !== REVALIDATE_SECRET) {
-        console.log('Invalid token')
         return NextResponse.json({ message: "Invalid token" }, { status: 401 });
     }
 
