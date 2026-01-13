@@ -218,7 +218,7 @@ footer .menu ul li a:hover {
         @apply font-dmsans;
     }
     h1 {
-        @apply text-3xl sm:text-5xl md:text-6xl lg:text-[72px] lg:leading-20;
+        @apply text-3xl sm:text-4xl md:text-5xl lg:text-[72px] lg:leading-20;
     }
     h2 {
         @apply text-3xl md:text-4xl lg:text-5xl lg:leading-14 text-body;
