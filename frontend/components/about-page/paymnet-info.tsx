@@ -13,7 +13,7 @@ export default async function PaymentInfo() {
                     <div className="container">
                         <div className="flex items-center flex-col lg:flex-row gap-y-10 gap-x-5 justify-between">
                             <div className="w-full lg:max-w-[37.720%] pr-9 order-2 lg:order-1">
-                                <h2 className="text-2xl sm:text-3xl md:text-[40px] md:leading-12 w-full lg:w-[500px] xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
+                                <h2 className="text-2xl md:text-3xl xl:text-4xl 2xl:text-[40px] md:leading-12 w-full lg:w-[590px] 2xl:w-[610px]">{paymnetInfo?.data?.title_before_span}
                                     <span className="text-blue">{paymnetInfo?.data?.title_span}</span> {paymnetInfo?.data?.title_after_span}</h2>
                                 <Description content={paymnetInfo?.data?.description} />
 

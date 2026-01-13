@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import CoreImg from "../../public/images/core-principles.svg";
+import CoreImg from "../../public/images/core-principles-update.svg";
 import { useEffect, useRef, useState } from "react";
 
 export default function Core() {
