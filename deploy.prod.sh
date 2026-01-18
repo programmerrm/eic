@@ -35,6 +35,8 @@ echo "Nginx restarted ✅"
 
 # ---------------- DATABASE MIGRATION ----------------
 echo "STEP 5 ::: DATABASE MIGRATION"
+docker-compose -f docker-compose.prod.yml exec -T backend python manage.py migrate --noinput
+echo "Backend database ready ✅"
 
 # ---------------- COLLECT STATIC ----------------
 echo "STEP 6 ::: COLLECT STATIC FILES"

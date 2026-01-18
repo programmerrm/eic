@@ -159,6 +159,7 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+
 class HomePageSchema(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField()
@@ -168,7 +169,11 @@ class HomePageSchema(models.Model):
         graph = []
 
         # Organization
-        graph.append(self.organization.schema())
+        try:
+            org = self.organization
+            graph.append(org.schema())
+        except Organization.DoesNotExist:
+            pass
 
         # WebSite
         graph.append({
@@ -202,9 +207,7 @@ class HomePageSchema(models.Model):
         }, ensure_ascii=False)
 
     def __str__(self):
-        return "Homepage Schema"
-
-
+        return f"{self.name} ({self.url})"
 
 # ================= BANNER ====================
 class Banner(models.Model):
