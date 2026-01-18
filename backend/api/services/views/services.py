@@ -211,7 +211,6 @@ class ServiceView(viewsets.ModelViewSet):
 class SingleServiceView(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = SingleServiceSerializer
-    permission_classes = [AllowAny]
     lookup_field = "slug"
 
     def retrieve(self, request, *args, **kwargs):

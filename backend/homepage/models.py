@@ -119,6 +119,14 @@ class Organization(models.Model):
     linkedin = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
 
+    homepage_schema = models.OneToOneField(
+        "HomePageSchema",
+        on_delete=models.CASCADE,
+        related_name="organization",
+        null=True,
+        blank=True
+    )
+
     def schema(self):
         data = {
             "@type": "Organization",
@@ -155,12 +163,6 @@ class HomePageSchema(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField()
     description = models.TextField(blank=True, null=True)
-
-    organization = models.OneToOneField(
-        Organization,
-        on_delete=models.CASCADE,
-        related_name="homepage_schema"
-    )
 
     def json_ld(self):
         graph = []
