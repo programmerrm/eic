@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '50/min',
-        'user': '1000/min',
+        'user': '100/min',
     }
 }
 
@@ -188,5 +188,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default=env('EMAIL_HOST_USER'))
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 SITE_ADMIN_EMAIL = env('SITE_ADMIN_EMAIL')

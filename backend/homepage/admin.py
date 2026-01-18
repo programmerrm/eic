@@ -21,10 +21,16 @@ from homepage.models import (
     ExperienceEicItem,
     GloballyAccredited,
     SeoTag,
-    Schema,
+    Organization,
+    HomePageSchema
 )
 from django import forms
 from django.db import models
+
+class OrganizationInline(admin.StackedInline):
+    model = Organization
+    extra = 0
+    max_num = 1
 
 # ========== SEO TAG TOP BAR ADMIN ==========
 class SeoTagAdmin(admin.ModelAdmin):
@@ -72,85 +78,6 @@ class SeoTagAdmin(admin.ModelAdmin):
                 "twitter_title",
                 "twitter_description",
                 "twitter_image",
-            )
-        }),
-        (_("System Info"), {
-            "classes": ("collapse",),
-            "fields": ("created_at", "updated_at"),
-        }),
-    )
-
-    def action_buttons(self, obj):
-        app_label = obj._meta.app_label
-        model_name = obj._meta.model_name
-
-        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
-        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
-
-        return format_html(
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#4caf50; color:white; border-radius:4px; text-decoration:none; margin-right:4px;">Edit</a>'
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#f44336; color:white; border-radius:4px; text-decoration:none;">Delete</a>',
-            change_url,
-            delete_url,
-        )
-
-    action_buttons.short_description = _("Actions")
-    action_buttons.allow_tags = True
-
-# =========== Schema Admin =============
-class SchemaAdmin(admin.ModelAdmin):
-    list_display = (
-        "type",
-        "name",
-        "url",
-        "created_at",
-        "updated_at",
-        "action_buttons",
-    )
-    list_display_links = ("name",)
-
-    list_filter = ("type", "created_at", "updated_at")
-
-    search_fields = (
-        "type",
-        "name",
-        "url",
-        "email",
-        "phone_number",
-    )
-
-    list_per_page = 25
-
-    readonly_fields = ("created_at", "updated_at")
-
-    fieldsets = (
-        (_("Basic Info"), {
-            "fields": (
-                "context",
-                "type",
-                "name",
-                "url",
-                "description",
-            )
-        }),
-        (_("Contact Info"), {
-            "classes": ("collapse",),
-            "fields": (
-                "contact_type",
-                "email",
-                "phone_number",
-                "address",
-                "logo",
-            )
-        }),
-        (_("Social Profiles (sameAs)"), {
-            "classes": ("collapse",),
-            "fields": (
-                "same_as_facebook",
-                "same_as_instagram",
-                "same_as_linkedin",
             )
         }),
         (_("System Info"), {
@@ -312,6 +239,17 @@ class SecurityFirmAdmin(admin.ModelAdmin):
         )
     delete_link.short_description = "Delete"
 
+
+@admin.register(HomePageSchema)
+class HomePageSchemaAdmin(admin.ModelAdmin):
+    inlines = [OrganizationInline]
+
+    list_display = ("name", "url")
+    fieldsets = (
+        ("Homepage Info", {
+            "fields": ("name", "url", "description")
+        }),
+    )
 admin.site.register(Banner)
 admin.site.register(PaymnetInfo)
 admin.site.register(SecurityFirm, SecurityFirmAdmin)
@@ -324,5 +262,4 @@ admin.site.register(Review)
 admin.site.register(ExperienceEic)
 admin.site.register(ExperienceEicItem)
 admin.site.register(GloballyAccredited)
-admin.site.register(Schema, SchemaAdmin)
 admin.site.register(SeoTag, SeoTagAdmin)

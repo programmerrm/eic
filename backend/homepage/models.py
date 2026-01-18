@@ -13,7 +13,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # CREATE MODELS HERE.
 
-# ==================== BLOG PAGE SEO TAGS ====================
+# ==================== HOME PAGE SEO TAGS ====================
 class SeoTag(models.Model):
     title = models.CharField(
         null=True,
@@ -106,131 +106,103 @@ class SeoTag(models.Model):
     def __str__(self):
         return self.title or "SEO Infomation added"
 
-# =========== BLOG PAGE SCHEMA ================
-class Schema(models.Model):
-    context = models.CharField(
-        max_length=280,
-        default="https://schema.org",
-        verbose_name=_('Context'),
-        help_text=_('Always https://schema.org')
-    )
-    type = models.CharField(
-        max_length=50,
-        default="HomePage",
-        verbose_name=_('Type'),
-        help_text=_('@type for JSON-LD')
-    )
-    name = models.CharField(
-        null=True,
-        blank=True,
-        max_length=255,
-        verbose_name=_('Page Name'),
-        help_text=_('The name/title of the page.')
-    )
-    url = models.URLField(
-        null=True,
-        blank=True,
-        verbose_name=_('URL'),
-        help_text=_('Full URL of the page.')
-    )
-    description = models.TextField(
-        null=True,
-        blank=True,
-        verbose_name=_('Description'),
-        help_text=_('Page description for schema.org.')
-    )
-    contact_type = models.CharField(
-        max_length=280,
-        blank=True,
-        null=True,
-        verbose_name=_('Contact Type'),
-        help_text=_('contactType for schema.org, e.g., Customer Support.')
-    )
-    email = models.EmailField(
-        max_length=280,
-        blank=True,
-        null=True,
-        verbose_name=_('Email'),
-        help_text=_('Contact email address.')
-    )
-    phone_number = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True,
-        verbose_name=_('Phone Number'),
-        help_text=_('Contact phone number.')
-    )
-    logo = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name=_('Logo URL'),
-        help_text=_('Logo URL for schema.org (recommended).')
-    )
-    address = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name=_('Address'),
-        help_text=_('Physical address for local business schema.')
-    )
-    same_as_facebook = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name=_('Facebook Profile'),
-        help_text=_('URL to Facebook profile or page.')
-    )
-    same_as_instagram = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name=_('Instagram Profile'),
-        help_text=_('URL to Instagram profile.')
-    )
-    same_as_linkedin = models.URLField(
-        blank=True,
-        null=True,
-        verbose_name=_('LinkedIn Profile'),
-        help_text=_('URL to LinkedIn profile.')
-    )
+class Organization(models.Model):
+    name = models.CharField(max_length=255)
+    url = models.URLField()
+    logo = models.URLField(blank=True, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=50, blank=True, null=True)
 
-    class Meta:
-        verbose_name = _('SEO Schema')
-        verbose_name_plural = _('SEO Schema')
+    facebook = models.URLField(blank=True, null=True)
+    instagram = models.URLField(blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
 
-    def __str__(self):
-        return f"{self.type} Schema"
-
-    def json_ld(self):
+    def schema(self):
         data = {
-            "@context": self.context,
-            "@type": self.type,
+            "@type": "Organization",
+            "@id": f"{self.url}#organization",
             "name": self.name,
-            "url": self.url,
-            "description": self.description
+            "url": self.url
         }
-        if self.contact_type:
-            data["contactType"] = self.contact_type
+
+        if self.logo:
+            data["logo"] = {
+                "@type": "ImageObject",
+                "url": self.logo
+            }
+
         if self.email:
             data["email"] = self.email
+
         if self.phone_number:
             data["telephone"] = self.phone_number
-        if self.logo:
-            data["logo"] = self.logo
-        if self.address:
-            data["address"] = self.address
 
         same_as = []
-        if self.same_as_facebook:
-            same_as.append(self.same_as_facebook)
-        if self.same_as_instagram:
-            same_as.append(self.same_as_instagram)
-        if self.same_as_linkedin:
-            same_as.append(self.same_as_linkedin)
+        for link in [self.facebook, self.instagram, self.linkedin]:
+            if link:
+                same_as.append(link)
         if same_as:
             data["sameAs"] = same_as
 
-        return json.dumps(data, ensure_ascii=False)
+        return data
+
+    def __str__(self):
+        return self.name
+
+class HomePageSchema(models.Model):
+    name = models.CharField(max_length=255)
+    url = models.URLField()
+    description = models.TextField(blank=True, null=True)
+
+    organization = models.OneToOneField(
+        Organization,
+        on_delete=models.CASCADE,
+        related_name="homepage_schema"
+    )
+
+    def json_ld(self):
+        graph = []
+
+        # Organization
+        graph.append(self.organization.schema())
+
+        # WebSite
+        graph.append({
+            "@type": "WebSite",
+            "@id": f"{self.url}#website",
+            "url": self.url,
+            "name": self.name,
+            "publisher": {
+                "@id": f"{self.url}#organization"
+            }
+        })
+
+        # WebPage (Homepage)
+        graph.append({
+            "@type": "WebPage",
+            "@id": f"{self.url}#homepage",
+            "url": self.url,
+            "name": self.name,
+            "description": self.description,
+            "isPartOf": {
+                "@id": f"{self.url}#website"
+            },
+            "about": {
+                "@id": f"{self.url}#organization"
+            }
+        })
+
+        return json.dumps({
+            "@context": "https://schema.org",
+            "@graph": graph
+        }, ensure_ascii=False)
+
+    def __str__(self):
+        return "Homepage Schema"
+
+
 
 # ================= BANNER ====================
 class Banner(models.Model):

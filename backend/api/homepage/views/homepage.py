@@ -38,7 +38,7 @@ from homepage.models import (
     ExperienceEicItem,
     GloballyAccredited,
     SeoTag,
-    Schema,
+    HomePageSchema,
 )
 
 # ============= SEO TAGS View =================
@@ -102,7 +102,7 @@ class SeoTagView(viewsets.ModelViewSet):
 
 # ============= SCHEMA View =================
 class SchemaView(viewsets.ModelViewSet):
-    queryset = Schema.objects.all()
+    queryset = HomePageSchema.objects.all()
     serializer_class = SchemaSerializer
 
     CACHE_KEY = "home_schema_first"
@@ -121,7 +121,7 @@ class SchemaView(viewsets.ModelViewSet):
                     'message': 'Homepage schema data fetching successfully.',
                     'data': cached_data,
                 }, status=status.HTTP_200_OK)
-            obj = Schema.objects.first()
+            obj = HomePageSchema.objects.first()
             if not obj:
                 return Response({
                     'success': False,
@@ -144,20 +144,6 @@ class SchemaView(viewsets.ModelViewSet):
                 'message': 'Something went wrong.',
                 'error': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
 
 
 # =========== BANNER VIEW SET =============

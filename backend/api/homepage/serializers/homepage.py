@@ -17,9 +17,25 @@ from homepage.models import (
     ExperienceEic,
     ExperienceEicItem,
     GloballyAccredited,
-    Schema,
+    Organization,
+    HomePageSchema,
     SeoTag,
 )
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = ['__all__'] 
+
+class SchemaSerializer(serializers.ModelSerializer):
+    organization = OrganizationSerializer(read_only=True)
+    schema = serializers.SerializerMethodField()
+
+    class Meta:
+        model = HomePageSchema
+        fields = (
+            "schema",
+        )
 
 # =========== Seo Tag =================
 class SeoTagSerializer(serializers.ModelSerializer):
@@ -28,16 +44,6 @@ class SeoTagSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('created_at', 'updated_at')
 
-# =========== Schema =================
-class SchemaSerializer(serializers.ModelSerializer):
-    json_ld = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Schema
-        fields = '__all__'
-
-    def get_json_ld(self, obj):
-        return obj.json_ld()
 
 # ============ BANNER SERIALIZER ===============
 class BannerSerializer(serializers.ModelSerializer):
