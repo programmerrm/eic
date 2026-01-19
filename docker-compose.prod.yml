@@ -25,6 +25,7 @@ services:
     env_file:
       - ./backend/.env.prod
     volumes:
+      - ./backend:/app
       - ./backend/staticfiles:/backend/staticfiles
       - ./backend/media:/backend/media
     expose:
