@@ -2,10 +2,8 @@ User-agent: *
 Allow: /
 
 Disallow: /admin/
-Disallow: /dashboard/
 Disallow: /api/
-Disallow: /_next/
-Disallow: /private/
 
-Sitemap: https://eic.com.bd/services/sitemap.xml
-Host: eic.com.bd
+Host: https://eic.com.bd
+
+Sitemap: https://eic.com.bd/sitemap.xml
