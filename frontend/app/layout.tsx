@@ -13,6 +13,7 @@ import Footer from "@/components/footer/footer";
 import ScrollTopBottom from "@/components/scroll/scrollTopBottom";
 import { getFetchData } from "@/utils/getFetchData";
 import Head from "next/head";
+export const dynamic = 'force-dynamic';
 
 const fetchSeoTag = async () => {
   const res = await getFetchData('/homepage/seo-tag/');
