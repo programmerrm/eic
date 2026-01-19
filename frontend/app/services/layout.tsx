@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Eic Services Page",
-    description: "Create your Services page",
+    description: "Create eic Services page",
     alternates: {
         canonical: "https://eic.com.bd/services",
     },

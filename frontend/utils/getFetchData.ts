@@ -11,9 +11,9 @@ export const getFetchData = async (
 ) => {
     try {
         const fetchOptions: RequestInit & { next?: NextFetchOptions } = {
-            ...options,
             next: {
-                cache: options.next?.cache ?? "no-store",
+                cache: "no-store"
+                // cache: options.next?.cache ?? "no-store",
                 // tags: options.next?.tags,
             },
         };
