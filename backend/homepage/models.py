@@ -208,9 +208,6 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
-class Rasel(models.Model):
-    name = models.CharField(max_length=280, default='Rasel Mahmud')
-
 # ================= BANNER ====================
 class Banner(models.Model):
     image = models.FileField(
