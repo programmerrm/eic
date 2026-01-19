@@ -9,7 +9,6 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from services.models import (
     SeoTag,
-    Schema,
     ServicePageTopBar, 
     Service, 
     Categories, 
@@ -27,159 +26,25 @@ from services.models import (
     ServicePaymnet, 
     ServiceWhyChooseUsTitle, 
     ServiceWhyChooseUsItem,
+    ServicePageSchema,
+    Organization,
 )
 
-# ========== SEO TAG TOP BAR ADMIN ==========
-class SeoTagAdmin(admin.ModelAdmin):
-    list_display = (
-        "title",
-        "og_type",
-        "created_at",
-        "updated_at",
-        "action_buttons",
-    )
-    list_display_links = ("title",)
-    list_filter = ("og_type", "created_at", "updated_at")
-    search_fields = (
-        "title",
-        "description",
-        "keywords",
-        "og_title",
-        "twitter_title",
-    )
-    list_per_page = 25
-    readonly_fields = ("created_at", "updated_at")
+class OrganizationInline(admin.StackedInline):
+    model = Organization
+    extra = 0
+    max_num = 1
 
+@admin.register(ServicePageSchema)
+class ServicePageSchemaAdmin(admin.ModelAdmin):
+    inlines = [OrganizationInline]
+
+    list_display = ("name", "url")
     fieldsets = (
-        (_("Basic SEO"), {
-            "fields": (
-                "title",
-                "description",
-                "keywords",
-            )
-        }),
-        (_("Open Graph (Facebook / LinkedIn)"), {
-            "classes": ("collapse",),
-            "fields": (
-                "og_title",
-                "og_description",
-                "og_image",
-                "og_image_file",
-                "og_url",
-                "og_type",
-            )
-        }),
-        (_("Twitter Card"), {
-            "classes": ("collapse",),
-            "fields": (
-                "twitter_title",
-                "twitter_description",
-                "twitter_image",
-            )
-        }),
-        (_("System Info"), {
-            "classes": ("collapse",),
-            "fields": ("created_at", "updated_at"),
+        ("ServicePage Info", {
+            "fields": ("name", "url", "description")
         }),
     )
-
-    def action_buttons(self, obj):
-        app_label = obj._meta.app_label
-        model_name = obj._meta.model_name
-
-        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
-        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
-
-        return format_html(
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#4caf50; color:white; border-radius:4px; text-decoration:none; margin-right:4px;">Edit</a>'
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#f44336; color:white; border-radius:4px; text-decoration:none;">Delete</a>',
-            change_url,
-            delete_url,
-        )
-
-    action_buttons.short_description = _("Actions")
-    action_buttons.allow_tags = True
-
-# =========== Schema Admin =============
-class SchemaAdmin(admin.ModelAdmin):
-    list_display = (
-        "type",
-        "name",
-        "url",
-        "created_at",
-        "updated_at",
-        "action_buttons",
-    )
-    list_display_links = ("name",)
-
-    list_filter = ("type", "created_at", "updated_at")
-
-    search_fields = (
-        "type",
-        "name",
-        "url",
-        "email",
-        "phone_number",
-    )
-
-    list_per_page = 25
-
-    readonly_fields = ("created_at", "updated_at")
-
-    fieldsets = (
-        (_("Basic Info"), {
-            "fields": (
-                "context",
-                "type",
-                "name",
-                "url",
-                "description",
-            )
-        }),
-        (_("Contact Info"), {
-            "classes": ("collapse",),
-            "fields": (
-                "contact_type",
-                "email",
-                "phone_number",
-                "address",
-                "logo",
-            )
-        }),
-        (_("Social Profiles (sameAs)"), {
-            "classes": ("collapse",),
-            "fields": (
-                "same_as_facebook",
-                "same_as_instagram",
-                "same_as_linkedin",
-            )
-        }),
-        (_("System Info"), {
-            "classes": ("collapse",),
-            "fields": ("created_at", "updated_at"),
-        }),
-    )
-
-    def action_buttons(self, obj):
-        app_label = obj._meta.app_label
-        model_name = obj._meta.model_name
-
-        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
-        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
-
-        return format_html(
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#4caf50; color:white; border-radius:4px; text-decoration:none; margin-right:4px;">Edit</a>'
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#f44336; color:white; border-radius:4px; text-decoration:none;">Delete</a>',
-            change_url,
-            delete_url,
-        )
-
-    action_buttons.short_description = _("Actions")
-    action_buttons.allow_tags = True
 
 class ServicePageTopBarAdmin(admin.ModelAdmin):
     list_display = ["title", "description", "action_buttons"]
@@ -713,10 +578,9 @@ class ServiceWhyChooseUsItemAdmin(admin.ModelAdmin):
     action_buttons.short_description = "Actions"
 
 # REGISTER MODELS HERE.
-admin.site.register(SeoTag, SeoTagAdmin)
-admin.site.register(Schema, SchemaAdmin)
+admin.site.register(SeoTag)
 admin.site.register(ServicePageTopBar, ServicePageTopBarAdmin)
-admin.site.register(Service, ServiceAdmin)
+admin.site.register(Service)
 admin.site.register(Categories, CategoriesAdmin)
 admin.site.register(Faq, FaqAdmin)
 admin.site.register(FaqItem, FaqItemAdmin)

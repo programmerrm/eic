@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.cache import cache
 from services.pagination import CumulativePagination
-from services.models import Service, ServicePageTopBar, Schema, SeoTag
+from services.models import Service, ServicePageTopBar, ServicePageSchema, SeoTag
 from api.services.serializers.services import (
     ServicePageTopBarSerializer,
     ServiceSerializer,
@@ -64,7 +64,7 @@ class SeoTagView(viewsets.ModelViewSet):
 
 # ============= Contact SCHEMA View =================
 class SchemaView(viewsets.ModelViewSet):
-    queryset = Schema.objects.all()
+    queryset = ServicePageSchema.objects.all()
     serializer_class = SchemaSerializer
 
     CACHE_KEY = SERVICE_SCHEMA_CACHE_KEY
@@ -83,7 +83,7 @@ class SchemaView(viewsets.ModelViewSet):
                     'message': 'Service schema data fetching successfully.',
                     'data': cached_data,
                 }, status=status.HTTP_200_OK)
-            obj = Schema.objects.first()
+            obj = ServicePageSchema.objects.first()
             if not obj:
                 return Response({
                     'success': False,

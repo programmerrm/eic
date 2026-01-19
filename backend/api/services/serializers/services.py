@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from services.models import ServicePageTopBar, Categories, Service, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem, SeoTag, Schema, ComplianceTitle, ComplianceItemList, ComplianceItem
+from services.models import ServicePageTopBar, Categories, Service, Faq, FaqItem, ServiceItemMain, ServiceItem, ServicesIncludeTopTitle, ServicesIncludeTopItem, ServicesIncludeBottomTitle, ServicesIncludeBottomItem, ServicePaymnet, ServiceWhyChooseUsTitle, ServiceWhyChooseUsItem, SeoTag, ServicePageSchema, Organization, ComplianceTitle, ComplianceItemList, ComplianceItem
 
 # =========== Seo Tag =================
 class SeoTagSerializer(serializers.ModelSerializer):
@@ -9,14 +9,27 @@ class SeoTagSerializer(serializers.ModelSerializer):
         read_only_fields = ('created_at', 'updated_at')
 
 # =========== Schema =================
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = '__all__' 
+
 class SchemaSerializer(serializers.ModelSerializer):
-    json_ld = serializers.SerializerMethodField()
+    organization = OrganizationSerializer(read_only=True)
+    schema = serializers.SerializerMethodField()
 
     class Meta:
-        model = Schema
-        fields = '__all__'
+        model = ServicePageSchema
+        fields = (
+            "id",
+            "name",
+            "url",
+            "description",
+            "organization",
+            "schema",
+        )
 
-    def get_json_ld(self, obj):
+    def get_schema(self, obj):
         return obj.json_ld()
     
 class ServicePageTopBarSerializer(serializers.ModelSerializer):
@@ -102,7 +115,6 @@ class ComplianceItemListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ComplianceItemList
         fields = '__all__'
-
 
 class ComplianceItemSerializer(serializers.ModelSerializer):
     lists = ComplianceItemListSerializer(many=True, read_only=True)

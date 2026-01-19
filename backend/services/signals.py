@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.core.cache import cache
 from django.dispatch import receiver
-from services.models import Service, SeoTag, Schema, ServicePageTopBar
+from services.models import Service, SeoTag, ServicePageSchema, ServicePageTopBar
 from utils.trigger_nextjs_revalidate import trigger_nextjs_revalidate
 from utils.slug import GENERATE_SLUG
 from services.cache import SERVICE_SEO_TAGS_CACHE_KEY, SERVICE_SCHEMA_CACHE_KEY, SERVICE_PAGE_TOP_BAR_CACHE_KEY, ALL_SERVICES_CACHE_KEY
@@ -10,7 +10,7 @@ from services.cache import SERVICE_SEO_TAGS_CACHE_KEY, SERVICE_SCHEMA_CACHE_KEY,
 def clear_seo_tag_cache(sender, **kwargs):
     cache.delete(SERVICE_SEO_TAGS_CACHE_KEY)
 
-@receiver([post_save, post_delete], sender=Schema)
+@receiver([post_save, post_delete], sender=ServicePageSchema)
 def clear_schema_cache(sender, **kwargs):
     cache.delete(SERVICE_SCHEMA_CACHE_KEY)
 
