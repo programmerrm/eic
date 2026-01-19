@@ -29,7 +29,6 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 class SchemaSerializer(serializers.ModelSerializer):
     organization = OrganizationSerializer(read_only=True)
-    schema = serializers.SerializerMethodField()
 
     class Meta:
         model = HomePageSchema
