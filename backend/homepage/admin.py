@@ -22,7 +22,8 @@ from homepage.models import (
     GloballyAccredited,
     SeoTag,
     Organization,
-    HomePageSchema
+    HomePageSchema,
+    Rasel,
 )
 from django import forms
 from django.db import models
@@ -250,6 +251,7 @@ class HomePageSchemaAdmin(admin.ModelAdmin):
             "fields": ("name", "url", "description")
         }),
     )
+admin.site.register(Rasel)
 admin.site.register(Banner)
 admin.site.register(PaymnetInfo)
 admin.site.register(SecurityFirm, SecurityFirmAdmin)
