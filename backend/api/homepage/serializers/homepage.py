@@ -25,16 +25,25 @@ from homepage.models import (
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
-        fields = ['__all__'] 
+        fields = '__all__' 
 
 class SchemaSerializer(serializers.ModelSerializer):
     organization = OrganizationSerializer(read_only=True)
+    schema = serializers.SerializerMethodField()
 
     class Meta:
         model = HomePageSchema
         fields = (
+            "id",
+            "name",
+            "url",
+            "description",
+            "organization",
             "schema",
         )
+
+    def get_schema(self, obj):
+        return obj.json_ld()
 
 # =========== Seo Tag =================
 class SeoTagSerializer(serializers.ModelSerializer):
