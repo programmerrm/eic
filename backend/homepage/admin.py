@@ -32,79 +32,6 @@ class OrganizationInline(admin.StackedInline):
     extra = 0
     max_num = 1
 
-# ========== SEO TAG TOP BAR ADMIN ==========
-class SeoTagAdmin(admin.ModelAdmin):
-    list_display = (
-        "title",
-        "og_type",
-        "created_at",
-        "updated_at",
-        "action_buttons",
-    )
-    list_display_links = ("title",)
-    list_filter = ("og_type", "created_at", "updated_at")
-    search_fields = (
-        "title",
-        "description",
-        "keywords",
-        "og_title",
-        "twitter_title",
-    )
-    list_per_page = 25
-    readonly_fields = ("created_at", "updated_at")
-
-    fieldsets = (
-        (_("Basic SEO"), {
-            "fields": (
-                "title",
-                "description",
-                "keywords",
-            )
-        }),
-        (_("Open Graph (Facebook / LinkedIn)"), {
-            "classes": ("collapse",),
-            "fields": (
-                "og_title",
-                "og_description",
-                "og_image",
-                "og_image_file",
-                "og_url",
-                "og_type",
-            )
-        }),
-        (_("Twitter Card"), {
-            "classes": ("collapse",),
-            "fields": (
-                "twitter_title",
-                "twitter_description",
-                "twitter_image",
-            )
-        }),
-        (_("System Info"), {
-            "classes": ("collapse",),
-            "fields": ("created_at", "updated_at"),
-        }),
-    )
-
-    def action_buttons(self, obj):
-        app_label = obj._meta.app_label
-        model_name = obj._meta.model_name
-
-        change_url = reverse(f"admin:{app_label}_{model_name}_change", args=[obj.pk])
-        delete_url = reverse(f"admin:{app_label}_{model_name}_delete", args=[obj.pk])
-
-        return format_html(
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#4caf50; color:white; border-radius:4px; text-decoration:none; margin-right:4px;">Edit</a>'
-            '<a href="{}" '
-            'style="padding:4px 8px; background:#f44336; color:white; border-radius:4px; text-decoration:none;">Delete</a>',
-            change_url,
-            delete_url,
-        )
-
-    action_buttons.short_description = _("Actions")
-    action_buttons.allow_tags = True
-
 class SecurityFirmAdmin(admin.ModelAdmin):
     list_display = (
         'styled_title',
@@ -263,4 +190,4 @@ admin.site.register(Review)
 admin.site.register(ExperienceEic)
 admin.site.register(ExperienceEicItem)
 admin.site.register(GloballyAccredited)
-admin.site.register(SeoTag, SeoTagAdmin)
+admin.site.register(SeoTag)

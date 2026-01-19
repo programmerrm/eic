@@ -10,10 +10,19 @@ import SecurityFirm from "@/components/security-firm/security-firm";
 import HomePageRelated from "@/components/services/homepageRelated";
 import HomePageSuccessStoriesRelated from "@/components/success-stories/HomePageSuccessStoriesRelated";
 import WhyChoose from "@/components/why-choose/why-choose";
+import { getFetchData } from "@/utils/getFetchData";
 
-export default function Page() {
+export default async function Page() {
+    const schemaData = await getFetchData('/homepage/schema/');
+    const jsonLd = JSON.parse(schemaData.data.schema);
     return (
-        <main>
+        <>
+            {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
             <Banner />
             <SecurityFirm />
             <Features />
@@ -25,6 +34,6 @@ export default function Page() {
             <HomePageSuccessStoriesRelated />
             <GloballyAccredited />
             <HomePageRelatedBlog />
-        </main>
+        </>
     );
 }

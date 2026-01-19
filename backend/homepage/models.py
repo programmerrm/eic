@@ -15,87 +15,37 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # ==================== HOME PAGE SEO TAGS ====================
 class SeoTag(models.Model):
-    title = models.CharField(
-        null=True,
-        blank=True,
-        max_length=380,
-        verbose_name=_('SEO Title'),
-        help_text=_('The title of the page for search engines and browser tab.')
-    )
-    description = models.TextField(
-        null=True,
-        blank=True,
-        verbose_name=_('Meta Description'),
-        help_text=_('A short description of the page for SEO purposes.')
-    )
-    keywords = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name=_('Meta Keywords'),
-        help_text=_('Comma separated keywords for SEO.')
-    )
-    author = models.CharField(
-        max_length=280,
-        verbose_name=_('Author Name'),
-    )
-    og_title = models.CharField(
-        max_length=255, 
-        blank=True, 
-        null=True,
-        verbose_name=_('OG Title'),
-        help_text=_('Title for Open Graph (Facebook, LinkedIn).')
-    )
-    og_description = models.TextField(
-        blank=True, 
-        null=True,
-        verbose_name=_('OG Description'),
-        help_text=_('Description for Open Graph (Facebook, LinkedIn).')
-    )
-    og_image = models.URLField(
-        blank=True, 
-        null=True,
-        verbose_name=_('OG Image URL'),
-        help_text=_('Image URL for Open Graph preview.')
-    )
-    og_image_file = models.ImageField(
-        upload_to="seo/",
-        validators=[VALIDATE_IMAGE_EXTENSION],
-        blank=True,
-        null=True,
-        verbose_name=_('OG Image File'),
-        help_text=_('Upload OG image instead of or in addition to URL.')
-    )
-    og_url = models.URLField(
-        blank=True, 
-        null=True,
-        verbose_name=_('OG URL'),
-        help_text=_('Canonical URL for Open Graph.')
-    )
-    og_type = models.CharField(
-        max_length=50, 
-        default="website",
-        verbose_name=_('OG Type'),
-        help_text=_('Type of Open Graph object. Default is "website".')
-    )
-    twitter_title = models.CharField(
-        max_length=255, 
-        blank=True, 
-        null=True,
-        verbose_name=_('Twitter Title'),
-        help_text=_('Title for Twitter Card.')
-    )
-    twitter_description = models.TextField(
-        blank=True, 
-        null=True,
-        verbose_name=_('Twitter Description'),
-        help_text=_('Description for Twitter Card.')
-    )
-    twitter_image = models.URLField(
-        blank=True, 
-        null=True,
-        verbose_name=_('Twitter Image URL'),
-        help_text=_('Image URL for Twitter Card preview.')
-    )
+    # Basic SEO
+    title = models.CharField(null=True, blank=True, max_length=380)
+    description = models.TextField(null=True, blank=True)
+    keywords = models.TextField(blank=True, null=True)
+    author = models.CharField(max_length=280)
+
+     # Open Graph
+    og_title = models.CharField(max_length=255, blank=True, null=True)
+    og_description = models.TextField(blank=True, null=True)
+    og_image = models.URLField(blank=True, null=True)
+    og_image_file = models.ImageField(upload_to="seo/", blank=True, null=True)
+    og_url = models.URLField(blank=True, null=True)
+    og_type = models.CharField(max_length=50, default="website")
+    og_locale = models.CharField(max_length=50, blank=True, null=True)
+    og_site_name = models.CharField(max_length=255, blank=True, null=True)
+
+    # Twitter Card
+    twitter_card = models.CharField(max_length=50, blank=True, null=True, default="summary_large_image")
+    twitter_site = models.CharField(max_length=50, blank=True, null=True)
+    twitter_creator = models.CharField(max_length=50, blank=True, null=True)
+    twitter_title = models.CharField(max_length=255, blank=True, null=True)
+    twitter_description = models.TextField(blank=True, null=True)
+    twitter_image = models.URLField(blank=True, null=True)
+
+    # Extra SEO (you can add more if needed)
+    canonical_url = models.URLField(blank=True, null=True)
+    category = models.CharField(max_length=255, blank=True, null=True)
+    creator = models.CharField(max_length=255, blank=True, null=True)
+    published_time = models.DateTimeField(blank=True, null=True)
+    modified_time = models.DateTimeField(blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -104,7 +54,7 @@ class SeoTag(models.Model):
         verbose_name_plural = _('SEO Tag')
 
     def __str__(self):
-        return self.title or "SEO Infomation added"
+        return "SEO Tag Infomation added"
 
 class HomePageSchema(models.Model):
     name = models.CharField(max_length=255)
