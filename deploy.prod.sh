@@ -33,6 +33,12 @@ docker-compose -f docker-compose.prod.yml exec nginx nginx -t
 docker-compose -f docker-compose.prod.yml exec nginx nginx -s reload
 echo "Nginx restarted ✅"
 
+# ---------------- DATABASE MIGRATION ----------------
+echo "STEP 5 ::: DATABASE MIGRATION"
+docker-compose -f docker-compose.prod.yml exec -T backend python manage.py makemigrations --noinput
+docker-compose -f docker-compose.prod.yml exec -T backend python manage.py migrate --noinput
+echo "Backend database ready ✅"
+
 # ---------------- COLLECT STATIC ----------------
 echo "STEP 6 ::: COLLECT STATIC FILES"
 docker-compose -f docker-compose.prod.yml exec backend python manage.py collectstatic --noinput

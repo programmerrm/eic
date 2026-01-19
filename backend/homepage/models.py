@@ -106,60 +106,6 @@ class SeoTag(models.Model):
     def __str__(self):
         return self.title or "SEO Infomation added"
 
-class Organization(models.Model):
-    name = models.CharField(max_length=255)
-    url = models.URLField()
-    logo = models.URLField(blank=True, null=True)
-
-    email = models.EmailField(blank=True, null=True)
-    phone_number = models.CharField(max_length=50, blank=True, null=True)
-
-    facebook = models.URLField(blank=True, null=True)
-    instagram = models.URLField(blank=True, null=True)
-    linkedin = models.URLField(blank=True, null=True)
-    twitter = models.URLField(blank=True, null=True)
-
-    homepage_schema = models.OneToOneField(
-        "HomePageSchema",
-        on_delete=models.CASCADE,
-        related_name="organization",
-        null=True,
-        blank=True
-    )
-
-    def schema(self):
-        data = {
-            "@type": "Organization",
-            "@id": f"{self.url}#organization",
-            "name": self.name,
-            "url": self.url
-        }
-
-        if self.logo:
-            data["logo"] = {
-                "@type": "ImageObject",
-                "url": self.logo
-            }
-
-        if self.email:
-            data["email"] = self.email
-
-        if self.phone_number:
-            data["telephone"] = self.phone_number
-
-        same_as = []
-        for link in [self.facebook, self.instagram, self.linkedin]:
-            if link:
-                same_as.append(link)
-        if same_as:
-            data["sameAs"] = same_as
-
-        return data
-
-    def __str__(self):
-        return self.name
-
-
 class HomePageSchema(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField()
@@ -208,6 +154,59 @@ class HomePageSchema(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.url})"
+
+class Organization(models.Model):
+    name = models.CharField(max_length=255)
+    url = models.URLField()
+    logo = models.URLField(blank=True, null=True)
+
+    email = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=50, blank=True, null=True)
+
+    facebook = models.URLField(blank=True, null=True)
+    instagram = models.URLField(blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
+
+    homepage_schema = models.OneToOneField(
+        HomePageSchema,
+        on_delete=models.CASCADE,
+        related_name="organization",
+        null=True,
+        blank=True
+    )
+
+    def schema(self):
+        data = {
+            "@type": "Organization",
+            "@id": f"{self.url}#organization",
+            "name": self.name,
+            "url": self.url
+        }
+
+        if self.logo:
+            data["logo"] = {
+                "@type": "ImageObject",
+                "url": self.logo
+            }
+
+        if self.email:
+            data["email"] = self.email
+
+        if self.phone_number:
+            data["telephone"] = self.phone_number
+
+        same_as = []
+        for link in [self.facebook, self.instagram, self.linkedin]:
+            if link:
+                same_as.append(link)
+        if same_as:
+            data["sameAs"] = same_as
+
+        return data
+
+    def __str__(self):
+        return self.name
 
 # ================= BANNER ====================
 class Banner(models.Model):
