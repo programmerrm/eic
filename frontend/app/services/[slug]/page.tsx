@@ -19,10 +19,10 @@ type SingleServiceProps = {
 export async function generateMetadata({
   params,
 }: SingleServiceProps): Promise<Metadata> {
-  const response = await getFetchData(
-    `/services/single/${params.slug}`
-  );
 
+  const { slug } = await params;
+
+  const response = await getFetchData(`/services/single/${slug}`);
   const data = response?.data || {};
 
   return {
