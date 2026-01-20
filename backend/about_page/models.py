@@ -114,7 +114,7 @@ class Organization(models.Model):
     twitter = models.URLField(blank=True, null=True)
 
     homepage_schema = models.OneToOneField(
-        HomePageSchema,
+        AboutPageSchema,
         on_delete=models.CASCADE,
         related_name="organization",
         null=True,
