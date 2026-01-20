@@ -14,7 +14,7 @@ class SeoTag(models.Model):
     title = models.CharField(null=True, blank=True, max_length=380)
     description = models.TextField(null=True, blank=True)
     keywords = models.TextField(blank=True, null=True)
-    author = models.CharField(max_length=280)
+    author = models.CharField(max_length=280, null=True, blank=True,)
 
      # Open Graph
     og_title = models.CharField(max_length=255, blank=True, null=True)
@@ -52,8 +52,8 @@ class SeoTag(models.Model):
         return "SEO Tag Infomation added"
 
 class AboutPageSchema(models.Model):
-    name = models.CharField(max_length=255)
-    url = models.URLField()
+    name = models.CharField(max_length=255, null=True, blank=True,)
+    url = models.URLField(null=True, blank=True,)
     description = models.TextField(blank=True, null=True)
 
     def json_ld(self):
@@ -101,8 +101,8 @@ class AboutPageSchema(models.Model):
         return f"{self.name} ({self.url})"
 
 class Organization(models.Model):
-    name = models.CharField(max_length=255)
-    url = models.URLField()
+    name = models.CharField(max_length=255, null=True, blank=True,)
+    url = models.URLField(null=True, blank=True,)
     logo = models.URLField(blank=True, null=True)
 
     email = models.EmailField(blank=True, null=True)
