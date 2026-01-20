@@ -108,7 +108,7 @@ class SchemaView(viewsets.ModelViewSet):
                     'message': 'Aboutpage schema data fetching successfully.',
                     'data': cached_data,
                 }, status=status.HTTP_200_OK)
-            obj = A.objects.first()
+            obj = AboutPageSchema.objects.first()
             if not obj:
                 return Response({
                     'success': False,

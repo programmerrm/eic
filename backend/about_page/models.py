@@ -113,7 +113,7 @@ class Organization(models.Model):
     linkedin = models.URLField(blank=True, null=True)
     twitter = models.URLField(blank=True, null=True)
 
-    homepage_schema = models.OneToOneField(
+    aboutpage_schema = models.OneToOneField(
         AboutPageSchema,
         on_delete=models.CASCADE,
         related_name="organization",
