@@ -12,8 +12,13 @@ from app.settings.unfold import UNFOLD
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # LOAD ENVIRON
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env.prod')
+except Exception as e:
+    print(f'Cannot load dotenv variables. Error: {str(e)}')
+
 env = environ.Env()
-environ.Env.read_env(BASE_DIR / '.env.prod')
 
 # INSTALLED APPS
 INSTALLED_APPS = [
