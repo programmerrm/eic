@@ -14,7 +14,7 @@ If ENV is not set correctly, an exception is raised.
 ###################################################
 import os
 
-app_env = os.environ.get('ENV', 'dev')
+app_env = os.environ.get('ENV', 'prod')
 
 if app_env == 'dev':
     from app.settings.dev import *
