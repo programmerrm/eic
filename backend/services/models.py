@@ -5,6 +5,7 @@ SERVICES MODELS HERE.
 ####################################################
 import json
 from django.db import models
+from django.utils.html import strip_tags
 from django.utils.text import slugify
 from django.core.validators import MinLengthValidator
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -382,6 +383,11 @@ class ServiceItem(models.Model):
         help_text=_('Enter your service description...'),
     )
 
+    def save(self, *args, **kwargs):
+        if self.description:
+            self.description = strip_tags(self.description)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Service item title : {self.title[:50]}"
 
@@ -410,6 +416,11 @@ class ServicesIncludeTopTitle(models.Model):
     class Meta:
         verbose_name = _('Services Include Bottom Title')
         verbose_name_plural = _('Services Include Bottom Title')
+
+    def save(self, *args, **kwargs):
+        if self.description:
+            self.description = strip_tags(self.description)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"ServicesIncludeTopTitle"
@@ -446,6 +457,11 @@ class ServicesIncludeTopItem(models.Model):
     class Meta:
         verbose_name = _('Services Include Bottom Item')
         verbose_name_plural = _('Services Include Bottom Item')
+
+    def save(self, *args, **kwargs):
+        if self.description:
+            self.description = strip_tags(self.description)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"ServicesIncludeTopItem"
@@ -651,6 +667,11 @@ class ServicePaymnet(models.Model):
         verbose_name=_('Button URL'),
     )
 
+    def save(self, *args, **kwargs):
+        if self.description:
+            self.description = strip_tags(self.description)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title_span[:50] or "paymnet"
 
@@ -680,6 +701,11 @@ class ServicesIncludeBottomTitle(models.Model):
         verbose_name = _('Services Include Top Title')
         verbose_name_plural = _('Services Include Top Title')
 
+    def save(self, *args, **kwargs):
+        if self.description:
+            self.description = strip_tags(self.description)
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"ServicesIncludeBottomTitle"
 
@@ -708,6 +734,11 @@ class ServicesIncludeBottomItem(models.Model):
     class Meta:
         verbose_name = _('Services Include Top Item')
         verbose_name_plural = _('Services Include Top Item')
+
+    def save(self, *args, **kwargs):
+        if self.description:
+            self.description = strip_tags(self.description)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"ServicesIncludeBottomItem"
@@ -762,6 +793,11 @@ class FaqItem(models.Model):
         verbose_name=_('Answer'),
         help_text=_('Enter your FAQ answer...')
     )
+
+    def save(self, *args, **kwargs):
+        if self.answer:
+            self.answer = strip_tags(self.answer)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.question[:50]

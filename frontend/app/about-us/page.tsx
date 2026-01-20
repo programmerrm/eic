@@ -14,9 +14,17 @@ export default async function Page() {
     const digitalSecuritySolutionItemData = await getFetchData('/about/digital-security-solution-item/');
     const secureFutureTopBarData = await getFetchData('/about/secure-future-top-bar/')
     const secureFutureItemData = await getFetchData('/about/secure-future-item/')
+    const schemaData = await getFetchData('/about/schema/');
+    const jsonLd = JSON.parse(schemaData.data.schema);
 
     return (
-        <main>
+        <>
+            {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
             <SectionBanner topBarData={topBarFetchData?.data} />
             <AboutSecurity />
             <HappyJourney />
@@ -83,6 +91,6 @@ export default async function Page() {
             <Core />
 
             <StayCompliant />
-        </main>
+        </>
     );
 }

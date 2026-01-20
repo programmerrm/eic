@@ -1,14 +1,4 @@
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "Eic Services Page",
-    description: "Create eic Services page",
-    alternates: {
-        canonical: "https://eic.com.bd/services/",
-    },
-};
-
-export default function RootLayout({
+export default function SingleServiceLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

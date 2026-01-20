@@ -9,17 +9,70 @@ import RelatedBGImg from "../../../public/images/related-image-bg.svg";
 import trustedForProven from "../../../public/images/trusted-for-proven.png";
 import FAQ from "@/components/FAQ/FAQ";
 import Description from "@/components/paymnet-info/description";
+import { Metadata } from "next";
+import { TextEditor } from "@/components/text-editor/textEditor";
 
 type SingleServiceProps = {
     params: { slug: string };
 };
+
+export async function generateMetadata({
+  params,
+}: SingleServiceProps): Promise<Metadata> {
+  const response = await getFetchData(
+    `/services/single/${params.slug}`
+  );
+
+  const data = response?.data || {};
+
+  return {
+    title: data?.seo_title || data?.title,
+    description: data?.seo_description || data?.description,
+    keywords: data?.seo_keywords || "cybersecurity, eic",
+    authors: data?.seo_author ? [{ name: data.seo_author }] : [],
+    category: data?.category || undefined,
+
+    // Canonical
+    alternates: {
+      canonical: data?.canonical_url || `https://eic.com.bd/services/${data?.slug}`,
+    },
+
+    // Open Graph
+    openGraph: {
+      title: data?.og_title || data?.title,
+      description: data?.og_description || data?.description,
+      url: data?.og_url || data?.canonical_url,
+      type: data?.og_type || "website",
+      siteName: data?.og_site_name || "EIC",
+      locale: data?.og_locale || "en_US",
+      images: data?.og_image ? [{ url: data.og_image }] : [],
+    },
+
+    // Twitter
+    twitter: {
+      card: data?.twitter_card || "summary_large_image",
+      title: data?.twitter_title || data?.title,
+      description: data?.twitter_description || data?.description,
+      images: data?.twitter_image ? [data.twitter_image] : [],
+      site: data?.twitter_site || "",
+      creator: data?.twitter_creator || "",
+    },
+
+    metadataBase: new URL(data?.canonical_url || `https://eic.com.bd/services/${data?.slug}`),
+    other: {
+      "creator": data?.creator || undefined,
+      "article:published_time": data?.published_time || undefined,
+      "article:modified_time": data?.modified_time || undefined,
+    },
+  };
+}
+
 
 export default async function SingleService({ params }: SingleServiceProps) {
     const { slug } = await params;
 
     const singleService = await getFetchData(`/services/single/${slug}`);
     const singleServiceData = singleService?.data || {};
-
     const topBar = {
         title: singleServiceData?.title || "",
         description: singleServiceData?.description || "",
@@ -64,9 +117,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                 <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
                                     {singleServiceData?.include_bottom_title?.title}
                                 </h2>
-                                <p className="text-white text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">
-                                    {singleServiceData?.include_bottom_title?.description}
-                                </p>
+                                <TextEditor content={singleServiceData?.include_bottom_title?.description} style={"text-white text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk"} />
                             </div>
 
                             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-8 2xl:gap-x-[125px] gap-y-5 md:gap-y-10 lg:gap-y-14">
@@ -78,7 +129,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                         <div className="content">
                                             <h4 className="text-white">{item?.title}</h4>
                                             <div className="h-0.5 w-full bg-white/30 mt-4"></div>
-                                            <p className="text-white text-sm sm:text-base mt-4">{item?.description}</p>
+                                            <TextEditor content={item?.description} style={"text-white text-sm sm:text-base mt-4"} />
                                         </div>
                                     </div>
                                 ))}
@@ -281,9 +332,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                     <h2 className="text-white max-w-[602px] mb-4 md:mb-6">
                                         {singleServiceData?.include_top_title?.title}
                                     </h2>
-                                    <p className="text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk">
-                                        {singleServiceData?.include_top_title?.description}
-                                    </p>
+                                    <TextEditor content={singleServiceData?.include_top_title?.description} style={"text-base sm:text-lg md:text-2xl md:leading-8 font-normal font-spacegrotesk"} />
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full h-full gap-5">
                                     {singleServiceData?.include_top_items?.map((item: any) => (
@@ -293,7 +342,7 @@ export default async function SingleService({ params }: SingleServiceProps) {
                                             </div>
                                             <h4 className="text-white mt-6 lg:min-h-[100px]">{item.title}</h4>
                                             <div className="h-0.5 w-full lg:max-w-full bg-white/30 mt-4"></div>
-                                            <p className="text-sm sm:text-base mt-4">{item.description}</p>
+                                            <TextEditor content={item.description} styel={"text-sm sm:text-base mt-4"} />
                                         </div>
                                     ))}
                                 </div>

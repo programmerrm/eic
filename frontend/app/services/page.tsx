@@ -7,9 +7,17 @@ import { getFetchData } from "@/utils/getFetchData";
 
 export default async function Page() {
     const topBarFetchData = await getFetchData('/services/top-bar/');
+    const schemaData = await getFetchData('/services/schema/');
+    const jsonLd = JSON.parse(schemaData.data.schema);
 
     return (
         <>
+        {jsonLd && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
             <SectionBanner topBarData={topBarFetchData?.data} />
             <Services />
             <Features />

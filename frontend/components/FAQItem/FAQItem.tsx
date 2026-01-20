@@ -4,6 +4,7 @@ import Image from "next/image";
 import Plus from "../../public/images/+.svg";
 import Minus from "../../public/images/minus.svg";
 import { useEffect, useRef, useState } from "react";
+import { TextEditor } from "../text-editor/textEditor";
 
 type FAQItemProps = {
     question: string;
@@ -52,9 +53,7 @@ export default function FAQItem({ question, answer, isActive, onClick }: FAQItem
                     }`}
                 style={{ height }}
             >
-                <p className="text-sm sm:text-base w-full">
-                    {answer}
-                </p>
+                <TextEditor content={answer} style={"text-sm sm:text-base w-full"} />
             </div>
         </div>
     );
