@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'success_stories',
     'privacy_policy',
     'terms_conditions',
+    'pages',
 ]
 
 # MIDDLEWARE

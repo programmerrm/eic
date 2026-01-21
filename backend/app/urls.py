@@ -14,6 +14,7 @@ from helpers.api_base import BASE_API
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home_page'),
+    path(f"{BASE_API}/pages/", include('api.pages.urls')),
     path(f"{BASE_API}/homepage/", include('api.homepage.urls')),
     path(f"{BASE_API}/about/", include('api.about_page.urls')),
     path(f"{BASE_API}/configuration/", include('api.configuration.urls')),
