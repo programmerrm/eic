@@ -64,7 +64,7 @@ class SecureFutureItem(models.Model):
     )
     alt = models.CharField(
         max_length=280,
-        name=True,
+        null=True,
         blank=True,
         verbose_name=_('Alt')
     )
