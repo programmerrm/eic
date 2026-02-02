@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'unfold',
     'ckeditor',
     'ckeditor_uploader',
-    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
