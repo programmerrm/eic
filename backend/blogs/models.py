@@ -59,7 +59,7 @@ class Blog(models.Model):
         verbose_name=_('Blog Image Alt'),
     )
     title = models.CharField(
-        max_length=500,
+        max_length=280,
         unique=True,
         verbose_name=_('Title'),
         help_text=_('Enter your blog title...'),
@@ -95,7 +95,7 @@ class Blog(models.Model):
         blank=True,
     )
     author_bio = models.CharField(
-        max_length=500,
+        max_length=280,
         null=True,
         blank=True,
     )
