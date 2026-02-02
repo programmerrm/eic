@@ -82,6 +82,12 @@ class SocialLink(models.Model):
         verbose_name=_('Socail Icon'),
         help_text=_('Enter your website socail icon name...')
     )
+    alt=models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Alt'),
+    )
     url = models.URLField(
         null=True,
         blank=True,
@@ -105,14 +111,26 @@ class NotFoundContent(models.Model):
         upload_to='not-found/',
         validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Image'),
+        null=True,
+        blank=True,
         help_text=_('Upload your website not found image...'),
+    )
+    alt=models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Alt'),
     )
     title = models.CharField(
         max_length=280,
+        null=True,
+        blank=True,
         verbose_name=_('Title'),
         help_text=_('Enter your website not found title...'),
     )
     description = models.TextField(
+        null=True,
+        blank=True,
         verbose_name=_('Description'),
         help_text=_('Enter your website not found description...')
     )
@@ -133,8 +151,16 @@ class StayCompliant(models.Model):
         null=True,
         blank=True,
     )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Alt'),
+    )
     title = models.CharField(
         max_length=280,
+        null=True,
+        blank=True,
         verbose_name=_('Title'),
     )
     description = models.TextField(
@@ -159,7 +185,7 @@ class StayCompliant(models.Model):
         verbose_name_plural = _('Stay Compliant')
 
     def __str__(self):
-        return self.title[:50]
+        return self.title[:50] or "Stay COmpliant"
 
 # ============== Compliance Title =================
 class ComplianceTitle(models.Model):
@@ -183,6 +209,8 @@ class ComplianceTitle(models.Model):
     )
     btn_name = models.CharField(
         max_length=280,
+        blank=True,
+        null=True,
         verbose_name=_('Button Name'),
     )
     btn_url = models.URLField(
@@ -196,7 +224,7 @@ class ComplianceTitle(models.Model):
         verbose_name_plural = _('Compliance Title')
 
     def __str__(self):
-        return self.title_span[:50]
+        return self.title_span[:50] or "Compliance Title"
 
 # ========== Compliance Item List ===========
 class ComplianceItemList(models.Model):
@@ -221,14 +249,23 @@ class ComplianceItem(models.Model):
         null=True,
         blank=True,
     )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Alt'),
+    )
     title = models.CharField(
         max_length=280,
+        null=True,
+        blank=True,
         verbose_name=_('Title'),
     )
-
     item_list = models.ManyToManyField(
         ComplianceItemList,
         related_name='items',
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -236,7 +273,7 @@ class ComplianceItem(models.Model):
         verbose_name_plural = _('Compliance Items')
 
     def __str__(self):
-        return self.title[:50]
+        return self.title[:50] or "Compliance Items"
 
 # =========== Subscribe =============
 class Subscribe(models.Model):

@@ -1,36 +1,5 @@
 from rest_framework import serializers
-from about_page.models import AboutTopBar, SecureFutureTopBar, SecureFutureItem, SecurityFirm, DigitalSecuritySolutionTopBar, DigitalSecuritySolutionItem, HappyJourneyTopBar, HappyJourneyItem, SeoTag, AboutPageSchema, Organization
-
-class OrganizationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Organization
-        fields = '__all__' 
-
-class SchemaSerializer(serializers.ModelSerializer):
-    organization = OrganizationSerializer(read_only=True)
-    schema = serializers.SerializerMethodField()
-
-    class Meta:
-        model = AboutPageSchema
-        fields = (
-            "id",
-            "name",
-            "url",
-            "description",
-            "organization",
-            "schema",
-        )
-
-    def get_schema(self, obj):
-        return obj.json_ld()
-
-# =========== Seo Tag =================
-class SeoTagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SeoTag
-        fields = '__all__'
-        read_only_fields = ('created_at', 'updated_at')
-
+from about_page.models import AboutTopBar, SecureFutureTopBar, SecureFutureItem, SecurityFirm, DigitalSecuritySolutionTopBar, DigitalSecuritySolutionItem, HappyJourneyTopBar, HappyJourneyItem
 
 class AboutTopBarSerializer(serializers.ModelSerializer):
     class Meta:

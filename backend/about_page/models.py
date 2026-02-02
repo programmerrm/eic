@@ -3,155 +3,9 @@
 ABOUT PAGE MODELS HERE.
 """
 ####################################################
-import json
 from django.db import models
 from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
 from django.utils.translation import gettext_lazy as _
-
-# ============= SEO TAGS =================
-class SeoTag(models.Model):
-    # Basic SEO
-    title = models.CharField(null=True, blank=True, max_length=380)
-    description = models.TextField(null=True, blank=True)
-    keywords = models.TextField(blank=True, null=True)
-    author = models.CharField(max_length=280, null=True, blank=True,)
-
-     # Open Graph
-    og_title = models.CharField(max_length=255, blank=True, null=True)
-    og_description = models.TextField(blank=True, null=True)
-    og_image = models.URLField(blank=True, null=True)
-    og_image_file = models.ImageField(upload_to="seo/", blank=True, null=True)
-    og_url = models.URLField(blank=True, null=True)
-    og_type = models.CharField(max_length=50, default="website")
-    og_locale = models.CharField(max_length=50, blank=True, null=True)
-    og_site_name = models.CharField(max_length=255, blank=True, null=True)
-
-    # Twitter Card
-    twitter_card = models.CharField(max_length=50, blank=True, null=True, default="summary_large_image")
-    twitter_site = models.CharField(max_length=50, blank=True, null=True)
-    twitter_creator = models.CharField(max_length=50, blank=True, null=True)
-    twitter_title = models.CharField(max_length=255, blank=True, null=True)
-    twitter_description = models.TextField(blank=True, null=True)
-    twitter_image = models.URLField(blank=True, null=True)
-
-    # Extra SEO (you can add more if needed)
-    canonical_url = models.URLField(blank=True, null=True)
-    category = models.CharField(max_length=255, blank=True, null=True)
-    creator = models.CharField(max_length=255, blank=True, null=True)
-    published_time = models.DateTimeField(blank=True, null=True)
-    modified_time = models.DateTimeField(blank=True, null=True)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = _('SEO Tag')
-        verbose_name_plural = _('SEO Tag')
-
-    def __str__(self):
-        return "SEO Tag Infomation added"
-
-class AboutPageSchema(models.Model):
-    name = models.CharField(max_length=255, null=True, blank=True,)
-    url = models.URLField(null=True, blank=True,)
-    description = models.TextField(blank=True, null=True)
-
-    def json_ld(self):
-        graph = []
-
-        # Organization
-        try:
-            org = self.organization
-            graph.append(org.schema())
-        except Organization.DoesNotExist:
-            pass
-
-        # WebSite
-        graph.append({
-            "@type": "WebSite",
-            "@id": f"{self.url}#website",
-            "url": self.url,
-            "name": self.name,
-            "publisher": {
-                "@id": f"{self.url}#organization"
-            }
-        })
-
-        # WebPage (Homepage)
-        graph.append({
-            "@type": "WebPage",
-            "@id": f"{self.url}#homepage",
-            "url": self.url,
-            "name": self.name,
-            "description": self.description,
-            "isPartOf": {
-                "@id": f"{self.url}#website"
-            },
-            "about": {
-                "@id": f"{self.url}#organization"
-            }
-        })
-
-        return json.dumps({
-            "@context": "https://schema.org",
-            "@graph": graph
-        }, ensure_ascii=False)
-
-    def __str__(self):
-        return f"{self.name} ({self.url})"
-
-class Organization(models.Model):
-    name = models.CharField(max_length=255, null=True, blank=True,)
-    url = models.URLField(null=True, blank=True,)
-    logo = models.URLField(blank=True, null=True)
-
-    email = models.EmailField(blank=True, null=True)
-    phone_number = models.CharField(max_length=50, blank=True, null=True)
-
-    facebook = models.URLField(blank=True, null=True)
-    instagram = models.URLField(blank=True, null=True)
-    linkedin = models.URLField(blank=True, null=True)
-    twitter = models.URLField(blank=True, null=True)
-
-    aboutpage_schema = models.OneToOneField(
-        AboutPageSchema,
-        on_delete=models.CASCADE,
-        related_name="organization",
-        null=True,
-        blank=True
-    )
-
-    def schema(self):
-        data = {
-            "@type": "Organization",
-            "@id": f"{self.url}#organization",
-            "name": self.name,
-            "url": self.url
-        }
-
-        if self.logo:
-            data["logo"] = {
-                "@type": "ImageObject",
-                "url": self.logo
-            }
-
-        if self.email:
-            data["email"] = self.email
-
-        if self.phone_number:
-            data["telephone"] = self.phone_number
-
-        same_as = []
-        for link in [self.facebook, self.instagram, self.linkedin]:
-            if link:
-                same_as.append(link)
-        if same_as:
-            data["sameAs"] = same_as
-
-        return data
-
-    def __str__(self):
-        return self.name
 
 # ========= ABOUT TOP BAR =================
 class AboutTopBar(models.Model):
@@ -197,16 +51,22 @@ class SecureFutureTopBar(models.Model):
 
 class SecureFutureItem(models.Model):
     title = models.CharField(
+        max_length=280,
         null=True,
         blank=True,
         verbose_name=_('Title'),
     )
     image = models.FileField(
         upload_to='secure-future/',
-        validators=[VALIDATE_IMAGE_EXTENSION],
         null=True,
         blank=True,
         verbose_name=_('Image'),
+    )
+    alt = models.CharField(
+        max_length=280,
+        name=True,
+        blank=True,
+        verbose_name=_('Alt')
     )
     description = models.TextField(
         null=True,
@@ -315,6 +175,12 @@ class SecurityFirm(models.Model):
         verbose_name=_('Security Firm BG'),
         help_text=_('Upload your security firm bg image...'),
     )
+    bg_image_alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('BG Image Alt'),
+    )
     main_img = models.FileField(
         null=True,
         blank=True,
@@ -322,6 +188,12 @@ class SecurityFirm(models.Model):
         validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Main Image'),
         help_text=_('Upload your security firm image...'),
+    )
+    main_image_alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Main Image Alt'),
     )
     title_span = models.CharField(
         max_length=280,

@@ -15,6 +15,21 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [logo, setLogo] = useState<any>(null);
     const [number, setNumber] = useState<any>(null);
+    const [pages, setPages] = useState<any[]>([]);
+
+    useEffect(() => {
+        async function fetchPages() {
+            const res = await getFetchData("/pages/list/");
+            setPages(res || []);
+        }
+        fetchPages();
+    }, []);
+
+    const getPathByName = (name: string, fallback: string) => {
+        const page = pages.find((p) => p.name === name);
+        return page?.slug ? `/${page.slug}` : fallback;
+    };
+
 
     useEffect(() => {
         async function fetchLogo() {
@@ -36,7 +51,10 @@ export default function Header() {
     }, []);
 
     const isActive = (route: string) =>
-        route === pathname ? "text-blue-dark!" : "text-black";
+        pathname === route || pathname.startsWith(route + "/")
+            ? "text-blue-dark!"
+            : "text-black";
+
 
     const handleLinkClick = () => setIsOpen(false);
 
@@ -75,19 +93,32 @@ export default function Header() {
                                 <Link href="/" className={isActive("/")} onClick={handleLinkClick}>Home</Link>
                             </li>
                             <li>
-                                <Link href="/about-us" className={isActive("/about-us")} onClick={handleLinkClick}>About Us</Link>
+                                <Link
+                                    href={getPathByName("About Us", "/about-us")}
+                                    className={isActive(getPathByName("About Us", "/about-us"))}
+                                    onClick={handleLinkClick}
+                                >About Us</Link>
                             </li>
                             <li>
-                                <Link href="/services" className={isActive("/services")} onClick={handleLinkClick}>Services</Link>
+                                <Link
+                                    href={getPathByName("Services", "/services")}
+                                    className={isActive(getPathByName("Services", "/services"))} onClick={handleLinkClick}>Services</Link>
                             </li>
                             <li>
-                                <Link href="/case-studies" className={isActive("/case-studies")} onClick={handleLinkClick}>Case Studies</Link>
+                                <Link
+                                    href={getPathByName("Case Studies", "/case-studies")}
+                                    className={isActive(getPathByName("Case Studies", "/case-studies"))}
+                                    onClick={handleLinkClick}>Case Studies</Link>
                             </li>
                             <li>
-                                <Link href="/blogs" className={isActive("/blogs")} onClick={handleLinkClick}>Blog</Link>
+                                <Link
+                                    href={getPathByName("Blogs", "/blogs")}
+                                    className={isActive(getPathByName("Blogs", "/blogs"))} onClick={handleLinkClick}>Blog</Link>
                             </li>
                             <li>
-                                <Link href="/contact" className={isActive("/contact")} onClick={handleLinkClick}>Contact</Link>
+                                <Link
+                                    href={getPathByName("Contact Us", "/contact")}
+                                    className={isActive(getPathByName("Contact Us", "/contact"))} onClick={handleLinkClick}>Contact</Link>
                             </li>
                         </ul>
                         <div className="lg:hidden flex items-center justify-center mt-20">

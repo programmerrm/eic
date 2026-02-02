@@ -13,13 +13,9 @@ from api.about_page.views.about_page import (
     DigitalSecuritySolutionItemView,
     HappyJourneyTopBarView,
     HappyJourneyItemView,
-    SchemaView,
-    SeoTagView
 )
 
 router = DefaultRouter()
-router.register(r'seo-tag', SeoTagView, basename='aboutpage_seo_tag')
-router.register(r'schema', SchemaView, basename='aboutpage_schema')
 router.register(r'top-bar', AboutTopBarView, basename='about_top_bar')
 router.register(r'secure-future-top-bar', SecureFutureTopBarView, basename='about_secure_futurea_top_bar')
 router.register(r'secure-future-item', SecureFutureItemView, basename='about_secure_future_item_view')

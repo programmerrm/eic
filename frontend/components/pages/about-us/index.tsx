@@ -1,34 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import HappyJourney from "@/components/about-page/happyJourney";
 import SectionBanner from "@/components/banner/section-banner";
 import AboutSecurity from "@/components/security-firm/about-security";
 import StayCompliant from "@/components/stay-compliant/stay-compliant";
 import { getFetchData } from "@/utils/getFetchData";
-import GlobalBGImg from "../../public/images/world-map.svg";
 import Image from "next/image";
-import HappyJourney from "@/components/about-page/happyJourney";
-import Core from "./core";
+import GlobalBGImg from "../../../public/images/world-map.svg";
+import Core from "@/components/about-page/core";
 
-export default async function Page() {
+export default async function AboutUs(jsonSchema: any) {
     const topBarFetchData = await getFetchData('/about/top-bar/');
     const digitalSecuritySolutionTopBarData = await getFetchData('/about/digital-security-solution-top-bar/')
     const digitalSecuritySolutionItemData = await getFetchData('/about/digital-security-solution-item/');
     const secureFutureTopBarData = await getFetchData('/about/secure-future-top-bar/')
     const secureFutureItemData = await getFetchData('/about/secure-future-item/')
-    const schemaData = await getFetchData('/about/schema/');
-    const jsonLd = JSON.parse(schemaData.data.schema);
-
     return (
         <>
-            {jsonLd && (
+            {jsonSchema && (
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonSchema) }}
                 />
             )}
             <SectionBanner topBarData={topBarFetchData?.data} />
             <AboutSecurity />
             <HappyJourney />
-
             <section className=" py-12 md:py-[100px]">
                 <div className="container">
                     <h2 className="text-center">{secureFutureTopBarData?.data?.normal_title} <span className="text-blue">{secureFutureTopBarData?.data?.title_span}</span></h2>
@@ -45,11 +41,11 @@ export default async function Page() {
                                         <div className="w-full max-w-40">
                                             {item.image && (
                                                 <Image
-                                                src={item.image}
-                                                alt={item.title}
-                                                width={160}
-                                                height={100}
-                                            />
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    width={160}
+                                                    height={100}
+                                                />
                                             )}
                                         </div>
                                         <p className="text-sm md:text-base leading-[26px] font-poppins font-normal text-center sm:text-left">{item.description}</p>
@@ -60,7 +56,6 @@ export default async function Page() {
                     </div>
                 </div>
             </section>
-            
             <section className="pt-12 md:pt-[100px] bg-blue text-white">
                 <div className="container">
                     <div className="pb-12 md:pb-[100px] bg-center md:bg-bottom bg-contain bg-no-repeat"
@@ -87,9 +82,7 @@ export default async function Page() {
                     </div>
                 </div>
             </section>
-
             <Core />
-
             <StayCompliant />
         </>
     );

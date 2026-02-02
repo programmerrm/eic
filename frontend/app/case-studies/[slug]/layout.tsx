@@ -1,4 +1,4 @@
-export default function ContactRootLayout({
+export default function SingleCaseStudiesRootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

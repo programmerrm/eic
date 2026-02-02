@@ -1,20 +1,24 @@
-export const dynamic = 'force-dynamic';
-import Banner from "@/components/banner/banner";
-import HomePageRelatedBlog from "@/components/blogs/homePageRelatedBlog";
-import Cybersecurity from "@/components/cybersecurity/cybersecurity";
-import Features from "@/components/features/features";
-import GloballyAccredited from "@/components/globally-accredited/GloballyAccredited";
-import OurProvenProcessSecurity from "@/components/our-proven-process-security/our-proven-process-security";
-import Review from "@/components/review/review";
-import SecurityFirm from "@/components/security-firm/security-firm";
-import HomePageRelated from "@/components/services/homepageRelated";
-import HomePageSuccessStoriesRelated from "@/components/success-stories/HomePageSuccessStoriesRelated";
-import WhyChoose from "@/components/why-choose/why-choose";
+import AboutUs from "@/components/pages/about-us";
+import BlogsPage from "@/components/pages/blogs";
+import CaseStudiesPage from "@/components/pages/case-studies";
+import ContactPage from "@/components/pages/contact-us";
+import FaqPage from "@/components/pages/faq";
+import ServicesPage from "@/components/pages/services";
 import { getFetchData } from "@/utils/getFetchData";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-export async function generateMetadata(): Promise<Metadata> {
-    const response = await getFetchData(`/pages/home/`);
+type SlugProps = {
+    params: { slug: string };
+};
+
+export async function generateMetadata({
+    params,
+}: SlugProps): Promise<Metadata> {
+
+    const { slug } = await params;
+
+    const response = await getFetchData(`/pages/${slug}`);
     const data = response?.seo || {};
 
     return {
@@ -53,28 +57,26 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function Page() {
-    const pageData = await getFetchData(`/pages/home/`);
+export default async function Page({ params }: SlugProps) {
+    const { slug } = await params;
+    const pageData = await getFetchData(`/pages/${slug}/`);
     const jsonSchema = pageData?.schema?.schema || {};
-    return (
-        <>
-            {jsonSchema && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonSchema) }}
-                />
-            )}
-            <Banner />
-            <SecurityFirm />
-            <Features />
-            <Cybersecurity />
-            <HomePageRelated />
-            <OurProvenProcessSecurity />
-            <WhyChoose />
-            <Review />
-            <HomePageSuccessStoriesRelated />
-            <GloballyAccredited />
-            <HomePageRelatedBlog />
-        </>
-    );
+    if (!pageData) return notFound();
+
+    switch (pageData.name) {
+        case "About Us":
+            return <AboutUs jsonSchema={jsonSchema} />;
+        case "Services":
+            return <ServicesPage jsonSchema={jsonSchema} />;
+        case "Case Studies":
+            return <CaseStudiesPage jsonSchema={jsonSchema} />;
+        case "Blogs":
+            return <BlogsPage jsonSchema={jsonSchema} />;
+        case "Contact Us":
+            return <ContactPage jsonSchema={jsonSchema} />;
+        case "Faq":
+            return <FaqPage />;
+        default:
+            return notFound();
+    }
 }

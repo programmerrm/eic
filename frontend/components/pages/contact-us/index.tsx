@@ -1,21 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getFetchData } from "@/utils/getFetchData";
 import Image from "next/image";
 import Link from "next/link";
-import ContactForm from "../../components/forms/ContactForm";
-import address from "../../public/images/address.svg";
-import BannerImg from "../../public/images/banner-img.svg";
-import email from "../../public/images/email.svg";
-import ContactFormBG from "../../public/images/finger.svg";
-import phone from "../../public/images/phone-icon.svg";
-import { MEDIA_URL } from "../../utils/api";
-import { getFetchData } from "../../utils/getFetchData";
+import { MEDIA_URL } from "@/utils/api";
+import address from "../../../public/images/address.svg";
+import BannerImg from "../../../public/images/banner-img.svg";
+import email from "../../../public/images/email.svg";
+import ContactFormBG from "../../../public/images/finger.svg";
+import phone from "../../../public/images/phone-icon.svg";
+import ContactForm from "@/components/forms/ContactForm";
 
-export default async function Page() {
+export default async function ContactPage(jsonSchema:any) {
     const topBarData = await getFetchData("/contact/top-bar/");
     const infomation = await getFetchData("/contact/infomation/");
     const googleMap = await getFetchData("/contact/google-map/");
-
     return (
         <>
+            {jsonSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonSchema) }}
+                />
+            )}
             {topBarData?.data && (
                 <section className="mt-24 md:mt-36 banner-section bg-blue [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-60px)_100%,0_100%)] md:[clip-path:polygon(0_0,100%_0,100%_calc(100%-100px),calc(100%-150px)_100%,0_100%)]">
                     <div className="container">

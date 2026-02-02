@@ -20,17 +20,9 @@ from homepage.models import (
     ExperienceEic,
     ExperienceEicItem,
     GloballyAccredited,
-    SeoTag,
-    Organization,
-    HomePageSchema,
 )
 from django import forms
 from django.db import models
-
-class OrganizationInline(admin.StackedInline):
-    model = Organization
-    extra = 0
-    max_num = 1
 
 class SecurityFirmAdmin(admin.ModelAdmin):
     list_display = (
@@ -167,17 +159,6 @@ class SecurityFirmAdmin(admin.ModelAdmin):
     delete_link.short_description = "Delete"
 
 
-@admin.register(HomePageSchema)
-class HomePageSchemaAdmin(admin.ModelAdmin):
-    inlines = [OrganizationInline]
-
-    list_display = ("name", "url")
-    fieldsets = (
-        ("Homepage Info", {
-            "fields": ("name", "url", "description")
-        }),
-    )
-
 admin.site.register(Banner)
 admin.site.register(PaymnetInfo)
 admin.site.register(SecurityFirm, SecurityFirmAdmin)
@@ -190,4 +171,3 @@ admin.site.register(Review)
 admin.site.register(ExperienceEic)
 admin.site.register(ExperienceEicItem)
 admin.site.register(GloballyAccredited)
-admin.site.register(SeoTag)

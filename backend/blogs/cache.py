@@ -1,4 +1,3 @@
-BLOG_SEO_TAG_CACHE_KEY="blog_seo_tag_cache_key"
-BLOG_SCHEMA_CACHE_KEY="blog_schema_cache_key"
 BLOG_TOP_BAR_CACHE_KEY="blog_top_bar_cache_key"
 ALL_BLOGS_CACHE_KEY="all_blog_cache_key"
+SINGLE_BLOG_CACHE_KEY="single_blog_cache_key"

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import BannerImg from "../../public/images/banner-img.svg";
 
-export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonLd }: any) {
+export default function BlogsApp({ topBarData, initialBlogs, initialNext }: any) {
     const [blogs, setBlogs] = useState(initialBlogs);
     const [nextUrl, setNextUrl] = useState(initialNext);
     const [loading, setLoading] = useState(false);
@@ -36,12 +36,6 @@ export default function BlogsPage({ topBarData, initialBlogs, initialNext, jsonL
 
     return (
         <>
-            {jsonLd && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                />
-            )}
             {topBarData && (
                 <section className="mt-24 md:mt-36 banner-section bg-blue [clip-path:polygon(0_0,100%_0,100%_calc(100%-50px),calc(100%-60px)_100%,0_100%)] md:[clip-path:polygon(0_0,100%_0,100%_calc(100%-100px),calc(100%-150px)_100%,0_100%)]">
                     <div className="container">

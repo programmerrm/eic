@@ -21,8 +21,6 @@ from api.homepage.serializers.homepage import (
     ExperienceEicSerializer,
     ExperienceEicItemSerializer,
     GloballyAccreditedSerializer,
-    SchemaSerializer,
-    SeoTagSerializer,
 )
 from homepage.models import (
     Banner,
@@ -37,114 +35,7 @@ from homepage.models import (
     ExperienceEic,
     ExperienceEicItem,
     GloballyAccredited,
-    SeoTag,
-    HomePageSchema,
 )
-
-# ============= SEO TAGS View =================
-class SeoTagView(viewsets.ModelViewSet):
-    queryset = SeoTag.objects.all()
-    serializer_class = SeoTagSerializer
-
-    CACHE_KEY = "home_seotag_first"
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Homepage seo tags data fetching successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-            obj = SeoTag.objects.first()
-            if not obj:
-                return Response({
-                    'success': False,
-                    'message': 'Homepage seo tags records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=60*60)
-
-            return Response({
-                'success': True,
-                'message': 'Homepage seo tags data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
-# ============= SCHEMA View =================
-class SchemaView(viewsets.ModelViewSet):
-    queryset = HomePageSchema.objects.all()
-    serializer_class = SchemaSerializer
-
-    CACHE_KEY = "home_schema_first"
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Homepage schema data fetching successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-            obj = HomePageSchema.objects.first()
-            if not obj:
-                return Response({
-                    'success': False,
-                    'message': 'Homepage schema records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=60*60)
-
-            return Response({
-                'success': True,
-                'message': 'Homepage schema data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 # =========== BANNER VIEW SET =============
 class BannerViewSet(viewsets.ModelViewSet):

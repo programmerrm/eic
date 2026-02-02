@@ -1,0 +1,11 @@
+SCHEDULE_A_CALL_CACHE_KEY="schedule_a_call_cache_key"
+COMPLIANCE_ITEMS_CACHE_KEY="compliance_items_cache_key"
+COMPLIANCE_ITEMS_LIST_CACHE_KEY="compliance_items_list_cache_key"
+COMPLIANCE_TITLE_CACHE_KEY="compliance_title_cache_key"
+STAY_COMPLIANT_CACHE_KEY="stay_compliant_cache_key"
+NOT_FOUND_CONTENT_CACHE_KEY="not_found_content_cache_key"
+SOCIAL_LINK_CACHE_KEY="social_link_cache_key"
+COPY_RIGHT_CACHE_KEY="copy_right_cache_key"
+LOGO_CACHE_KEY="logo_cache_key"
+FAVICON_CACHE_KEY="favicon_cache_key"
+CACHE_TIMEOUT=60*60

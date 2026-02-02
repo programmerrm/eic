@@ -1,4 +1,4 @@
-export default function SingleServiceRootLayout({
+export default function SlugRootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

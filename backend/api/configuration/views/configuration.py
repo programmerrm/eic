@@ -3,6 +3,7 @@
 CONFIGURATION ALL VIEWS
 """
 ######################################################
+from django.core.cache import cache
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
@@ -31,6 +32,19 @@ from api.configuration.serializers.configuration import (
     SubscribeSeriliazer,
     ScheduleACallSeriliazer,
 )
+from configuration.cache import (
+    LOGO_CACHE_KEY,
+    FAVICON_CACHE_KEY,
+    COPY_RIGHT_CACHE_KEY,
+    COMPLIANCE_TITLE_CACHE_KEY,
+    COMPLIANCE_ITEMS_CACHE_KEY,
+    COMPLIANCE_ITEMS_LIST_CACHE_KEY,
+    NOT_FOUND_CONTENT_CACHE_KEY,
+    SCHEDULE_A_CALL_CACHE_KEY,
+    SOCIAL_LINK_CACHE_KEY,
+    STAY_COMPLIANT_CACHE_KEY,
+    CACHE_TIMEOUT,
+)
 
 # ======== FAVICON VIEW =========== 
 class FaviconViewSet(viewsets.ModelViewSet):
@@ -40,6 +54,8 @@ class FaviconViewSet(viewsets.ModelViewSet):
         if self.action == 'list':
             return [AllowAny()]
         return [IsAdminUser()]
+    
+    CACHE_KEY = FAVICON_CACHE_KEY
 
     def list(self, request, *args, **kwargs):
         try:

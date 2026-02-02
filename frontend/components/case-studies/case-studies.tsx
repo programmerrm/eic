@@ -7,7 +7,7 @@ import SectionImg from "../../public/images/finger.svg";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function CaseStudiesPage({ topBarData, initialItem, initialNext }: any) {
+export default function CaseStudies({ topBarData, initialItem, initialNext }: any) {
     const [items, setItems] = useState(initialItem);
     const [nextUrl, setNextUrl] = useState(initialNext);
     const [loading, setLoading] = useState(false);

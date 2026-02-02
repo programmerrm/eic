@@ -12,8 +12,6 @@ from api.about_page.serializers.about_page import (
     DigitalSecuritySolutionItemSerializer,
     HappyJourneyTopBarSerializer,
     HappyJourneyItemSerializer,
-    SchemaSerializer,
-    SeoTagSerializer
 )
 from about_page.models import (
     AboutTopBar, 
@@ -24,114 +22,18 @@ from about_page.models import (
     DigitalSecuritySolutionItem,
     HappyJourneyTopBar,
     HappyJourneyItem,
-    SeoTag,
-    AboutPageSchema,
 )
-
-# ============= SEO TAGS View =================
-class SeoTagView(viewsets.ModelViewSet):
-    queryset = SeoTag.objects.all()
-    serializer_class = SeoTagSerializer
-
-    CACHE_KEY = "about_seotag_first"
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Aboutpage seo tags data fetching successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-            obj = SeoTag.objects.first()
-            if not obj:
-                return Response({
-                    'success': False,
-                    'message': 'Aboutpage seo tags records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=60*60)
-
-            return Response({
-                'success': True,
-                'message': 'Aboutpage seo tags data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        cache.delete(self.CACHE_KEY)
-        return instance
-
-    def perform_destroy(self, instance):
-        super().perform_destroy(instance)
-        cache.delete(self.CACHE_KEY)
-
-# ============= SCHEMA View =================
-class SchemaView(viewsets.ModelViewSet):
-    queryset = AboutPageSchema.objects.all()
-    serializer_class = SchemaSerializer
-
-    CACHE_KEY = "about_schema_first"
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Aboutpage schema data fetching successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-            obj = AboutPageSchema.objects.first()
-            if not obj:
-                return Response({
-                    'success': False,
-                    'message': 'Aboutpage schema records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=60*60)
-
-            return Response({
-                'success': True,
-                'message': 'Aboutpage schema data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+from about_page.cache import (
+    ABOUT_DIGITAL_SECURITY_SOLUTION_ITEMS_CACHE_KEY,
+    ABOUT_DIGITAL_SECURITY_SOLUTION_TOP_BAR_CACHE_KEY,
+    ABOUT_HAPPY_JOURNEY_ITEMS_CACHE_KEY,
+    ABOUT_HAPPY_JOURNEY_TOP_BAR_CACHE_KEY,
+    ABOUT_SECURE_FUTURE_ITEMS_CACHE_KEY,
+    ABOUT_SECURE_FUTURE_TOP_BAR_CACHE_KEY,
+    ABOUT_SECURITY_FIRM_CACHE_KEY,
+    ABOUT_TOP_BAR_CACHE_KEY,
+    PAGE_CACHE_TIMEOUT,
+)
 
 # ============ ABOUT TOP BAR VIEW ===============
 class AboutTopBarView(viewsets.ModelViewSet):
@@ -142,20 +44,37 @@ class AboutTopBarView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_TOP_BAR_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
-            queryset = AboutTopBar.objects.first()
-            if not queryset:
+            
+            cached_data = cache.get(self.CACHE_KEY)
+
+            if cached_data:
                 return Response({
-                    'success': False,
+                    'success': True,
+                    'message': 'About top bar data fetching from cache successfully.',
+                    'data': cached_data,
+                }, status=status.HTTP_200_OK)
+
+            obj = AboutTopBar.objects.first()
+            if not obj:
+                return Response({
+                    'success': True,
                     'message': 'About top bar records not found',
                     'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(queryset)
+                }, status=status.HTTP_204_NO_CONTENT)
+            
+            serializer = self.serializer_class(obj)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 'success': True,
                 'message': 'About top bar data fetching successfully.',
-                'data': serializer.data,
+                'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -173,20 +92,37 @@ class SecureFutureTopBarView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_SECURE_FUTURE_TOP_BAR_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
-            queryset = SecureFutureTopBar.objects.first()
-            if not queryset:
+
+            cached_data = cache.get(self.CACHE_KEY)
+
+            if cached_data:
                 return Response({
-                    'success': False,
+                    'success': True,
+                    'message': 'Secure Future top bar data fetching from cache successfully.',
+                    'data': cached_data,
+                }, status=status.HTTP_200_OK)
+
+            obj = SecureFutureTopBar.objects.first()
+            if not obj:
+                return Response({
+                    'success': True,
                     'message': 'Secure Future Top Bar top bar records not found',
                     'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(queryset)
+                }, status=status.HTTP_204_NO_CONTENT)
+            
+            serializer = self.serializer_class(obj)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 'success': True,
                 'message': 'Secure Future top bar data fetching successfully.',
-                'data': serializer.data,
+                'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -205,14 +141,37 @@ class SecureFutureItemView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_SECURE_FUTURE_ITEMS_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
-            queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
+            cached_data = cache.get(self.CACHE_KEY)
+
+            if cached_data:
+                return Response({
+                    "success": True,
+                    "message": "SecureFuture Item items fetched from cache successfully.",
+                    "data": cached_data,
+                }, status=status.HTTP_200_OK)
+
+            obj = self.get_queryset()
+
+            if not obj:
+                return Response({
+                    'success': True,
+                    'message': 'Secure Future items records not found',
+                    'data': [],
+                }, status=status.HTTP_204_NO_CONTENT)
+
+            serializer = self.serializer_class(obj, many=True)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 "success": True,
                 "message": "SecureFuture Item items fetched successfully.",
-                "data": serializer.data
+                "data": data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -229,20 +188,37 @@ class SecurityFirmView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_SECURITY_FIRM_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
-            queryset = SecurityFirm.objects.first()
-            if not queryset:
+            cached_data = cache.get(self.CACHE_KEY)
+
+            if cached_data:
                 return Response({
-                    'success': False,
+                    'success': True,
+                    'message': 'Security Firm data fetching from cache successfully.',
+                    'data': cached_data,
+                }, status=status.HTTP_200_OK)
+            
+            obj = SecurityFirm.objects.first()
+
+            if not obj:
+                return Response({
+                    'success': True,
                     'message': 'Security Firm records not found',
                     'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-            serializer = self.serializer_class(queryset)
+                }, status=status.HTTP_204_NO_CONTENT)
+            
+            serializer = self.serializer_class(obj)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 'success': True,
                 'message': 'Security Firm data fetching successfully.',
-                'data': serializer.data,
+                'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -260,20 +236,36 @@ class DigitalSecuritySolutionTopBarView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_DIGITAL_SECURITY_SOLUTION_TOP_BAR_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
+            cached_data = cache.get(self.CACHE_KEY)
+
+            if cached_data:
+                return Response({
+                    'success': True,
+                    'message': 'DigitalSecurity Solution top bar data fetching from cache successfully.',
+                    'data': cached_data,
+                }, status=status.HTTP_200_OK)
+
             queryset = DigitalSecuritySolutionTopBar.objects.first()
             if not queryset:
                 return Response({
-                    'success': False,
+                    'success': True,
                     'message': 'DigitalSecurity Solution top bar records not found',
                     'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
+                }, status=status.HTTP_204_NO_CONTENT)
+            
             serializer = self.serializer_class(queryset)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 'success': True,
                 'message': 'DigitalSecurity Solution top bar data fetching successfully.',
-                'data': serializer.data,
+                'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -292,14 +284,37 @@ class DigitalSecuritySolutionItemView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_DIGITAL_SECURITY_SOLUTION_ITEMS_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
+            cached_data = cache.get(self.CACHE_KEY)
+
+            if cached_data:
+                return Response({
+                    "success": True,
+                    "message": "DigitalSecuritySolution items fetched from cache successfully.",
+                    "data": cached_data,
+                }, status=status.HTTP_200_OK)
+
             queryset = self.get_queryset()
+
+            if not queryset:
+                return Response({
+                    "success": True,
+                    "message": "DigitalSecuritySolution items no recoads.",
+                    "data": [],
+                }, status=status.HTTP_204_NO_CONTENT)
+
             serializer = self.get_serializer(queryset, many=True)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 "success": True,
                 "message": "DigitalSecuritySolution items fetched successfully.",
-                "data": serializer.data
+                "data": data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -316,20 +331,31 @@ class HappyJourneyTopBarView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_HAPPY_JOURNEY_TOP_BAR_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
+            cached_data = cache.get(self.CACHE_KEY)
+            if cached_data:
+                return Response({
+                    'success': True,
+                    'message': 'Happy Journey top bar data fetching successfully.',
+                    'data': cached_data,
+                }, status=status.HTTP_200_OK)
             queryset = HappyJourneyTopBar.objects.first()
             if not queryset:
                 return Response({
-                    'success': False,
+                    'success': True,
                     'message': 'Happy Journey top bar records not found',
                     'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
+                }, status=status.HTTP_204_NO_CONTENT)
             serializer = self.serializer_class(queryset)
+            data = serializer.data
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
             return Response({
                 'success': True,
                 'message': 'Happy Journey top bar data fetching successfully.',
-                'data': serializer.data,
+                'data': data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
@@ -348,18 +374,36 @@ class HappyJourneyItemView(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAdminUser()]
     
+    CACHE_KEY = ABOUT_HAPPY_JOURNEY_ITEMS_CACHE_KEY
+    
     def list(self, request, *args, **kwargs):
         try:
+            cached_data = cache.get(self.CACHE_KEY)
+            if cached_data:
+                return Response({
+                    "success": True,
+                    "message": "HappyJourney items fetched from cache successfully.",
+                    "data": cached_data,
+                }, status=status.HTTP_200_OK)
             queryset = self.get_queryset()
+            if not queryset:
+                return Response({
+                    "success": True,
+                    "message": "HappyJourney items fetched successfully.",
+                    "data": [],
+                }, status=status.HTTP_204_NO_CONTENT)
             serializer = self.get_serializer(queryset, many=True)
+            data = serializer.data
+
+            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
+
             return Response({
                 "success": True,
                 "message": "HappyJourney items fetched successfully.",
-                "data": serializer.data
+                "data": data,
             }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
                 "success": False,
                 "message": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-

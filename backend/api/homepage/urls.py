@@ -17,13 +17,9 @@ from api.homepage.views.homepage import (
     ExperienceEicViewSet,
     ExperienceEicItemViewSet,
     GloballyAccreditedViewSet,
-    SeoTagView,
-    SchemaView,
 )
 
 router = DefaultRouter()
-router.register(r'seo-tag', SeoTagView, basename='homepage_seo_tag')
-router.register(r'schema', SchemaView, basename='homepage_schema')
 router.register(r'banner', BannerViewSet, basename='banner')
 router.register(r'paymnet-info', PaymnetInfoViewSet, basename='paymnet_info')
 router.register(r'security-firm', SecurityFirmViewSet, basename='security_firm')
