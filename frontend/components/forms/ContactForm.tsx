@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { SERVER_URL } from "@/utils/api";
+import { FRONTEND_API_KEY, SERVER_URL } from "@/utils/api";
 import { useState } from "react";
 
 export default function ContactForm() {
@@ -28,6 +28,7 @@ export default function ContactForm() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "X-API-KEY": FRONTEND_API_KEY || "",
                 },
                 body: JSON.stringify(formData),
             });

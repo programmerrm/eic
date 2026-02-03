@@ -3,7 +3,7 @@
 HOMEPAGE ALL ROUTES
 """
 # ==========================================
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from api.homepage.views.homepage import (
     BannerViewSet,
     PaymnetInfoViewSet,
@@ -19,19 +19,65 @@ from api.homepage.views.homepage import (
     GloballyAccreditedViewSet,
 )
 
-router = DefaultRouter()
-router.register(r'banner', BannerViewSet, basename='banner')
-router.register(r'paymnet-info', PaymnetInfoViewSet, basename='paymnet_info')
-router.register(r'security-firm', SecurityFirmViewSet, basename='security_firm')
-router.register(r'cyber-security-solution-title', CybersecuritySolutionTitleViewSet, basename='cyber_security_solution_title')
-router.register(r'cyber-security-solution-items', CybersecuritySolutionItemViewSet, basename='cyber_security_solution_items')
-router.register(r'our-proven-process-security', OurProvenProcessSecurityViewSet, basename='our_proven_process_security')
-router.register(r'our-proven-process-security-items', OurProvenProcessSecurityItemsViewSet, basename='our_proven_process_security_items')
-router.register(r'review-top-bar', ReviewTopBarViewSet, basename='review_top_bar')
-router.register(r'review-items', ReviewViewSet, basename='review_items')
-
-router.register(r'experience-eic', ExperienceEicViewSet, basename='experience_eic')
-router.register(r'experience-eic-item', ExperienceEicItemViewSet, basename='experience_eic_item')
-router.register(r'globally-accredited', GloballyAccreditedViewSet, basename='globally_accredited')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        'banner/',
+        BannerViewSet.as_view(),
+        name='homepage_banner',
+    ),
+    path(
+        'paymnet-info/',
+        PaymnetInfoViewSet.as_view(),
+        name='homepage_paymnet_info',
+    ),
+    path(
+        'security-firm/',
+        SecurityFirmViewSet.as_view(),
+        name='homepage_security_firm',
+    ),
+    path(
+        'cyber-security-solution-title/',
+        CybersecuritySolutionTitleViewSet.as_view(),
+        name='homepage_cyber_security_solution_title',
+    ),
+    path(
+        'cyber-security-solution-items/',
+        CybersecuritySolutionItemViewSet.as_view(),
+        name='homepage_cyber_security_solution_items',
+    ),
+    path(
+        'our-proven-process-security/',
+        OurProvenProcessSecurityViewSet.as_view(),
+        name='homepage_our_proven_process_security',
+    ),
+    path(
+        'our-proven-process-security-items/',
+        OurProvenProcessSecurityItemsViewSet.as_view(),
+        name='homepage_our_proven_process_security_items',
+    ),
+    path(
+        'review-top-bar/',
+        ReviewTopBarViewSet.as_view(),
+        name='homepage_review_top_bar',
+    ),
+    path(
+        'review-items/',
+        ReviewViewSet.as_view(),
+        name='homepage_review_items',
+    ),
+    path(
+        'experience-eic/',
+        ExperienceEicViewSet.as_view(),
+        name='homepage_experience_eic',
+    ),
+    path(
+        'experience-eic-item/',
+        ExperienceEicItemViewSet.as_view(),
+        name='homepage_experience_eic_item',
+    ),
+    path(
+        'globally-accredited/',
+        GloballyAccreditedViewSet.as_view(),
+        name='homepage_globally_accredited',
+    ),
+]

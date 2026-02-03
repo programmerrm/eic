@@ -36,316 +36,142 @@ from homepage.models import (
     ExperienceEicItem,
     GloballyAccredited,
 )
+from homepage.cache import (
+    HOMEPAGE_BANNER_CACHE_KEY,
+    HOMEPAGE_CYBER_SECURITY_SOLUTION_ITEM_CACHE_KEY,
+    HOMEPAGE_CYBER_SECURITY_SOLUTION_TITLE_CACHE_KEY,
+    HOMEPAGE_EXPERIENCE_EIC_CACHE_KEY,
+    HOMEPAGE_EXPERIENCE_EIC_ITEMS_CACHE_KEY,
+    HOMEPAGE_GLOBALLY_ACCREDITED_CACHE_KEY,
+    HOMEPAGE_OUR_PROVEN_PROCESS_SECURITY_CACHE_KEY,
+    HOMEPAGE_OUR_PROVEN_PROCESS_SECURITY_ITEMS_CACHE_KEY,
+    HOMEPAGE_PAYMNET_INFO_CACHE_KEY,
+    HOMEPAGE_REVIEW_CACHE_KEY,
+    HOMEPAGE_REVIEW_TOP_BAR_CACHE_KEY,
+    HOMEPAGE_SECURITY_FIRM_CACHE_KEY,
+    CACHE_TIME_OUT,
+)
+from api.configuration.views.base import (
+    BaseRetrieveView,
+    BaseListView,
+)
 
 # =========== BANNER VIEW SET =============
-class BannerViewSet(viewsets.ModelViewSet):
+class BannerViewSet(BaseRetrieveView):
     serializer_class = BannerSerializer
+    CACHE_KEY = HOMEPAGE_BANNER_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_object_instance(self):
+        fields = BannerSerializer.Meta.fields
+        return Banner.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = Banner.objects.first()
-            if queryset is None:
-                return Response({
-                    "success": True,
-                    "message": "No banner records found.",
-                    "data": [],
-                }, status=status.HTTP_200_OK)
-            return Response({
-                "success": True,
-                "message": "banner data fetching", 
-                "data": BannerSerializer(queryset).data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e),
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
 # =========== Paymnet Info VIEW SET =============
-class PaymnetInfoViewSet(viewsets.ModelViewSet):
+class PaymnetInfoViewSet(BaseRetrieveView):
     serializer_class = PaymnetInfoSerializer
+    CACHE_KEY = HOMEPAGE_PAYMNET_INFO_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = PaymnetInfo.objects.first()
-            if queryset is None:
-                return Response({
-                    "success": True,
-                    "message": "No paymnet info records found.",
-                    "data": [],
-                }, status=status.HTTP_200_OK)
-            return Response({
-                "success": True,
-                "message": "paymnet info data fetching", 
-                "data": PaymnetInfoSerializer(queryset).data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e),
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def get_object_instance(self):
+        fields = PaymnetInfoSerializer.Meta.fields
+        return PaymnetInfo.objects.only(*fields)
 
 # =========== SECURITY FIRM VIEW SET =============
-class SecurityFirmViewSet(viewsets.ModelViewSet):
+class SecurityFirmViewSet(BaseRetrieveView):
     serializer_class = SecurityFirmSerializer
+    CACHE_KEY = HOMEPAGE_SECURITY_FIRM_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_object_instance(self):
+        fields = SecurityFirmSerializer.Meta.fields
+        return SecurityFirm.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = SecurityFirm.objects.first()
-            if queryset is None:
-                return Response({
-                    "success": True,
-                    "message": "No security firm records found.",
-                    "data": [],
-                }, status=status.HTTP_200_OK)
-            return Response({
-                "success": True,
-                "message": "Security firm data fetching", 
-                "data": SecurityFirmSerializer(queryset).data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e),
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-class CybersecuritySolutionTitleViewSet(viewsets.ModelViewSet):
+# ========= Cyber Security Solution Title View Set ============
+class CybersecuritySolutionTitleViewSet(BaseRetrieveView):
     serializer_class = CybersecuritySolutionTitleSerializer
+    CACHE_KEY = HOMEPAGE_CYBER_SECURITY_SOLUTION_TITLE_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_object_instance(self):
+        fields = CybersecuritySolutionTitleSerializer.Meta.fields
+        return CybersecuritySolutionTitle.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = CybersecuritySolutionTitle.objects.first()
-            if queryset is None:
-                return Response({
-                    "success": True,
-                    "message": "No security firm records found.",
-                    "data": [],
-                }, status=status.HTTP_200_OK)
-            return Response({
-                "success": True,
-                "message": "Security firm data fetching", 
-                "data": CybersecuritySolutionTitleSerializer(queryset).data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e),
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-class CybersecuritySolutionItemViewSet(viewsets.ModelViewSet):
-    queryset = CybersecuritySolutionItem.objects.all()
+# ======== Cyber Security Solution Item View Set ========
+class CybersecuritySolutionItemViewSet(BaseListView):
     serializer_class = CybersecuritySolutionItemSerializer
+    CACHE_KEY = HOMEPAGE_CYBER_SECURITY_SOLUTION_ITEM_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_queryset_instance(self):
+        fields = CybersecuritySolutionItemSerializer.Meta.fields
+        return CybersecuritySolutionItem.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        if not self.queryset.exists():
-            return Response({"message": "No cyber security solution item records found."}, status=status.HTTP_404_NOT_FOUND)
-        return super().list(request, *args, **kwargs)
-
-class OurProvenProcessSecurityViewSet(viewsets.ModelViewSet):
-    queryset = OurProvenProcessSecurity.objects.all()
+# ========= Our Proven Process Security View Set ========
+class OurProvenProcessSecurityViewSet(BaseRetrieveView):
     serializer_class = OurProvenProcessSecuritySerializer
+    CACHE_KEY = HOMEPAGE_OUR_PROVEN_PROCESS_SECURITY_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-
-    def list(self, request, *args, **kwargs):
-        first_record = OurProvenProcessSecurity.objects.first()
-
-        if first_record is None:
-            return Response({"message": "No our proven process security records found."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = self.get_serializer(first_record)
-        return Response({
-            "success": True,
-            "message": "Our Proven Process Security fetched successfully.",
-            "data": serializer.data,
-        }, status=status.HTTP_200_OK)
-
-class OurProvenProcessSecurityItemsViewSet(viewsets.ModelViewSet):
-    queryset = OurProvenProcessSecurityItems.objects.all()
+    def get_object_instance(self):
+        fields = OurProvenProcessSecuritySerializer.Meta.fields
+        return OurProvenProcessSecurity.objects.only(*fields)
+    
+# ========= Our Proven Process Security Items View Set =======
+class OurProvenProcessSecurityItemsViewSet(BaseListView):
     serializer_class = OurProvenProcessSecurityItemsSerializer
+    CACHE_KEY = HOMEPAGE_OUR_PROVEN_PROCESS_SECURITY_ITEMS_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_queryset_instance(self):
+        fields = OurProvenProcessSecurityItemsSerializer.Meta.fields
+        return OurProvenProcessSecurityItems.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        if not self.queryset.exists():
-            return Response({"message": "No our proven process security item records found."}, status=status.HTTP_404_NOT_FOUND)
-        return super().list(request, *args, **kwargs)
-
-class ReviewTopBarViewSet(viewsets.ModelViewSet):
+# ======= ReviewTopBarViewSet ===========
+class ReviewTopBarViewSet(BaseRetrieveView):
     serializer_class = ReviewTopBarSerializer
-    queryset = ReviewTopBar.objects.all()
+    CACHE_KEY = HOMEPAGE_REVIEW_TOP_BAR_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_object_instance(self):
+        fields = ReviewTopBarSerializer.Meta.fields
+        return ReviewTopBar.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = ReviewTopBar.objects.first()
-            if not queryset:
-                return Response({
-                    'success': False,
-                    'message': 'Review top bar records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-
-            serializer = self.get_serializer(queryset)
-            return Response({
-                'success': True,
-                'message': 'Review top bar data fetched successfully.',
-                'data': serializer.data,
-            }, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
-
-class ReviewViewSet(viewsets.ModelViewSet):
+# =========== Review View Set ===========
+class ReviewViewSet(BaseListView):
     serializer_class = ReviewSerializer
-    queryset = Review.objects.all()
+    CACHE_KEY = HOMEPAGE_REVIEW_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
-    def list(self, request, *args, **kwargs):
-        """Review all items"""
-        try:
-            queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
-            return Response({
-                "success": True,
-                "message": "Review items fetched successfully.",
-                "data": serializer.data
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-class ExperienceEicViewSet(viewsets.ModelViewSet):
+    def get_queryset_instance(self):
+        fields = ReviewSerializer.Meta.fields
+        return Review.objects.only(*fields)
+
+# ========== Experience Eic View Set ===========
+class ExperienceEicViewSet(BaseRetrieveView):
     serializer_class = ExperienceEicSerializer
-    queryset = ExperienceEic.objects.all()
+    CACHE_KEY = HOMEPAGE_EXPERIENCE_EIC_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
+    def get_object_instance(self):
+        fields = ExperienceEicSerializer.Meta.fields
+        return ExperienceEic.objects.only(*fields)
 
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = ExperienceEic.objects.first()
-            if not queryset:
-                return Response({
-                    'success': False,
-                    'message': 'Experience Eic records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-
-            serializer = self.get_serializer(queryset)
-            return Response({
-                'success': True,
-                'message': 'Experience eic data fetched successfully.',
-                'data': serializer.data,
-            }, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
-
-class ExperienceEicItemViewSet(viewsets.ModelViewSet):
+# ======== Experience Eic Item View Set ==========
+class ExperienceEicItemViewSet(BaseListView):
     serializer_class = ExperienceEicItemSerializer
-    queryset = ExperienceEicItem.objects.all()
+    CACHE_KEY = HOMEPAGE_EXPERIENCE_EIC_ITEMS_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
-    def list(self, request, *args, **kwargs):
-        """Experience eic all items"""
-        try:
-            queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
-            return Response({
-                "success": True,
-                "message": "Experience eic items fetched successfully.",
-                "data": serializer.data
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def get_queryset_instance(self):
+        fields = ExperienceEicItemSerializer.Meta.fields
+        return ExperienceEicItem.objects.only(*fields)
 
-class GloballyAccreditedViewSet(viewsets.ModelViewSet):
+# ======== Globally Accredited View Set =========
+class GloballyAccreditedViewSet(BaseRetrieveView):
     serializer_class = GloballyAccreditedSerializer
-    queryset = GloballyAccredited.objects.all()
+    CACHE_KEY = HOMEPAGE_GLOBALLY_ACCREDITED_CACHE_KEY
+    CACHE_TIMEOUT = CACHE_TIME_OUT
 
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-
-    def list(self, request, *args, **kwargs):
-        try:
-            queryset = GloballyAccredited.objects.first()
-            if not queryset:
-                return Response({
-                    'success': False,
-                    'message': 'Globally accredited records not found',
-                    'data': {},
-                }, status=status.HTTP_404_NOT_FOUND)
-
-            serializer = self.get_serializer(queryset)
-            return Response({
-                'success': True,
-                'message': 'Globally accredited data fetched successfully.',
-                'data': serializer.data,
-            }, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
+    def get_object_instance(self):
+        fields = GloballyAccreditedSerializer.Meta.fields
+        return GloballyAccredited.objects.only(*fields)

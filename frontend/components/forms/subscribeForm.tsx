@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { FRONTEND_API_KEY, SERVER_URL } from "@/utils/api";
 import { useState } from "react";
 
 export default function SubscribeForm() {
@@ -16,10 +17,11 @@ export default function SubscribeForm() {
         setError("");
 
         try {
-            const res = await fetch(`https://eicsec.com/api/v1/configuration/subscribe/`, {
+            const res = await fetch(`${SERVER_URL}/configuration/subscribe/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "X-API-KEY": FRONTEND_API_KEY || "",
                 },
                 body: JSON.stringify({ email }),
             });

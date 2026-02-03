@@ -8,10 +8,10 @@ import environ
 from pathlib import Path
 from app.settings.unfold import UNFOLD
 
-# BASE DIR
+# ======= BASE DIR ==========
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# LOAD ENVIRON
+# ======== LOAD ENVIRON =========
 try:
     from dotenv import load_dotenv
     load_dotenv(BASE_DIR / '.env.dev')
@@ -20,7 +20,7 @@ except Exception as e:
 
 env = environ.Env()
 
-# INSTALLED APPS
+# ======== INSTALLED APPS ========
 INSTALLED_APPS = [
     'unfold',
     'ckeditor',
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'pages',
 ]
 
-# MIDDLEWARE
+# ======== MIDDLEWARE ========
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -62,7 +62,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'app.urls'
 
-# TEMPLATES
+# ======== TEMPLATES ==========
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -81,7 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 ASGI_APPLICATION = 'app.asgi.application'
 
-# AUTH PASSWORD VALIDATORS
+# ======== AUTH PASSWORD VALIDATORS ========
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -110,15 +110,15 @@ STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS SETTINGS
+# ======= CORS SETTINGS ============
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 
-# CKEDITOR UPLOAD PATH
+# ====== CKEDITOR UPLOAD PATH =======
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
-# CKEDITOR CONFIGS
+# ======= CKEDITOR CONFIGS =========
 CKEDITOR_CONFIGS = {
     'default': {
         'height': 500,
@@ -151,10 +151,10 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-# ======== ADMIN UI UNFOLD ============
+# ======= ADMIN UI UNFOLD ========
 UNFOLD=UNFOLD
 
-# ============ REST FRAMEWORK ==========
+# ======== REST FRAMEWORK ========
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
@@ -169,8 +169,10 @@ REST_FRAMEWORK = {
     }
 }
 
+# ======= REDIS URL =========
 REDIS_URL = env("REDIS_URL", default="redis://127.0.0.1:6379/1")
 
+# ======== CACHES ==========
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -182,6 +184,7 @@ CACHES = {
     }
 }
 
+# ======= EMAIL CONFIGRATION =======
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -190,3 +193,9 @@ EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 SITE_ADMIN_EMAIL = env('SITE_ADMIN_EMAIL')
+
+# ======== DOMAIN CONFIGRATION ==========
+FRONTEND_DOMAIN = env("FRONTEND_DOMAIN")
+ALLOWED_FRONTEND = env("ALLOWED_FRONTEND")
+BACKEND_DOMAIN = env("BACKEND_DOMAIN")
+FRONTEND_API_KEY = env("FRONTEND_API_KEY")

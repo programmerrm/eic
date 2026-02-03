@@ -16,7 +16,14 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '51.79.35.178',
 ]
+
 SECRET_KEY = 'django-insecure--j7#f^zo#_&rlptdsq0ut#8)cdnocjkb=$7*=(vyc4z%5zizum'
+
+# MIDDLEWARE
+MIDDLEWARE.insert(
+    MIDDLEWARE.index('django.contrib.auth.middleware.AuthenticationMiddleware') + 1,
+    'app.middleware.DomainAndAdminMiddleware'
+)
 
 # DATABASE CONFIGRATION
 DATABASES = {
