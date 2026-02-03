@@ -1,8 +1,3 @@
-from rest_framework import viewsets
-from rest_framework.permissions import AllowAny, IsAdminUser
-from rest_framework.response import Response
-from rest_framework import status
-from django.core.cache import cache
 from api.about_page.serializers.about_page import (
     AboutTopBarSerializer,
     SecureFutureItemSerializer,
@@ -34,376 +29,87 @@ from about_page.cache import (
     ABOUT_TOP_BAR_CACHE_KEY,
     PAGE_CACHE_TIMEOUT,
 )
+from api.configuration.views.base import (
+    BaseRetrieveView, 
+    BaseListView,
+)
 
-# ============ ABOUT TOP BAR VIEW ===============
-class AboutTopBarView(viewsets.ModelViewSet):
+# ============ About Top Bar  ===============
+class AboutTopBarView(BaseRetrieveView):
     serializer_class = AboutTopBarSerializer
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_TOP_BAR_CACHE_KEY
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
+
+    def get_object_instance(self):
+        fields = AboutTopBarSerializer.Meta.fields
+        return AboutTopBar.objects.only(*fields)
     
-    def list(self, request, *args, **kwargs):
-        try:
-            
-            cached_data = cache.get(self.CACHE_KEY)
-
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'About top bar data fetching from cache successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-
-            obj = AboutTopBar.objects.first()
-            if not obj:
-                return Response({
-                    'success': True,
-                    'message': 'About top bar records not found',
-                    'data': {},
-                }, status=status.HTTP_204_NO_CONTENT)
-            
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                'success': True,
-                'message': 'About top bar data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-# ============ Secure Future TopBar TOP BAR VIEW ===============
-class SecureFutureTopBarView(viewsets.ModelViewSet):
+# ========== Secure Future Top Bar ============
+class SecureFutureTopBarView(BaseRetrieveView):
     serializer_class = SecureFutureTopBarSerializer
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_SECURE_FUTURE_TOP_BAR_CACHE_KEY
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
+
+    def get_object_instance(self):
+        fields = SecureFutureTopBarSerializer.Meta.fields
+        return SecureFutureTopBar.objects.only(*fields)
     
-    def list(self, request, *args, **kwargs):
-        try:
-
-            cached_data = cache.get(self.CACHE_KEY)
-
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Secure Future top bar data fetching from cache successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-
-            obj = SecureFutureTopBar.objects.first()
-            if not obj:
-                return Response({
-                    'success': True,
-                    'message': 'Secure Future Top Bar top bar records not found',
-                    'data': {},
-                }, status=status.HTTP_204_NO_CONTENT)
-            
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                'success': True,
-                'message': 'Secure Future top bar data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-# =========== Secure Future Item =============
-class SecureFutureItemView(viewsets.ModelViewSet):
+# =========== Secure Future Items =============
+class SecureFutureItemView(BaseListView):
     serializer_class = SecureFutureItemSerializer
-    queryset = SecureFutureItem.objects.all()
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_SECURE_FUTURE_ITEMS_CACHE_KEY
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
 
-            if cached_data:
-                return Response({
-                    "success": True,
-                    "message": "SecureFuture Item items fetched from cache successfully.",
-                    "data": cached_data,
-                }, status=status.HTTP_200_OK)
+    def get_queryset_instance(self):
+        fields = SecureFutureItemSerializer.Meta.fields
+        return SecureFutureItem.objects.only(*fields)
 
-            obj = self.get_queryset()
-
-            if not obj:
-                return Response({
-                    'success': True,
-                    'message': 'Secure Future items records not found',
-                    'data': [],
-                }, status=status.HTTP_204_NO_CONTENT)
-
-            serializer = self.serializer_class(obj, many=True)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                "success": True,
-                "message": "SecureFuture Item items fetched successfully.",
-                "data": data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
-
-# =============== SecurityFirm =================
-class SecurityFirmView(viewsets.ModelViewSet):
+# =============== Security Firm =================
+class SecurityFirmView(BaseRetrieveView):
     serializer_class = SecurityFirmSerializer
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_SECURITY_FIRM_CACHE_KEY
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
 
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Security Firm data fetching from cache successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-            
-            obj = SecurityFirm.objects.first()
+    def get_object_instance(self):
+        fields = SecurityFirmSerializer.Meta.fields
+        return SecurityFirm.objects.only(*fields)
 
-            if not obj:
-                return Response({
-                    'success': True,
-                    'message': 'Security Firm records not found',
-                    'data': {},
-                }, status=status.HTTP_204_NO_CONTENT)
-            
-            serializer = self.serializer_class(obj)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                'success': True,
-                'message': 'Security Firm data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-# =========== DigitalSecuritySolutionTopBar ==========
-class DigitalSecuritySolutionTopBarView(viewsets.ModelViewSet):
+# =========== Digital Security Solution Top Bar ==========
+class DigitalSecuritySolutionTopBarView(BaseRetrieveView):
     serializer_class = DigitalSecuritySolutionTopBarSerializer
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_DIGITAL_SECURITY_SOLUTION_TOP_BAR_CACHE_KEY
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
     
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'DigitalSecurity Solution top bar data fetching from cache successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-
-            queryset = DigitalSecuritySolutionTopBar.objects.first()
-            if not queryset:
-                return Response({
-                    'success': True,
-                    'message': 'DigitalSecurity Solution top bar records not found',
-                    'data': {},
-                }, status=status.HTTP_204_NO_CONTENT)
-            
-            serializer = self.serializer_class(queryset)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                'success': True,
-                'message': 'DigitalSecurity Solution top bar data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def get_object_instance(self):
+        fields = DigitalSecuritySolutionTopBarSerializer.Meta.fields
+        return DigitalSecuritySolutionTopBar.objects.only(*fields)
         
-# ============ DigitalSecuritySolutionItem =============
-class DigitalSecuritySolutionItemView(viewsets.ModelViewSet):
+# ============ Digital Security Solution Items =============
+class DigitalSecuritySolutionItemView(BaseListView):
     serializer_class = DigitalSecuritySolutionItemSerializer
-    queryset = DigitalSecuritySolutionItem.objects.all()
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_DIGITAL_SECURITY_SOLUTION_ITEMS_CACHE_KEY
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
 
-            if cached_data:
-                return Response({
-                    "success": True,
-                    "message": "DigitalSecuritySolution items fetched from cache successfully.",
-                    "data": cached_data,
-                }, status=status.HTTP_200_OK)
+    def get_queryset_instance(self):
+        fields = DigitalSecuritySolutionItemSerializer.Meta.fields
+        return DigitalSecuritySolutionItem.objects.only(*fields)
 
-            queryset = self.get_queryset()
-
-            if not queryset:
-                return Response({
-                    "success": True,
-                    "message": "DigitalSecuritySolution items no recoads.",
-                    "data": [],
-                }, status=status.HTTP_204_NO_CONTENT)
-
-            serializer = self.get_serializer(queryset, many=True)
-            data = serializer.data
-
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                "success": True,
-                "message": "DigitalSecuritySolution items fetched successfully.",
-                "data": data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
-
-# ============ HappyJourneyTopBar ============
-class HappyJourneyTopBarView(viewsets.ModelViewSet):
+# ============ Happy Journey Top Bar ============
+class HappyJourneyTopBarView(BaseRetrieveView):
     serializer_class = HappyJourneyTopBarSerializer
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_HAPPY_JOURNEY_TOP_BAR_CACHE_KEY
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
-                return Response({
-                    'success': True,
-                    'message': 'Happy Journey top bar data fetching successfully.',
-                    'data': cached_data,
-                }, status=status.HTTP_200_OK)
-            queryset = HappyJourneyTopBar.objects.first()
-            if not queryset:
-                return Response({
-                    'success': True,
-                    'message': 'Happy Journey top bar records not found',
-                    'data': {},
-                }, status=status.HTTP_204_NO_CONTENT)
-            serializer = self.serializer_class(queryset)
-            data = serializer.data
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-            return Response({
-                'success': True,
-                'message': 'Happy Journey top bar data fetching successfully.',
-                'data': data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                'success': False,
-                'message': 'Something went wrong.',
-                'error': str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
 
-# ============== HappyJourneyItem ==============
-class HappyJourneyItemView(viewsets.ModelViewSet):
+    def get_object_instance(self):
+        fields = HappyJourneyTopBarSerializer.Meta.fields
+        return HappyJourneyTopBar.objects.only(*fields)
+
+# ============== Happy Journey Items ==============
+class HappyJourneyItemView(BaseListView):
     serializer_class = HappyJourneyItemSerializer
-    queryset = HappyJourneyItem.objects.all()
-
-    def get_permissions(self):
-        if self.action == 'list':
-            return [AllowAny()]
-        return [IsAdminUser()]
-    
     CACHE_KEY = ABOUT_HAPPY_JOURNEY_ITEMS_CACHE_KEY
-    
-    def list(self, request, *args, **kwargs):
-        try:
-            cached_data = cache.get(self.CACHE_KEY)
-            if cached_data:
-                return Response({
-                    "success": True,
-                    "message": "HappyJourney items fetched from cache successfully.",
-                    "data": cached_data,
-                }, status=status.HTTP_200_OK)
-            queryset = self.get_queryset()
-            if not queryset:
-                return Response({
-                    "success": True,
-                    "message": "HappyJourney items fetched successfully.",
-                    "data": [],
-                }, status=status.HTTP_204_NO_CONTENT)
-            serializer = self.get_serializer(queryset, many=True)
-            data = serializer.data
+    CACHE_TIMEOUT = PAGE_CACHE_TIMEOUT
 
-            cache.set(self.CACHE_KEY, data, timeout=PAGE_CACHE_TIMEOUT)
-
-            return Response({
-                "success": True,
-                "message": "HappyJourney items fetched successfully.",
-                "data": data,
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({
-                "success": False,
-                "message": str(e)
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    def get_queryset_instance(self):
+        fields = HappyJourneyItemSerializer.Meta.fields
+        return HappyJourneyItem.objects.only(*fields)

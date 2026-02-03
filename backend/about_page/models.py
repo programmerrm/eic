@@ -7,7 +7,6 @@ from django.db import models
 from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
 from django.utils.translation import gettext_lazy as _
 
-# ========= ABOUT TOP BAR =================
 class AboutTopBar(models.Model):
     title = models.CharField(
         max_length=280,
@@ -83,7 +82,7 @@ class SecureFutureItem(models.Model):
 
 class DigitalSecuritySolutionTopBar(models.Model):
     title = models.CharField(
-        max_length=380,
+        max_length=280,
         verbose_name=_('Title'),
         null=True,
         blank=True,
@@ -147,7 +146,7 @@ class HappyJourneyItem(models.Model):
         blank=True
     )
     title = models.CharField(
-        max_length=380,
+        max_length=280,
         null=True,
         blank=True,
         verbose_name=_('Title'),
@@ -165,7 +164,6 @@ class HappyJourneyItem(models.Model):
     def __str__(self):
         return self.title[:50] or "Happy Journey Item"
 
-# ================= SECURITY ====================
 class SecurityFirm(models.Model):
     bg = models.FileField(
         null=True,

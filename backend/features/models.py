@@ -58,7 +58,12 @@ class FeatureItem(models.Model):
         verbose_name=_('Feature Image'),
         help_text=_('Upload your feature image...'),
     )
-
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Image Alt Text'),
+    )
     bg = models.FileField(
         null=True,
         blank=True,
@@ -67,18 +72,11 @@ class FeatureItem(models.Model):
         verbose_name=_('Feature BG Image'),
         help_text=_('Upload your feature bg image...'),
     )
-
     name = models.CharField(
         max_length=280,
         unique=True,
         verbose_name=_('Feature Name'),
         help_text=_('Enter your feature name...'),
-    )
-    slug = models.SlugField(
-        max_length=280,
-        unique=True,
-        editable=False,
-        verbose_name=_('Feature Slug'),
     )
     description = models.TextField(
         null=True,
@@ -86,7 +84,6 @@ class FeatureItem(models.Model):
         verbose_name=_('Feature Description'),
         help_text=_('Enter your feature description...'),
     )
-
     brn_name = models.CharField(
         max_length=280,
         null=True,

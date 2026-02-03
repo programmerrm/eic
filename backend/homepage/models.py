@@ -11,6 +11,7 @@ from utils.validate_image_extension import VALIDATE_IMAGE_EXTENSION
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # CREATE MODELS HERE.
+
 # ================= BANNER ====================
 class Banner(models.Model):
     image = models.FileField(
@@ -281,6 +282,12 @@ class CybersecuritySolutionItem(models.Model):
         verbose_name=_('Cyber Security Item Image'),
         help_text=_('Upload cyber security item image...'),
     )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Image Alt Text'),
+    )
     title = models.CharField(
         null=True,
         blank=True,
@@ -308,6 +315,12 @@ class OurProvenProcessSecurity(models.Model):
         blank=True,
         upload_to='our-proven-process-security/',
         verbose_name=_('our proven process security image'),
+    )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Image Alt Text'),
     )
     title_before_span = models.CharField(
         max_length=280, 
@@ -350,6 +363,12 @@ class OurProvenProcessSecurityItems(models.Model):
         blank=True,
         upload_to='our-proven-process-security/',
         verbose_name=_('our proven process security item image'),
+    )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Image Alt Text'),
     )
     title = models.CharField(
         null=True,
@@ -451,6 +470,12 @@ class GloballyAccredited(models.Model):
         validators=[VALIDATE_IMAGE_EXTENSION],
         verbose_name=_('Image'),
     )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Image Alt Text'),
+    )
     bg = models.FileField(
         null=True,
         blank=True,
@@ -484,6 +509,12 @@ class ExperienceEic(models.Model):
         blank=True,
         verbose_name=_('Image'),
         upload_to='experience-eic/',
+    )
+    alt = models.CharField(
+        max_length=280,
+        null=True,
+        blank=True,
+        verbose_name=_('Image Alt Text'),
     )
     btn_name = models.CharField(
         null=True,

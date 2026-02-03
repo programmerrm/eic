@@ -73,7 +73,6 @@ class FeatureAdmin(admin.ModelAdmin):
 class FeatureItemAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'slug',
         'image_preview',
         'bg_preview',
         'edit_link',
@@ -81,7 +80,6 @@ class FeatureItemAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = (
-        'slug',
         'image_preview',
         'bg_preview',
     )
@@ -174,9 +172,3 @@ class FeatureItemAdmin(admin.ModelAdmin):
             obj.id
         )
     delete_link.short_description = "Delete"
-
-    def save_model(self, request, obj, form, change):
-        from django.utils.text import slugify
-        if not obj.slug:
-            obj.slug = slugify(obj.name)
-        super().save_model(request, obj, form, change)

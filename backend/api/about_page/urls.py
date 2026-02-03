@@ -3,7 +3,7 @@
 ABOUT ALL ROUTES
 """
 # ==========================================
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from api.about_page.views.about_page import (
     AboutTopBarView,
     SecureFutureTopBarView,
@@ -15,14 +15,45 @@ from api.about_page.views.about_page import (
     HappyJourneyItemView,
 )
 
-router = DefaultRouter()
-router.register(r'top-bar', AboutTopBarView, basename='about_top_bar')
-router.register(r'secure-future-top-bar', SecureFutureTopBarView, basename='about_secure_futurea_top_bar')
-router.register(r'secure-future-item', SecureFutureItemView, basename='about_secure_future_item_view')
-router.register(r'security-firm', SecurityFirmView, basename='about_security_firm_view')
-router.register(r'digital-security-solution-top-bar', DigitalSecuritySolutionTopBarView, basename='about_digital_security_solution_top_bar')
-router.register(r'digital-security-solution-item', DigitalSecuritySolutionItemView, basename='about_digital_security_solution_item')
-router.register(r'happy-journey', HappyJourneyTopBarView, basename='about_happy_journey_top_bar')
-router.register(r'happy-journey-item', HappyJourneyItemView, basename='about_happy_journey_item')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        'top-bar/',
+        AboutTopBarView.as_view(),
+        name='about_top_bar',
+    ),
+    path(
+        'secure-future-top-bar/',
+        SecureFutureTopBarView.as_view(),
+        name='about_secure_futurea_top_bar',
+    ),
+    path(
+        'secure-future-item/',
+        SecureFutureItemView.as_view(),
+        name='about_secure_future_item_view',
+    ),
+    path(
+        'security-firm/',
+        SecurityFirmView.as_view(),
+        name='about_security_firm_view',
+    ),
+    path(
+        'digital-security-solution-top-bar/',
+        DigitalSecuritySolutionTopBarView.as_view(),
+        name='about_digital_security_solution_top_bar',
+    ),
+    path(
+        'digital-security-solution-item/',
+        DigitalSecuritySolutionItemView.as_view(),
+        name='about_digital_security_solution_item',
+    ),
+    path(
+        'happy-journey/',
+        HappyJourneyTopBarView.as_view(),
+        name='about_happy_journey_top_bar',
+    ),
+    path(
+        'happy-journey-item/',
+        HappyJourneyItemView.as_view(),
+        name='about_happy_journey_item',
+    ),
+]
